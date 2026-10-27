@@ -1,0 +1,80 @@
+---
+import Section from '../../layouts/Section.astro';
+import { projects } from '../../data/content';
+---
+<Section id="projects" title="Projects — Bhavana Durgam" description="Projects by Bhavana Durgam: product launches, positioning, market sizing, healthcare go-to-market, brain-computer interface research and this portfolio.">
+  <header class="frame-head">
+    <p class="kicker">File No.03</p>
+    <h1 class="title">Things I've <em>built</em></h1>
+    <p class="lede">Each one, the way I'd walk you through it in a room: the problem, what I did, and what changed. Click a row to open it.</p>
+  </header>
+
+  <ul class="rows">
+    {projects.map((p, i) => (
+      <li class="row reveal" style={`--pc: var(${p.color})`}>
+        <button class="row-head" type="button" aria-expanded="false" aria-controls={`p-${p.slug}`} data-sound>
+          <span class="thumb" aria-hidden="true">{p.icon}</span>
+          <span class="row-text">
+            <span class="row-no mono">No.{String(i + 1).padStart(2, '0')}</span>
+            <span class="row-title">{p.title}</span>
+            <span class="row-sum">{p.summary}</span>
+            <span class="row-tags">{p.tags.map((t) => <span class="pill">{t}</span>)}</span>
+          </span>
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="row-body" id={`p-${p.slug}`} role="region" aria-label={`${p.title} details`}>
+          <div class="pao">
+            <div><p class="mono">Problem</p><p>{p.problem}</p></div>
+            <div><p class="mono">Approach</p><p>{p.approach}</p></div>
+            <div><p class="mono">Outcome</p><p>{p.outcome}</p></div>
+          </div>
+          {p.link && <a class="btn btn-ink" href={p.link.href}>{p.link.label}</a>}
+        </div>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .rows { list-style: none; padding: 0; display: grid; gap: 14px; }
+  .row { border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow: hidden; transition: box-shadow .3s; }
+  .row:hover { box-shadow: 0 12px 26px -16px var(--shadow); }
+  .row-head { width: 100%; display: grid; grid-template-columns: 88px minmax(0, 1fr) 48px; gap: 20px; align-items: center; padding: 18px 20px; text-align: left; }
+  .thumb {
+    width: 88px; height: 88px; display: grid; place-items: center; border-radius: 6px; background: var(--pc); color: var(--sheet);
+    font-size: 34px; transform: rotate(-2deg); transition: transform .45s var(--spring);
+  }
+  .row:hover .thumb, .row.open .thumb { transform: rotate(0) scale(1.04); }
+  .row-text { display: grid; gap: 4px; }
+  .row-no { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .row-title { font: 400 clamp(22px, 2.4vw, 28px)/1.15 var(--serif); }
+  .row-sum { color: var(--muted); }
+  .row-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .plus { position: relative; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); transition: transform .45s var(--spring), background-color .3s; }
+  .plus::before, .plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; margin: -.75px 0 0 -8px; background: var(--ink); }
+  .plus::after { transform: rotate(90deg); }
+  .row.open .plus { transform: rotate(45deg); background: var(--butter); }
+  .row-body { max-height: 0; overflow: hidden; transition: max-height .5s var(--smooth); padding: 0 20px; }
+  .row.open .row-body { max-height: 640px; }
+  .pao { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 4px 0 18px; }
+  .pao > div { background: var(--paper); border-radius: 6px; padding: 16px; }
+  .pao .mono { font-size: 11px; font-weight: 700; color: var(--pc); margin-bottom: 6px; }
+  .row-body .btn { margin-bottom: 20px; }
+  @media (max-width: 640px) {
+    .row-head { grid-template-columns: 56px minmax(0, 1fr) 44px; gap: 12px; padding: 14px; }
+    .thumb { width: 56px; height: 56px; font-size: 24px; }
+    .pao { grid-template-columns: 1fr; }
+    .row-body { padding: 0 14px; }
+  }
+</style>
+
+<script>
+  function initRows() {
+    document.querySelectorAll<HTMLButtonElement>('.row-head').forEach((b) => b.addEventListener('click', () => {
+      const row = b.closest('.row')!;
+      const open = row.classList.toggle('open');
+      b.setAttribute('aria-expanded', String(open));
+    }));
+  }
+  document.addEventListener('astro:page-load', initRows);
+</script>

@@ -1,0 +1,55 @@
+---
+import Section from '../layouts/Section.astro';
+import { site } from '../data/content';
+const circles = [
+  { label: 'LinkedIn', sub: 'in/bhavanadurgam', href: site.socials.linkedin, c: '--blue', r: -6, icon: 'M7 10v7M7 7v.01M11 17v-4c0-1.7 1-3 2.6-3S16 11.3 16 13v4M11 10v7' },
+  { label: 'Instagram', sub: site.socials.instagramHandle, href: site.socials.instagram, c: '--pink', r: 5, icon: 'M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5zM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM17 6.8v.01' },
+  { label: 'Email', sub: 'Write to me', href: `mailto:${site.email}`, c: '--butter', r: -4, icon: 'M3 6h18v12H3zM3.5 6.5 12 13l8.5-6.5' },
+];
+---
+<Section id="contact" title="Contact — Bhavana Durgam" description="Contact Bhavana Durgam, Product Marketing Manager in Chicago: LinkedIn, Instagram and email. Open to PM and PMM roles.">
+  <header class="frame-head center">
+    <p class="kicker">File No.06</p>
+    <h1 class="title">Let's <em>talk</em></h1>
+    <p class="lede">Open to product marketing and product management roles, collaborations, and good book recommendations.</p>
+  </header>
+
+  <ul class="circles">
+    {circles.map((c) => (
+      <li class="reveal">
+        <a class="circle-link" href={c.href} target={c.label === 'Email' ? undefined : '_blank'} rel={c.label === 'Email' ? undefined : 'noopener me'} style={`--cc: var(${c.c}); --rr: ${c.r}deg`} data-sound>
+          <span class="circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={c.icon} /></svg></span>
+          <span class="c-label">{c.label}</span>
+          <span class="c-sub mono">{c.sub}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="email-bar reveal">
+    <span class="mono eb-k">Email</span>
+    <a href={`mailto:${site.email}`} data-email-text>{site.email}</a>
+    <button class="btn btn-ink" type="button" data-copy={site.email}>Copy</button>
+  </div>
+</Section>
+
+<style>
+  .center { text-align: center; display: grid; justify-items: center; }
+  .circles { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(24px, 5vw, 64px); margin: 12px 0 56px; }
+  .circle-link { display: grid; justify-items: center; gap: 8px; text-decoration: none; }
+  .circle {
+    width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center; background: var(--cc);
+    color: var(--ink); box-shadow: 0 6px 0 rgba(58,30,18,.18); transition: transform .45s var(--spring), box-shadow .45s var(--spring);
+  }
+  .circle svg { width: 50px; height: 50px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .circle-link:hover .circle, .circle-link:focus-visible .circle { transform: translateY(-10px) rotate(var(--rr)); box-shadow: 0 16px 0 rgba(58,30,18,.14); }
+  .c-label { font: 400 28px/1 var(--serif); margin-top: 8px; }
+  .c-sub { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .email-bar {
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px 20px; max-width: 680px; margin: 0 auto;
+    padding: 16px 16px 16px 24px; border: 1.5px dashed var(--line); border-radius: 14px; background: #fff;
+  }
+  .eb-k { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .email-bar a { font: 400 clamp(20px, 2.6vw, 28px)/1.2 var(--serif); text-decoration: none; user-select: all; word-break: break-all; }
+  @media (max-width: 640px) { .circle { width: 112px; height: 112px; } .circle svg { width: 40px; height: 40px; } }
+</style>

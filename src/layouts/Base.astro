@@ -1,0 +1,135 @@
+---
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource/instrument-sans/400.css';
+import '@fontsource/instrument-sans/500.css';
+import '@fontsource/instrument-sans/600.css';
+import '@fontsource/mrs-saint-delafield/400.css';
+import '@fontsource/courier-prime/400.css';
+import '@fontsource/courier-prime/700.css';
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import SEO from '../components/SEO.astro';
+import { site, folders } from '../data/content';
+
+interface Props {
+  title: string;
+  description?: string;
+  jsonld?: object;
+  noindex?: boolean;
+  active?: string;
+}
+const { title, description, jsonld, noindex, active } = Astro.props;
+const resumeHref = (k: 'pm' | 'pmm') => (site.resumes.ready ? site.resumes[k] : undefined);
+---
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F4EFE6" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO title={title} description={description} jsonld={jsonld} noindex={noindex} />
+    <ClientRouter fallback="swap" />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="logo" href="/" aria-label="Bhavana Durgam, home">Bhavana</a>
+        <nav class="nav" aria-label="Main">
+          {folders.map((f) => (
+            <a href={f.href} style={`--u: var(${f.color})`} aria-current={active === f.id ? 'page' : undefined} data-nav={f.id}>{f.label}</a>
+          ))}
+        </nav>
+        <div class="header-tools">
+          <button class="icon-btn sound-btn" type="button" aria-pressed="false" aria-label="Paper sounds: off" title="Paper sounds">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" /><path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" /><path class="mute" d="M17 9l5 6M22 9l-5 6" /></svg>
+          </button>
+          <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu-sheet" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="menu-sheet" id="menu-sheet" aria-hidden="true">
+      <div class="top">
+        <a class="logo" href="/">Bhavana</a>
+        <button class="icon-btn menu-close" type="button" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      </div>
+      <p class="kicker">The files</p>
+      <nav class="menu-tabs" aria-label="Main">
+        {folders.map((f) => (
+          <a href={f.href} style={`--c: var(${f.color}); --t: var(${f.ink})`}>{f.title}<span>No.{f.no}</span></a>
+        ))}
+      </nav>
+    </div>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <button class="logo secret-trigger" type="button" aria-label="Bhavana">Bhavana</button>
+        <div class="foot-links">
+          <a href={site.socials.linkedin} target="_blank" rel="noopener me">LinkedIn</a>
+          <a href={site.socials.instagram} target="_blank" rel="noopener me">Instagram</a>
+          <a href={`mailto:${site.email}`}>Email</a>
+          <a href={resumeHref('pm') ?? '#'} data-resume={site.resumes.ready ? undefined : 'soon'} download={site.resumes.ready ? '' : undefined}>PM Résumé</a>
+          <a href={resumeHref('pmm') ?? '#'} data-resume={site.resumes.ready ? undefined : 'soon'} download={site.resumes.ready ? '' : undefined}>PMM Résumé</a>
+        </div>
+        <p class="copy">© 2026 Bhavana Durgam · Made with ✦ in Chicago</p>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+
+    <div class="modal secret" id="secret" role="dialog" aria-modal="true" aria-labelledby="secret-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" aria-label="Close">✕</button>
+        <div class="secret-folder">
+          <span class="secret-tab">No.07 · Classified</span>
+          <div class="sheet secret-sheet">
+            <span class="secret-stamp" aria-hidden="true">Top secret</span>
+            <p class="kicker">You found the hidden file</p>
+            <h2 id="secret-title" class="h2">Hello, <em>detective.</em></h2>
+            <!-- TODO(Bhavana): swap in your own secret -->
+            <p>Since you typed my name (or tapped my logo five times), here's something that isn't on my résumé: I approach a launch plan and a full glam look with exactly the same checklist energy.</p>
+            <p class="secret-sign">— b.</p>
+            <a class="btn btn-ink" href="/contact/">Tell me you found it →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style is:global>
+      .sound-btn .mute { display: inline; }
+      .sound-btn .wave { display: none; }
+      .sound-btn[aria-pressed='true'] .mute { display: none; }
+      .sound-btn[aria-pressed='true'] .wave { display: inline; }
+      .secret-trigger { font: 400 56px/1 var(--script); color: var(--red); padding: 6px; }
+      .secret .modal-card { max-width: min(520px, 100%); overflow: visible; }
+      .secret-folder { position: relative; background: var(--plum); border-radius: 0 14px 14px 14px; padding: 18px; margin-top: 44px; transform: scale(.9) rotate(-2deg); transition: transform .5s var(--spring); }
+      .secret.open .secret-folder { transform: none; }
+      .secret-tab { position: absolute; top: -40px; left: 0; height: 40px; padding: 0 18px; display: grid; place-items: center; border-radius: 12px 12px 0 0; background: var(--plum); color: var(--sheet); font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+      .secret-sheet { padding: 32px 28px; display: grid; gap: 14px; }
+      .secret-sheet h2 em { color: var(--plum); }
+      .secret-stamp { position: absolute; top: 18px; right: 16px; transform: rotate(8deg); border: 2.5px solid var(--red); color: var(--red); padding: 4px 10px; border-radius: 4px; font: 700 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
+      .secret-sign { font: 400 40px/1 var(--script); color: var(--red); }
+    </style>
+
+    <script>
+      import { initShared } from '../scripts/shared';
+      document.addEventListener('astro:page-load', initShared);
+    </script>
+  </body>
+</html>

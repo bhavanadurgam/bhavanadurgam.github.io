@@ -1,0 +1,330 @@
+---
+import Section from '../../layouts/Section.astro';
+import { books } from '../../data/content';
+
+const top3 = books.filter((b) => b.top3).sort((a, b) => a.top3! - b.top3!);
+const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
+const shelf = books.map((b, i) => ({
+  ...b,
+  i,
+  w: b.w ?? 44,
+  h: b.h ?? 240,
+  cw: Math.round((b.h ?? 240) * 0.68),
+  style: b.style ?? 'serif',
+}));
+---
+<Section id="hobbies" sub="Bookshelf" back={{ href: '/hobbies/', label: 'Back to hobbies' }} holes={false} title="My Bookshelf — Bhavana Durgam" description="Bhavana Durgam's bookshelf: her top 3 books, everything she's read this year, ratings and one-line reviews.">
+  <header class="shelf-head">
+    <p class="kicker">Part I</p>
+    <h1 class="big">My personal <span>bookshelf</span></h1>
+    <p class="lede">The books that shaped how I think about products, people and stories. <span class="todo">Placeholder list until I add my real one.</span></p>
+  </header>
+
+  <!-- Top 3 -->
+  <section class="top3" aria-labelledby="top3-h">
+    <h2 class="sec-h" id="top3-h">The top <em>three</em></h2>
+    <p class="hint mono">Tap a cover to flip it</p>
+    <ul class="covers">
+      {top3.map((b) => (
+        <li class="reveal">
+          <button class="flip" type="button" aria-pressed="false" aria-label={`${b.title} by ${b.author}. Flip for rating and review`} data-sound>
+            <span class="flip-in">
+              <span class="face front" style={`--bc: ${b.color}; --bt: ${b.textColor}`}>
+                <span class="badge" aria-hidden="true">{b.top3}</span>
+                <span class={`c-title s-${b.style ?? 'serif'}`}>{b.title}</span>
+                <span class="c-rule" aria-hidden="true"></span>
+                <span class="c-author">{b.author}</span>
+              </span>
+              <span class="face back">
+                <span class="stars" aria-label={`${b.rating} out of 5 stars`}>{stars(b.rating)}</span>
+                <span class="review">“{b.review}”</span>
+                <span class="c-author dark">{b.title} · {b.author}</span>
+              </span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- The shelf -->
+  <section class="shelf-sec" aria-labelledby="shelf-h">
+    <div class="shelf-bar">
+      <div>
+        <h2 class="sec-h" id="shelf-h">Books read <em>this year</em></h2>
+        <p class="hint mono">Hover a spine · click to pull a book out</p>
+      </div>
+      <div class="shelf-ctrl">
+        <button class="icon-btn" type="button" data-nudge="-1" aria-label="Scroll shelf left">←</button>
+        <button class="icon-btn" type="button" data-glide aria-pressed="true" aria-label="Pause the gliding shelf">❚❚</button>
+        <button class="icon-btn" type="button" data-nudge="1" aria-label="Scroll shelf right">→</button>
+      </div>
+    </div>
+
+    <div class="shelf" data-shelf>
+      <ul class="track" data-track>
+        {[0, 1].map((copy) => shelf.map((b) => (
+          <li class="slot" style={`--w: ${b.w}px; --h: ${b.h}px; --cw: ${b.cw}px; --lean: ${b.lean ?? 0}deg; --bc: ${b.color}; --bt: ${b.textColor}; --k: ${b.i}`} data-dup={copy}>
+            <button class="book" type="button" data-book={b.i} tabindex={copy ? -1 : undefined} aria-hidden={copy ? 'true' : undefined} aria-label={`${b.title} by ${b.author}`} data-sound="open">
+              <span class="b3d">
+                <span class={`spine s-${b.style}`}>
+                  <span class="sp-title">{b.title}</span>
+                  <span class="sp-author">{b.author.split(' ').slice(-1)[0]}</span>
+                </span>
+                <span class="cover">
+                  <span class={`c-title s-${b.style}`}>{b.title}</span>
+                  <span class="c-rule" aria-hidden="true"></span>
+                  <span class="c-author">{b.author}</span>
+                </span>
+              </span>
+              <span class="tip" aria-hidden="true">{b.title} · {b.author}</span>
+            </button>
+          </li>
+        )))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Pulled-out book -->
+  <div class="modal pull" id="pull" role="dialog" aria-modal="true" aria-labelledby="pull-title">
+    <div class="modal-card pull-card">
+      <button class="modal-close" type="button" aria-label="Put the book back">✕</button>
+      <button class="pulled flip" type="button" aria-pressed="false" aria-label="Flip for rating and review">
+        <span class="flip-in">
+          <span class="face front" data-p-front>
+            <span class="c-title" data-p-title></span>
+            <span class="c-rule" aria-hidden="true"></span>
+            <span class="c-author" data-p-author></span>
+          </span>
+          <span class="face back">
+            <span class="stars" data-p-stars></span>
+            <span class="review" data-p-review></span>
+            <span class="c-author dark" data-p-meta></span>
+          </span>
+        </span>
+      </button>
+      <h2 id="pull-title" class="sr-only" data-p-sr></h2>
+      <p class="pull-hint mono">Tap the cover to flip · Esc to put it back</p>
+    </div>
+  </div>
+
+  <script type="application/json" id="books-data" set:html={JSON.stringify(shelf.map(({ title, author, color, textColor, rating, review, year, style }) => ({ title, author, color, textColor, rating, review, year, style })))} />
+</Section>
+
+<style>
+  .shelf-head { text-align: center; display: grid; justify-items: center; gap: 12px; margin-bottom: 56px; }
+  .big { font: 400 clamp(46px, 9vw, 112px)/.92 var(--serif); text-transform: uppercase; letter-spacing: -0.01em; }
+  .big span { display: block; font-style: italic; color: var(--orange); text-transform: none; }
+  .sec-h { font: 400 clamp(28px, 3vw, 40px)/1.1 var(--serif); }
+  .sec-h em { color: var(--red); }
+  .hint { font-size: 11px; font-weight: 700; color: var(--muted); margin-top: 4px; }
+
+  /* Top 3 flip cards */
+  .top3 { text-align: center; margin-bottom: 72px; }
+  .covers { list-style: none; padding: 28px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 36px; }
+  .flip { width: 190px; height: 280px; perspective: 1000px; display: block; }
+  .flip-in { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s var(--spring); }
+  .flip[aria-pressed='true'] .flip-in { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 3px 8px 8px 3px;
+    display: grid; align-content: center; justify-items: center; gap: 14px; padding: 22px 18px; text-align: center;
+  }
+  .front { background: var(--bc); color: var(--bt); box-shadow: inset 7px 0 0 rgba(0,0,0,.14), 0 18px 26px -16px rgba(0,0,0,.55); }
+  .front::after { content: ''; position: absolute; inset: 10px 10px 10px 16px; border: 1px solid currentColor; opacity: .35; border-radius: 2px; }
+  .back { background: var(--sheet); border: 1px solid var(--line); transform: rotateY(180deg); box-shadow: 0 18px 26px -16px rgba(0,0,0,.4); }
+  .badge {
+    position: absolute; top: -14px; right: -14px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--red); color: var(--sheet); font: 400 24px/1 var(--serif); box-shadow: 0 4px 0 rgba(0,0,0,.2); z-index: 2;
+  }
+  .c-title { font: 400 26px/1.05 var(--serif); }
+  .c-title.s-sans { font: 700 22px/1 var(--sans); text-transform: uppercase; letter-spacing: -0.02em; }
+  .c-title.s-type { font: 700 17px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+  .c-rule { width: 40px; height: 2px; background: currentColor; opacity: .6; }
+  .c-author { font: 700 10px/1.3 var(--mono); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+  .c-author.dark { color: var(--muted); }
+  .stars { color: var(--orange); font-size: 20px; letter-spacing: 3px; }
+  .review { font: italic 400 21px/1.3 var(--serif); }
+
+  /* Shelf */
+  .shelf-bar { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .shelf-ctrl { display: flex; gap: 8px; }
+  .shelf-ctrl .icon-btn { font: 700 14px/1 var(--mono); }
+  .shelf {
+    position: relative; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain;
+    margin-inline: calc(-1 * clamp(20px, 5vw, 64px)); padding: 0 clamp(20px, 5vw, 64px);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .shelf::-webkit-scrollbar { display: none; }
+  .track {
+    list-style: none; display: flex; align-items: flex-end; gap: 4px; width: max-content; margin: 0; padding: 70px 40px 22px;
+    background: linear-gradient(180deg, var(--wood) 0 13px, var(--wood-dark) 13px 22px) bottom / 100% 22px no-repeat;
+    filter: drop-shadow(0 12px 10px rgba(58,30,18,.18));
+  }
+  .slot {
+    width: var(--w); height: var(--h); perspective: 900px; flex: none;
+    transition: width .7s var(--spring), translate .9s var(--spring), opacity .5s;
+    translate: 110vw 0; opacity: 0; transition-delay: 0s, calc(var(--k) * 70ms), calc(var(--k) * 70ms);
+  }
+  .shelf.ready .slot { translate: 0 0; opacity: 1; }
+  .slot.out { width: var(--cw); margin: 0 10px; }
+  .book { position: relative; display: block; width: 100%; height: 100%; transform: rotate(var(--lean)); transform-origin: bottom center; transition: transform .5s var(--spring); }
+  .slot.out .book { transform: none; }
+  .b3d { position: relative; display: block; width: 100%; height: 100%; transition: translate .45s var(--spring); }
+  .book:hover .b3d, .book:focus-visible .b3d { translate: 0 -26px; }
+  .spine, .cover {
+    position: absolute; left: 0; top: 0; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--bc); color: var(--bt); transform-origin: left center; transition: transform .7s var(--spring);
+  }
+  .spine {
+    width: var(--w); border-radius: 3px 3px 1px 1px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 14px 0 12px;
+    box-shadow: inset -4px 0 0 rgba(0,0,0,.14), inset 3px 0 0 rgba(255,255,255,.14);
+  }
+  .sp-title { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-height: calc(var(--h) - 60px); font: 400 17px/1 var(--serif); }
+  .s-sans.spine .sp-title { font: 700 15px/1 var(--sans); text-transform: uppercase; letter-spacing: -0.01em; }
+  .s-type.spine .sp-title { font: 700 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+  .sp-author { font: 700 8px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); opacity: .8; }
+  .cover {
+    width: var(--cw); border-radius: 2px 6px 6px 2px; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 18px 14px; text-align: center;
+    transform: rotateY(90deg); box-shadow: inset 6px 0 0 rgba(0,0,0,.14), 0 16px 24px -14px rgba(0,0,0,.5);
+  }
+  .cover .c-title { font-size: 20px; } .cover .c-title.s-sans { font-size: 17px; } .cover .c-title.s-type { font-size: 13px; }
+  .slot.out .spine { transform: rotateY(-90deg); }
+  .slot.out .cover { transform: rotateY(0); }
+  .tip {
+    position: absolute; bottom: calc(100% + 34px); left: 50%; translate: -50% 6px; width: max-content; max-width: 220px; padding: 7px 11px;
+    background: var(--ink); color: var(--sheet); border-radius: 6px; font: 700 10px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+    opacity: 0; pointer-events: none; transition: opacity .2s, translate .3s var(--spring); z-index: 3;
+  }
+  .book:hover .tip, .book:focus-visible .tip { opacity: 1; translate: -50% 0; }
+
+  /* Pulled-out book */
+  .pull-card { display: grid; justify-items: center; gap: 16px; overflow: visible; }
+  .pulled { width: min(300px, 70vw); height: min(440px, 62vh); }
+  .pull.open .pulled { animation: pullOut .9s var(--spring) both; }
+  @keyframes pullOut { from { transform: rotateY(-90deg) translateY(30px); opacity: .4; } }
+  .pulled .c-title { font-size: 36px; }
+  .pulled .review { font-size: 26px; }
+  .pull .modal-close { top: -12px; right: -12px; }
+  .pull-hint { color: var(--sheet); font-size: 11px; font-weight: 700; }
+
+  @media (max-width: 640px) {
+    .flip { width: 160px; height: 236px; }
+    .covers { gap: 26px; }
+  }
+</style>
+
+<script>
+  import { openModal, reducedMotion } from '../../scripts/shared';
+
+  type BookData = { title: string; author: string; color: string; textColor: string; rating: number; review: string; year: number; style: string };
+
+  function initBookshelf() {
+    const shelf = document.querySelector<HTMLElement>('[data-shelf]');
+    const track = document.querySelector<HTMLElement>('[data-track]');
+    if (!shelf || !track) return;
+    const data: BookData[] = JSON.parse(document.getElementById('books-data')!.textContent!);
+    const slots = [...track.querySelectorAll<HTMLElement>('.slot')];
+    const calm = reducedMotion();
+
+    // Flip cards (top 3 + pulled book)
+    document.querySelectorAll<HTMLButtonElement>('.flip').forEach((f) => f.addEventListener('click', () => {
+      f.setAttribute('aria-pressed', String(f.getAttribute('aria-pressed') !== 'true'));
+    }));
+
+    // Books slide onto the shelf one at a time.
+    requestAnimationFrame(() => shelf.classList.add('ready'));
+
+    // Glide + face-out book in the middle.
+    let pos = shelf.scrollLeft;
+    let paused = calm;
+    let hover = false;
+    let holdUntil = 0;
+    let target: number | null = null;
+    let current: HTMLElement | null = null;
+    let last = performance.now();
+    const startAt = last + (calm ? 0 : slots.length / 2 * 70 + 900);
+    const glideBtn = document.querySelector<HTMLButtonElement>('[data-glide]')!;
+    const setGlide = (on: boolean) => {
+      paused = !on;
+      glideBtn.setAttribute('aria-pressed', String(on));
+      glideBtn.textContent = on ? '❚❚' : '▶';
+      glideBtn.setAttribute('aria-label', on ? 'Pause the gliding shelf' : 'Play the gliding shelf');
+    };
+    setGlide(!calm);
+    glideBtn.addEventListener('click', () => setGlide(paused));
+    document.querySelectorAll<HTMLButtonElement>('[data-nudge]').forEach((b) => b.addEventListener('click', () => {
+      target = shelf.scrollLeft + Number(b.dataset.nudge) * Math.min(360, shelf.clientWidth * 0.6);
+      holdUntil = performance.now() + 2500;
+    }));
+    shelf.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+    shelf.addEventListener('pointerleave', () => { hover = false; });
+    ['touchstart', 'wheel', 'focusin'].forEach((ev) => shelf.addEventListener(ev, () => { holdUntil = performance.now() + 4000; target = null; }, { passive: true }));
+
+    const loopWidth = () => (slots[slots.length / 2]?.offsetLeft ?? 0) - (slots[0]?.offsetLeft ?? 0);
+
+    let raf = 0;
+    const tick = (now: number) => {
+      if (!document.body.contains(shelf)) return cancelAnimationFrame(raf);
+      const dt = Math.min(now - last, 50); last = now;
+      if (Math.abs(shelf.scrollLeft - pos) > 2) pos = shelf.scrollLeft; // user scrolled
+      const lw = loopWidth();
+      if (target !== null) {
+        pos += (target - pos) * 0.12;
+        if (Math.abs(target - pos) < 1) target = null;
+      } else if (!paused && !hover && now > startAt && now > holdUntil) {
+        pos += dt * 0.045; // ~45px a second
+      }
+      if (lw > 0 && pos >= lw) pos -= lw;
+      if (lw > 0 && pos < 0) pos += lw;
+      shelf.scrollLeft = pos;
+
+      // The book closest to the middle turns face-out (with a little hysteresis).
+      if (!calm && now > startAt - 400) {
+        const mid = shelf.getBoundingClientRect().left + shelf.clientWidth / 2;
+        let best: HTMLElement | null = null, bestD = Infinity;
+        for (const s of slots) {
+          const r = s.getBoundingClientRect();
+          const d = Math.abs(r.left + r.width / 2 - mid);
+          if (d < bestD) { bestD = d; best = s; }
+        }
+        if (best && best !== current) {
+          const cr = current?.getBoundingClientRect();
+          const curD = cr ? Math.abs(cr.left + cr.width / 2 - mid) : Infinity;
+          if (bestD < curD - 30) {
+            current?.classList.remove('out');
+            best.classList.add('out');
+            current = best;
+          }
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    // Click: pull the book out.
+    const modal = document.getElementById('pull')!;
+    const pulled = modal.querySelector<HTMLButtonElement>('.pulled')!;
+    track.addEventListener('click', (e) => {
+      const btn = (e.target as Element).closest<HTMLElement>('[data-book]');
+      if (!btn) return;
+      const b = data[Number(btn.dataset.book)];
+      const front = modal.querySelector<HTMLElement>('[data-p-front]')!;
+      front.style.setProperty('--bc', b.color);
+      front.style.setProperty('--bt', b.textColor);
+      const title = modal.querySelector<HTMLElement>('[data-p-title]')!;
+      title.textContent = b.title;
+      title.className = `c-title s-${b.style}`;
+      modal.querySelector('[data-p-author]')!.textContent = b.author;
+      const stars = modal.querySelector<HTMLElement>('[data-p-stars]')!;
+      stars.textContent = '★'.repeat(b.rating) + '☆'.repeat(5 - b.rating);
+      stars.setAttribute('aria-label', `${b.rating} out of 5 stars`);
+      modal.querySelector('[data-p-review]')!.textContent = `“${b.review}”`;
+      modal.querySelector('[data-p-meta]')!.textContent = `${b.title} · ${b.author} · ${b.year}`;
+      modal.querySelector('[data-p-sr]')!.textContent = `${b.title} by ${b.author}`;
+      pulled.setAttribute('aria-pressed', 'false');
+      pulled.style.animation = 'none'; void pulled.offsetWidth; pulled.style.animation = '';
+      openModal(modal);
+    });
+  }
+  document.addEventListener('astro:page-load', initBookshelf);
+</script>

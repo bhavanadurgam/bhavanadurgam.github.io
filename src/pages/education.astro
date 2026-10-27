@@ -1,0 +1,46 @@
+---
+import Section from '../layouts/Section.astro';
+import { education, gradPolaroids } from '../data/content';
+---
+<Section id="education" title="Education — Bhavana Durgam" description="Bhavana Durgam's education: Master of Engineering Management at Northwestern University (Rubenstein Scholar) and a B.E. in Medical Electronics from BMS College of Engineering.">
+  <header class="frame-head">
+    <p class="kicker">File No.02</p>
+    <h1 class="title">Where I <em>learned</em></h1>
+    <p class="lede">An engineering degree taught me how things work. A management degree taught me why people choose them.</p>
+  </header>
+
+  <div class="edu-grid">
+    <ol class="timeline">
+      {education.map((e) => (
+        <li class="t-entry reveal" style={`--dc: var(${e.color})`}>
+          <span class="t-dot" aria-hidden="true">{e.initial}</span>
+          <p class="t-date">{e.dates} · {e.place}</p>
+          <h2 class="t-role">{e.school}</h2>
+          <p class="t-org">{e.degree}</p>
+          <ul class="t-list">{e.bullets.map((b) => <li>{b}</li>)}</ul>
+        </li>
+      ))}
+    </ol>
+
+    <div class="polas" aria-label="Graduation photos">
+      {gradPolaroids.map((p, i) => (
+        <figure class="polaroid reveal" style={`--r: ${i ? 3 : -3}deg; --tone: var(${p.tone})`}>
+          <div class="ph"><span>Graduation photo<br />coming soon</span></div>
+          <figcaption>{p.caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</Section>
+
+<style>
+  .edu-grid { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .polas { display: grid; gap: 28px; justify-items: center; }
+  .polaroid { width: 230px; }
+  .polaroid:hover { transform: rotate(0) scale(1.03); }
+  @media (max-width: 960px) {
+    .edu-grid { grid-template-columns: 1fr; }
+    .polas { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .polaroid { width: 100%; max-width: 240px; }
+  }
+</style>

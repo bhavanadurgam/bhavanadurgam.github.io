@@ -1,0 +1,38 @@
+---
+import Base from './Base.astro';
+import { folders, type FolderId } from '../data/content';
+
+interface Props {
+  id: FolderId;
+  title: string;
+  description: string;
+  sub?: string;          // e.g. "Bookshelf" for hobby sub-pages
+  back?: { href: string; label: string };
+  holes?: boolean;
+}
+const { id, title, description, sub, back = { href: '/#files', label: 'Back to files' }, holes = true } = Astro.props;
+const f = folders.find((x) => x.id === id)!;
+const light = f.ink === '--ink';
+---
+<Base title={title} description={description} active={id}>
+  <section
+    class:list={['frame', { 'frame-light': light }]}
+    style={`--c: var(${f.color}); --t: var(${f.ink}); --accent: var(${light ? '--red' : f.color})`}
+    transition:name={sub ? undefined : `folder-${id}`}
+    transition:animate="initial"
+  >
+    <div class="frame-in">
+      <span class="frame-tab">{f.no} · {f.label}{sub && <> › {sub}</>}</span>
+      <a class="frame-back" href={back.href} data-sound>← {back.label}</a>
+      <div class:list={['sheet', 'frame-sheet', { holes }]} style={`--hole: var(${f.color})`}>
+        <slot />
+      </div>
+    </div>
+  </section>
+
+  <nav class="side-tabs" aria-label="Jump to another file">
+    {folders.map((x) => (
+      <a href={x.href} style={`--c: var(${x.color}); --t: var(${x.ink})`} aria-current={x.id === id && !sub ? 'page' : undefined} data-sound>{x.label}</a>
+    ))}
+  </nav>
+</Base>

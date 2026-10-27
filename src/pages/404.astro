@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Stamp from '../components/Stamp.astro';
+---
+<Base title="This file is missing — Bhavana Durgam" description="This page doesn't exist." noindex>
+  <section class="nf wrap">
+    <div class="nf-folder">
+      <span class="nf-tab mono">File No.404</span>
+      <div class="sheet holes nf-sheet">
+        <p class="kicker">Misfiled</p>
+        <h1 class="title">This file is <em>missing</em></h1>
+        <p class="lede">Someone borrowed it and never put it back. Try the cabinet instead.</p>
+        <a class="btn btn-ink" href="/#files">Back to the files</a>
+      </div>
+      <div class="nf-stamp"><Stamp color="--butter" rotate={10}><span class="nf-st">Not found</span></Stamp></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding: 90px 0 120px; }
+  .nf-folder { position: relative; max-width: 760px; margin: 0 auto; padding: 22px; background: var(--orange); border-radius: 0 14px 14px 14px; }
+  .nf-tab { position: absolute; bottom: calc(100% - 1px); left: 0; height: 44px; padding: 0 20px; display: grid; place-items: center; background: var(--orange); border-radius: 12px 12px 0 0; font-size: 12px; font-weight: 700; color: var(--ink); }
+  .nf-sheet { --hole: var(--orange); padding: 48px 32px 40px 76px; display: grid; gap: 16px; justify-items: start; transform: rotate(-1deg); }
+  .nf-stamp { position: absolute; right: -10px; bottom: -30px; }
+  .nf-st { font: 700 14px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+</style>

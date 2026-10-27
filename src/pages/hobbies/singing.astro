@@ -1,0 +1,60 @@
+---
+import Section from '../../layouts/Section.astro';
+import { songs } from '../../data/content';
+---
+<Section id="hobbies" sub="Singing" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Singing — Bhavana Durgam" description="Singing recordings by Bhavana Durgam.">
+  <header class="frame-head">
+    <p class="kicker">Hobby 03</p>
+    <h1 class="title">Side <em>B</em></h1>
+    <p class="lede">A few recordings, pressed onto imaginary cassettes. Hover a tape to set the reels spinning.</p>
+  </header>
+
+  <ul class="tapes">
+    {songs.map((s, i) => (
+      <li class="tape reveal" style={`--lc: var(${s.color}); --r: ${[-2, 1.5, -1][i % 3]}deg`}>
+        <div class="shell" aria-hidden="true">
+          <div class="label">
+            <span class="l-title">{s.title}</span>
+            <span class="l-side mono">Side A · {String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="window"><span class="reel"></span><span class="ribbon"></span><span class="reel"></span></div>
+        </div>
+        <div class="tape-info">
+          <p class="t-name">{s.title}</p>
+          {s.src ? <audio controls preload="none" src={s.src}></audio>
+            : s.link ? <a class="btn btn-line" href={s.link} target="_blank" rel="noopener">Listen →</a>
+            : <p class="mono soon">{s.note}</p>}
+        </div>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .tapes { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 36px; }
+  .tape { display: grid; gap: 14px; transform: rotate(var(--r)); }
+  .shell {
+    position: relative; aspect-ratio: 1.6; padding: 14px 16px; border-radius: 12px; background: var(--ink);
+    box-shadow: 0 16px 24px -14px rgba(0,0,0,.5); transition: transform .45s var(--spring);
+  }
+  .tape:hover .shell { transform: translateY(-6px) rotate(calc(var(--r) * -1)); }
+  .label { position: relative; height: 62%; border-radius: 6px; background: var(--lc); padding: 10px 14px; display: grid; align-content: start; }
+  .l-title { font: 400 38px/1 var(--script); color: var(--ink); }
+  .l-side { font-size: 10px; font-weight: 700; color: var(--ink); opacity: .7; }
+  .window {
+    position: absolute; left: 22%; right: 22%; top: 42%; height: 26%; border-radius: 30px; background: #2a1810;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 10px;
+  }
+  .reel {
+    width: 34px; height: 34px; border-radius: 50%; background:
+      conic-gradient(from 0deg, var(--sheet) 0 20deg, transparent 20deg 120deg, var(--sheet) 120deg 140deg, transparent 140deg 240deg, var(--sheet) 240deg 260deg, transparent 260deg),
+      radial-gradient(circle, var(--ink) 30%, var(--sheet) 32%);
+    border: 3px solid var(--sheet);
+  }
+  .ribbon { flex: 1; height: 10px; margin: 0 4px; background: #5a3a28; border-radius: 4px; }
+  .tape:hover .reel { animation: spin 1.4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .t-name { font: 400 24px/1.1 var(--serif); }
+  .soon { font-size: 11px; font-weight: 700; color: var(--muted); }
+  audio { width: 100%; }
+</style>

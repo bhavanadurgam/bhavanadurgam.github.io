@@ -1,0 +1,11 @@
+---
+interface Props {
+  color?: string;   // CSS variable name, e.g. '--pink'
+  rotate?: number;
+  class?: string;
+}
+const { color = '--pink', rotate = -6, class: cls } = Astro.props;
+---
+<span class:list={['stamp', cls]} style={`--stamp-color: var(${color}); transform: rotate(${rotate}deg)`} aria-hidden="true">
+  <span class="stamp-face"><slot /></span>
+</span>

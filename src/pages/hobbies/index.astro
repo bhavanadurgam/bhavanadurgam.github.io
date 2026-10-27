@@ -1,0 +1,51 @@
+---
+import Section from '../../layouts/Section.astro';
+import { hobbies } from '../../data/content';
+---
+<Section id="hobbies" title="Hobbies — Bhavana Durgam" description="What Bhavana Durgam does off the clock: her bookshelf, painting, singing and content creation.">
+  <header class="frame-head">
+    <p class="kicker">File No.05</p>
+    <h1 class="title">Off the <em>clock</em></h1>
+    <p class="lede">I think personality makes a product person better. Here's what I do when I'm not thinking about product. Every folder opens a page of its own.</p>
+  </header>
+
+  <ul class="h-grid">
+    {hobbies.map((h, i) => (
+      <li class="reveal">
+        <a class="h-card" href={h.href} style={`--hc: var(${h.color}); --pk: var(${h.peek}); --tilt: ${i % 2 ? 4 : -4}deg`} data-sound="open">
+          <span class="h-photo" aria-hidden="true"><span>{h.icon}</span></span>
+          <span class="h-folder">
+            <span class="h-tab mono">Hobby {h.no}</span>
+            <span class="h-title">{h.title}</span>
+            <span class="h-copy">{h.copy}</span>
+            <span class="h-open mono">Open →</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .h-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 36px; padding-top: 40px; }
+  .h-card { position: relative; display: block; text-decoration: none; color: var(--sheet); padding-top: 90px; }
+  .h-photo {
+    position: absolute; left: 12%; right: 18%; top: 0; height: 170px; display: grid; place-items: center;
+    background: var(--pk); border: 8px solid #fff; box-shadow: 0 10px 20px -10px rgba(0,0,0,.35);
+    transform: rotate(-3deg); transition: transform .5s var(--spring);
+  }
+  .h-photo span { font-size: 54px; transform: translateY(-18px); }
+  .h-card:hover .h-photo, .h-card:focus-visible .h-photo { transform: translateY(-34px) rotate(var(--tilt)); }
+  .h-folder {
+    position: relative; display: grid; gap: 6px; padding: 28px 26px 24px; min-height: 210px; background: var(--hc);
+    border-radius: 0 12px 12px 12px; box-shadow: 0 14px 26px -16px rgba(0,0,0,.45);
+    transition: transform .45s var(--spring);
+  }
+  .h-folder::before { content: ''; position: absolute; left: 0; top: -22px; width: 42%; height: 24px; background: var(--hc); border-radius: 12px 12px 0 0; }
+  .h-card:hover .h-folder { transform: translateY(-6px); }
+  .h-tab { position: relative; font-size: 11px; font-weight: 700; opacity: .85; }
+  .h-title { font: 400 clamp(30px, 3.4vw, 40px)/1.05 var(--serif); }
+  .h-copy { opacity: .9; }
+  .h-open { margin-top: 10px; font-size: 12px; font-weight: 700; }
+  @media (max-width: 640px) { .h-grid { grid-template-columns: 1fr; } }
+</style>

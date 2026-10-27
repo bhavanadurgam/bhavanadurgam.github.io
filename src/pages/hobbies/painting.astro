@@ -1,0 +1,68 @@
+---
+import Section from '../../layouts/Section.astro';
+import { paintings } from '../../data/content';
+---
+<Section id="hobbies" sub="Painting" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Painting — Bhavana Durgam" description="Paintings by Bhavana Durgam: acrylics, watercolour and gouache.">
+  <header class="frame-head">
+    <p class="kicker">Hobby 02</p>
+    <h1 class="title">The <em>easel</em></h1>
+    <p class="lede">Colour, texture and slowness. Scroll sideways and click a frame to look closer. <span class="todo">Placeholder canvases until photos of the real paintings arrive.</span></p>
+  </header>
+
+  <ul class="gallery" aria-label="Paintings">
+    {paintings.map((p) => (
+      <li>
+        <button class="frame-art" type="button" data-art={p.art} data-title={p.title} data-sub={`${p.medium} · ${p.year}`} data-sound aria-label={`${p.title}, ${p.medium}, ${p.year}`}>
+          <span class="mat"><span class="canvas" style={`background: ${p.art}`}></span></span>
+        </button>
+        <p class="cap"><span class="cap-t">{p.title}</span><span class="mono">{p.medium} · {p.year}</span></p>
+      </li>
+    ))}
+  </ul>
+
+  <div class="modal" id="art-modal" role="dialog" aria-modal="true" aria-labelledby="art-title">
+    <div class="modal-card art-card">
+      <button class="modal-close" type="button" aria-label="Close">✕</button>
+      <span class="mat big"><span class="canvas"></span></span>
+      <h2 id="art-title" class="h2"></h2>
+      <p class="mono art-sub"></p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .gallery {
+    list-style: none; padding: 16px 4px 22px; display: flex; gap: 32px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: thin; scrollbar-color: var(--wood) transparent;
+  }
+  .gallery li { scroll-snap-align: start; flex: none; }
+  .frame-art {
+    display: block; padding: 14px; background: linear-gradient(135deg, var(--wood), var(--wood-dark)); border-radius: 3px;
+    box-shadow: 0 16px 24px -14px rgba(0,0,0,.5); transition: transform .45s var(--spring), box-shadow .45s;
+  }
+  .frame-art:hover, .frame-art:focus-visible { transform: translateY(-10px); box-shadow: 0 26px 30px -16px rgba(0,0,0,.45); }
+  .mat { display: block; padding: 22px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .canvas { display: block; width: 220px; height: 280px; }
+  .cap { display: grid; gap: 2px; margin-top: 14px; }
+  .cap-t { font: 400 24px/1.1 var(--serif); }
+  .cap .mono { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .art-card { display: grid; justify-items: center; gap: 10px; background: var(--sheet); padding: 28px; border-radius: 8px; }
+  .mat.big { padding: 26px; border: 14px solid var(--wood-dark); }
+  .mat.big .canvas { width: min(360px, 60vw); height: min(440px, 52vh); }
+  .art-sub { font-size: 12px; font-weight: 700; color: var(--muted); }
+</style>
+
+<script>
+  import { openModal } from '../../scripts/shared';
+  function initArt() {
+    const m = document.getElementById('art-modal');
+    if (!m) return;
+    document.querySelectorAll<HTMLElement>('[data-art]').forEach((b) => b.addEventListener('click', () => {
+      m.querySelector<HTMLElement>('.canvas')!.style.background = b.dataset.art!;
+      m.querySelector('#art-title')!.textContent = b.dataset.title!;
+      m.querySelector('.art-sub')!.textContent = b.dataset.sub!;
+      openModal(m);
+    }));
+  }
+  document.addEventListener('astro:page-load', initArt);
+</script>

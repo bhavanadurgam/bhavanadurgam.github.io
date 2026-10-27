@@ -1,0 +1,388 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Stamp from '../components/Stamp.astro';
+import headshot from '../assets/photos/headshot.jpg';
+import { site, folders, marquee, notes, philosophy, currently } from '../data/content';
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#person`,
+      name: 'Bhavana Durgam',
+      givenName: 'Bhavana',
+      familyName: 'Durgam',
+      jobTitle: 'Product Marketing Manager',
+      worksFor: { '@type': 'Organization', name: 'Salmalita Cosmetics' },
+      alumniOf: [
+        { '@type': 'CollegeOrUniversity', name: 'Northwestern University' },
+        { '@type': 'CollegeOrUniversity', name: 'BMS College of Engineering' },
+      ],
+      address: { '@type': 'PostalAddress', addressLocality: 'Chicago', addressRegion: 'IL', addressCountry: 'US' },
+      email: `mailto:${site.email}`,
+      url: `${site.url}/`,
+      image: `${site.url}/og/headshot.jpg`,
+      knowsAbout: ['Product Marketing', 'Product Management', 'Positioning', 'Go-to-Market Strategy', 'Product Launches', 'Creator Partnerships', 'User Research'],
+      award: ['Femina Miss India Karnataka 2018', 'Albert H. Rubenstein Memorial Scholarship'],
+      sameAs: [site.socials.linkedin, site.socials.instagram],
+    },
+    { '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: 'Bhavana Durgam', about: { '@id': `${site.url}/#person` } },
+  ],
+};
+
+const tagline = site.tagline.replace(/\*(.+?)\*/g, '<em>$1</em>');
+const backFolders = [
+  { label: 'Work', href: '/work/', c: '--brown', t: '--sheet', x: '70%' },
+  { label: 'Education', href: '/education/', c: '--pink', t: '--brown', x: '24%' },
+  { label: 'Projects', href: '/projects/', c: '--red', t: '--sheet', x: '50%' },
+];
+const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'];
+---
+<Base title="Bhavana Durgam — Product Marketing Manager & PM · Chicago" jsonld={jsonld}>
+  <!-- ═══ A. Hero: postfolio folder stack ═══ -->
+  <section class="hero" aria-label="Introduction">
+    <div class="wrap hero-stack">
+      {backFolders.map((b, i) => (
+        <a class="hf" href={b.href} style={`--c: var(${b.c}); --t: var(${b.t}); --x: ${b.x}; --i: ${i}`} data-sound>
+          <span class="hf-tab">{b.label}</span>
+          <span class="sr-only">Open {b.label}</span>
+        </a>
+      ))}
+
+      <div class="front">
+        <span class="front-tab">Portfolio · Vol. 01</span>
+        <div class="front-grid">
+          <div class="hero-sheet sheet holes">
+            <span class="clip hero-clip" aria-hidden="true"></span>
+            <h1 class="name">
+              <span class="first">bhavana</span>
+              <span class="last"><span class="ink">durgam</span></span>
+            </h1>
+            <p class="tagline" set:html={tagline} />
+            <p class="meta mono">{site.meta}</p>
+            <div class="ctas">
+              <a class="btn btn-ink" href="#files" data-sound>Open the files ↓</a>
+              <a class="btn btn-line" href="/contact/" data-sound>Say hello</a>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <figure class="headshot">
+              <Image src={headshot} alt="Bhavana Durgam headshot" widths={[260, 520]} sizes="260px" loading="eager" fetchpriority="high" />
+            </figure>
+            <aside class="currently" aria-label="Currently">
+              <p class="mono">Currently</p>
+              <dl>
+                {currently.map((c) => <><dt>{c.label}</dt><dd>{c.value}</dd></>)}
+              </dl>
+            </aside>
+          </div>
+        </div>
+        <div class="hero-stamp">
+          <Stamp color="--pink" rotate={-6}>
+            <span class="st-big">PM × PMM</span>
+            <span class="st-small">Est. Chicago</span>
+          </Stamp>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ B. Marquee ═══ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[0, 1].map(() => marquee.map((m) => <span>{m}<b>✦</b></span>))}
+    </div>
+  </div>
+
+  <!-- ═══ C. The files ═══ -->
+  <section class="files" id="files" aria-labelledby="files-h">
+    <div class="wrap files-head">
+      <p class="kicker">Six folders, one person</p>
+      <h2 class="h2" id="files-h">The <em>files</em></h2>
+      <p class="files-hint mono">Hover to peek · click to open</p>
+    </div>
+    <div class="wrap stack" data-stack>
+      {folders.map((f, i) => (
+        <a
+          class:list={['file', { last: i === folders.length - 1 }]}
+          href={f.href}
+          style={`--c: var(${f.color}); --t: var(${f.ink}); --x: ${f.tabX}%; --i: ${i}`}
+          data-sound="open"
+          transition:name={`folder-${f.id}`}
+        >
+          <span class="file-tab"><span class="no">No.{f.no}</span>{f.title}</span>
+          <span class="file-body">
+            <span class="peek">
+              <span class="peek-l mono">{f.peek}</span>
+              <span class="peek-r">{f.teaser} <span aria-hidden="true">→</span></span>
+            </span>
+            {i === folders.length - 1 && <span class="file-foot mono">Six files · all open · no login required</span>}
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ═══ D. Things to know ═══ -->
+  <section class="notes on-dark" aria-labelledby="notes-h">
+    <div class="wrap">
+      <p class="kicker">Off the record</p>
+      <h2 class="h2" id="notes-h">A few things <em>to know</em> about me…</h2>
+    </div>
+    <div class="notes-row">
+      <ul class="notes-track">
+        {[0, 1].map((k) => notes.map((n, i) => (
+          <li class="note" style={`--bg: ${pastel[i % pastel.length]}; --r: ${[-4, 3, -2, 5, -5, 2, -3, 4][i % 8]}deg`} aria-hidden={k === 1 ? 'true' : undefined}>
+            <span class="note-icon" aria-hidden="true">{n.icon}</span>
+            <span class="note-text">{n.text}</span>
+          </li>
+        )))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ E. Stripes + scallop quote ═══ -->
+  <section class="stripes" aria-label="How I work">
+    <div class="quote-wrap reveal">
+      <div class="scallop">
+        <div class="scallop-in">
+          <p class="kicker">{philosophy.by}</p>
+          <blockquote>“{philosophy.quote}”</blockquote>
+          <p class="sig">Bhavana</p>
+        </div>
+      </div>
+      <div class="quote-stamp">
+        <Stamp color="--butter" rotate={8}>
+          <span class="st-script">bd</span>
+          <span class="st-small">2026</span>
+        </Stamp>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Hero ─────────────────────────────────────── */
+  .hero { padding: 28px 0 88px; overflow-x: clip; }
+  .hero-stack { position: relative; }
+  .hf {
+    position: relative; display: block; height: 100px; margin-top: 46px; margin-bottom: -66px;
+    background: var(--c); border-radius: 6px 6px 0 0; text-decoration: none;
+    box-shadow: 0 -2px 8px rgba(0,0,0,.06);
+    animation: drop .7s var(--spring) both; animation-delay: calc(var(--i) * 160ms);
+  }
+  .hf-tab {
+    position: absolute; bottom: calc(100% - 1px); left: var(--x); height: 46px; padding: 0 26px;
+    display: grid; place-items: center; background: var(--c); color: var(--t); border-radius: 14px 14px 0 0;
+    font: 700 14px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    transition: transform .35s var(--spring);
+  }
+  .hf:hover .hf-tab, .hf:focus-visible .hf-tab { transform: translateY(-6px); }
+  @keyframes drop { from { opacity: 0; transform: translateY(-40px); } }
+
+  .front {
+    position: relative; margin-top: 46px; padding: clamp(28px, 4vw, 56px) clamp(16px, 4vw, 56px) clamp(56px, 6vw, 80px);
+    background-color: var(--blue); border-radius: 0 14px 14px 14px;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px);
+    box-shadow: 0 -4px 14px rgba(0,0,0,.1);
+    animation: rise .8s var(--spring) .48s both;
+  }
+  .front-tab {
+    position: absolute; bottom: calc(100% - 1px); left: 0; height: 46px; padding: 0 24px; display: grid; place-items: center;
+    background: var(--blue); color: var(--sheet); border-radius: 14px 14px 0 0;
+    font: 700 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(60px); } }
+
+  .front-grid { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: clamp(24px, 4vw, 56px); align-items: start; }
+  .hero-sheet {
+    --hole: var(--blue);
+    padding: clamp(36px, 5vw, 60px) clamp(22px, 4vw, 52px) clamp(30px, 4vw, 48px) 76px;
+    transform: rotate(-1.2deg); animation: slide .9s var(--smooth) .7s both;
+  }
+  @keyframes slide { from { opacity: 0; transform: translateX(-80px) rotate(-6deg); } }
+  .hero-clip { top: -22px; left: 46%; transform: rotate(8deg); animation: snap .45s var(--spring) 1.15s both; }
+  @keyframes snap { from { opacity: 0; transform: translateY(-30px) rotate(-20deg) scale(1.3); } }
+
+  .name { margin: 0; line-height: 1; }
+  .name .first {
+    display: block; font: 600 clamp(64px, 11vw, 150px)/.86 var(--sans); letter-spacing: -0.04em; color: var(--red);
+  }
+  .name .last {
+    display: block; margin: -0.34em 0 -0.18em 20%;
+    font: 400 clamp(68px, 10vw, 138px)/1 var(--script); color: var(--pink);
+  }
+  /* "durgam" writes itself. The clip box is padded so the g descender is never cut. */
+  .name .last .ink {
+    display: inline-block; padding: .18em .25em .42em .05em; margin: -.18em -.25em -.42em -.05em;
+    animation: write 1.3s cubic-bezier(.6,.05,.3,1) .95s both;
+  }
+  @keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  .tagline { margin-top: 26px; max-width: 560px; font: 400 clamp(22px, 2.4vw, 28px)/1.3 var(--serif); }
+  .tagline :global(em) { color: var(--red); }
+  .meta { margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+  .hero-side { display: grid; gap: 28px; justify-items: center; }
+  .headshot {
+    width: 250px; aspect-ratio: 25 / 32; border-radius: 50%; overflow: hidden; margin: 0;
+    background: var(--sky); border: 9px solid var(--sheet); transform: rotate(4deg);
+    box-shadow: 0 16px 30px -12px rgba(0,0,0,.35);
+    animation: pop .6s var(--spring) 1.5s both;
+  }
+  .headshot img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+  @keyframes pop { from { opacity: 0; transform: scale(.6) rotate(-6deg); } }
+
+  .currently {
+    width: 220px; padding: 16px 18px 18px; background: #F6E7A6; transform: rotate(3deg);
+    box-shadow: 0 10px 20px -10px rgba(0,0,0,.35); animation: pop .6s var(--spring) 1.7s both;
+  }
+  .currently::before { content: ''; display: block; width: 60px; height: 18px; margin: -26px auto 8px; background: rgba(255,255,255,.55); transform: rotate(-3deg); }
+  .currently .mono { font-size: 12px; font-weight: 700; color: var(--red); }
+  .currently dl { margin-top: 6px; display: grid; gap: 2px; font-size: 14px; }
+  .currently dd + dt { margin-top: 8px; }
+  .currently dt { font: 700 11px/1.6 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .currently dd { margin: 0; font: italic 400 16px/1.3 var(--serif); }
+
+  .hero-stamp { position: absolute; right: clamp(24px, 9%, 140px); bottom: -46px; z-index: 4; animation: pop .6s var(--spring) 1.85s both; }
+  .st-big { font: 700 22px/1 var(--sans); letter-spacing: -.02em; color: var(--brown); }
+  .st-small { font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brown); }
+  .st-script { font: 400 40px/1 var(--script); color: var(--red); }
+
+  @media (max-width: 960px) {
+    .front-grid { grid-template-columns: 1fr; }
+    .hero-side { order: -1; grid-template-columns: auto auto; align-items: center; justify-content: center; }
+    .headshot { width: 170px; }
+    .currently { width: 190px; }
+  }
+  @media (max-width: 640px) {
+    .hf-tab { padding: 0 14px; font-size: 12px; }
+    .hf:nth-child(1) .hf-tab { left: auto; right: 0; }
+    .hf:nth-child(2) .hf-tab { left: 0; }
+    .hf:nth-child(3) .hf-tab { left: 38%; }
+    .hero-sheet { transform: none; padding-left: 58px; padding-right: 18px; }
+    @keyframes slide { from { opacity: 0; transform: translateX(-40px); } }
+    .hero-side { grid-template-columns: 1fr; }
+    .currently { display: none; }
+    .hero-stamp { right: 16px; bottom: -40px; }
+    .name .last { margin-left: 12%; }
+  }
+
+  /* ── Marquee ──────────────────────────────────── */
+  .marquee { background: var(--ink); color: var(--sheet); overflow: hidden; padding: 16px 0; }
+  .marquee-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee span { white-space: nowrap; font: italic 400 26px/1 var(--serif); padding-right: 28px; }
+  .marquee b { color: var(--pink); font-weight: 400; margin-left: 28px; font-style: normal; font-size: 18px; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* ── The files ────────────────────────────────── */
+  .files { padding: 88px 0 96px; }
+  .files-head { display: grid; gap: 8px; margin-bottom: 30px; }
+  .files-hint { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .stack { position: relative; padding-top: 60px; }
+  .file {
+    position: relative; display: block; margin-bottom: -46px; text-decoration: none; color: var(--t);
+    translate: 0 60px; opacity: 0;
+    transition: translate .7s var(--spring), opacity .5s ease, transform .45s var(--spring), filter .3s;
+    transition-delay: calc(var(--i) * 90ms), calc(var(--i) * 90ms), 0s, 0s;
+  }
+  .stack.dealt .file, :global(.no-js) .file { translate: 0 0; opacity: 1; }
+  .file-tab {
+    position: absolute; bottom: calc(100% - 1px); left: var(--x); height: 50px; padding: 0 24px;
+    display: flex; align-items: center; gap: 12px; background: var(--c); border-radius: 14px 14px 0 0;
+    font: 400 22px/1 var(--serif); white-space: nowrap;
+  }
+  .file-tab .no { font: 700 11px/1 var(--mono); letter-spacing: .14em; opacity: .8; }
+  .file-body {
+    display: block; box-sizing: border-box; min-height: 150px; padding: 20px 26px 0; background: var(--c); border-radius: 0 10px 0 0;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 3px);
+    box-shadow: 0 -6px 14px rgba(0,0,0,.1);
+  }
+  .file:nth-child(odd) .file-body { border-radius: 10px 0 0 0; }
+  .file.last .file-body { min-height: 230px; padding-bottom: 60px; border-radius: 10px 10px 14px 14px; }
+  .file.last { margin-bottom: 0; }
+  .peek { display: flex; justify-content: space-between; gap: 24px; }
+  .peek-l { font-size: 13px; font-weight: 700; clip-path: inset(0 100% 0 0); }
+  .peek-r { font: italic 400 20px/1.2 var(--serif); white-space: nowrap; margin-left: auto; opacity: .85; }
+  .file-foot { position: absolute; left: 26px; bottom: 26px; font-size: 12px; font-weight: 700; opacity: .75; }
+  .file:hover, .file:focus-visible { transform: translateY(-22px); }
+  .file:hover .peek, .file:focus-visible .peek { opacity: 1; }
+  .file:hover .peek-l, .file:focus-visible .peek-l { animation: type .9s steps(36) forwards; }
+  @keyframes type { to { clip-path: inset(0 0 0 0); } }
+  .stack.leaving .file:not(.picked) { translate: 0 120vh; opacity: 0; transition: translate .5s var(--smooth), opacity .4s; transition-delay: calc(var(--i) * 40ms); }
+  .stack.leaving .file.picked { transform: translateY(-36px); }
+  @media (max-width: 640px) {
+    .file-tab { left: 0 !important; font-size: 19px; padding: 0 16px; }
+    .peek { flex-direction: column; gap: 6px; opacity: 1; }
+    .peek-l { clip-path: none; }
+    .peek-r { white-space: normal; }
+  }
+
+  /* ── Notes band ───────────────────────────────── */
+  .notes { background: var(--brown); color: var(--sheet); padding: 80px 0 90px; overflow: hidden; }
+  .notes .kicker { color: var(--pink); }
+  .notes .h2 em { color: var(--pink); }
+  .notes-row { margin-top: 40px; overflow: hidden; padding: 20px 0; }
+  .notes-track { display: flex; gap: 26px; width: max-content; padding: 0; list-style: none; animation: marquee 60s linear infinite; }
+  .notes-row:hover .notes-track { animation-play-state: paused; }
+  .note {
+    width: 220px; min-height: 190px; padding: 22px 20px; display: grid; align-content: center; gap: 14px; justify-items: center; text-align: center;
+    background: var(--bg); color: var(--ink); transform: rotate(var(--r)); box-shadow: 0 14px 22px -12px rgba(0,0,0,.5);
+    transition: transform .4s var(--spring);
+  }
+  .note:hover { transform: rotate(0) scale(1.06); }
+  .note-icon { font-size: 30px; line-height: 1; color: var(--brown); }
+  .note-text { font: italic 400 21px/1.25 var(--serif); }
+
+  /* ── Stripes + quote ──────────────────────────── */
+  .stripes {
+    padding: clamp(64px, 9vw, 120px) var(--gutter);
+    background: repeating-linear-gradient(90deg, var(--sky) 0 30px, var(--sheet) 30px 60px);
+  }
+  .quote-wrap { position: relative; max-width: 680px; margin: 0 auto; }
+  .scallop { filter: drop-shadow(0 18px 24px rgba(58,30,18,.18)); }
+  .scallop-in { text-align: center; display: grid; gap: 16px; }
+  blockquote { font: 400 clamp(26px, 3.4vw, 40px)/1.2 var(--serif); }
+  .sig { font: 400 48px/1 var(--script); color: var(--red); }
+  .quote-stamp { position: absolute; right: -18px; bottom: -26px; }
+  @media (max-width: 640px) { .quote-stamp { right: 0; } }
+</style>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+  import { reducedMotion } from '../scripts/shared';
+
+  function initHome() {
+    const stack = document.querySelector<HTMLElement>('[data-stack]');
+    if (!stack) return;
+    stack.classList.remove('leaving');
+    stack.querySelectorAll('.picked').forEach((p) => p.classList.remove('picked'));
+
+    // Deal the folders in when the stack scrolls into view.
+    if (reducedMotion() || !('IntersectionObserver' in window)) stack.classList.add('dealt');
+    else {
+      const io = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { stack.classList.add('dealt'); io.disconnect(); }
+      }, { threshold: 0.15 });
+      io.observe(stack);
+    }
+
+    // Mosby-style open: the other files fall away, the picked one rises into its page.
+    stack.querySelectorAll<HTMLAnchorElement>('.file').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0 || reducedMotion()) return;
+        e.preventDefault();
+        a.classList.add('picked');
+        stack.classList.add('leaving');
+        setTimeout(() => navigate(a.href), 420);
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initHome);
+</script>

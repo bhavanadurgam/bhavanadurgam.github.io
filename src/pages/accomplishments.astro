@@ -1,0 +1,81 @@
+---
+import Section from '../layouts/Section.astro';
+import { accomplishments } from '../data/content';
+const tones = ['--sky', '--butter', '--paper2'];
+---
+<Section id="accomplishments" title="Accomplishments — Bhavana Durgam" description="Bhavana Durgam's accomplishments: Femina Miss India Karnataka 2018 and a 125K creator community across Instagram, YouTube and TikTok.">
+  <header class="frame-head">
+    <p class="kicker">File No.04</p>
+    <h1 class="title">Proud <em>moments</em></h1>
+    <p class="lede">Not trophies, turning points. Click a photo to see it bigger.</p>
+  </header>
+
+  <div class="blocks">
+    {accomplishments.map((a) => (
+      <article class="block reveal">
+        <div class="b-text">
+          <span class="b-no" aria-hidden="true">{a.no}</span>
+          <h2 class="b-title">{a.title}</h2>
+          <p class="b-org mono">{a.org}</p>
+          <p class="b-sum">{a.summary}</p>
+        </div>
+        <div class="fan">
+          {a.photos.map((cap, j) => (
+            <button class="polaroid fan-item" type="button" style={`--r: ${[-8, 2, 9][j]}deg; --tone: var(${tones[j]}); --j: ${j}`} data-lightbox={cap} data-lightbox-title={a.title} data-sound aria-label={`Open photo: ${cap}`}>
+              <span class="ph"><span>Photo coming soon</span></span>
+              <span class="fan-cap">{cap}</span>
+            </button>
+          ))}
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="modal lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title">
+    <div class="modal-card">
+      <button class="modal-close" type="button" aria-label="Close">✕</button>
+      <figure class="polaroid lb-pola">
+        <div class="ph"><span>Photo coming soon</span></div>
+        <figcaption id="lb-title"></figcaption>
+      </figure>
+      <p class="lb-sub mono"></p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .blocks { display: grid; gap: clamp(40px, 6vw, 72px); }
+  .block { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: center; padding-bottom: clamp(32px, 5vw, 56px); border-bottom: 1px dashed var(--line); }
+  .block:last-child { border-bottom: 0; }
+  .b-no { display: block; font: 400 110px/.8 var(--script); color: var(--pink); }
+  .b-title { font: 400 clamp(28px, 3vw, 38px)/1.1 var(--serif); margin-top: 8px; }
+  .b-org { margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .b-sum { margin-top: 12px; max-width: 560px; }
+  .fan { position: relative; height: 270px; }
+  .fan-item { position: absolute; top: 20px; left: calc(var(--j) * 90px + 10px); width: 170px; z-index: var(--j); }
+  .fan-item:hover, .fan-item:focus-visible { transform: rotate(0) translateY(-14px) scale(1.04); z-index: 5; }
+  .fan-cap { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: 400 24px/1 var(--script); }
+  .lightbox .modal-card { display: grid; justify-items: center; gap: 12px; }
+  .lb-pola { width: min(420px, 82vw); --r: -1deg; }
+  .lb-sub { color: var(--sheet); font-size: 12px; font-weight: 700; }
+  @media (max-width: 960px) {
+    .block { grid-template-columns: 1fr; }
+    .fan { height: 250px; max-width: 360px; }
+  }
+  @media (max-width: 400px) { .fan-item { width: 140px; left: calc(var(--j) * 70px); } }
+</style>
+
+<script>
+  import { openModal } from '../scripts/shared';
+  function initLightbox() {
+    const lb = document.getElementById('lightbox');
+    if (!lb) return;
+    document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach((b) => b.addEventListener('click', () => {
+      lb.querySelector('#lb-title')!.textContent = b.dataset.lightbox!;
+      lb.querySelector('.lb-sub')!.textContent = b.dataset.lightboxTitle!;
+      lb.querySelector<HTMLElement>('.ph')!.style.background = getComputedStyle(b).getPropertyValue('--tone') || '';
+      openModal(lb);
+    }));
+  }
+  document.addEventListener('astro:page-load', initLightbox);
+</script>

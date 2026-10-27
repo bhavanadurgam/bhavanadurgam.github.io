@@ -1,0 +1,74 @@
+---
+import Section from '../layouts/Section.astro';
+import { experience, site } from '../data/content';
+
+const resumes = [
+  { key: 'pm' as const, title: 'PM Résumé', sub: 'Product Management', c: '--red' },
+  { key: 'pmm' as const, title: 'PMM Résumé', sub: 'Product Marketing', c: '--blue' },
+];
+---
+<Section id="work" title="Work Experience — Bhavana Durgam" description="Bhavana Durgam's work experience: Product Marketing Manager at Salmalita Cosmetics, product management at PatientXpress, product quality lead at Capgemini, and BCI research.">
+  <header class="frame-head">
+    <p class="kicker">File No.01</p>
+    <h1 class="title">Where I've <em>worked</em></h1>
+    <p class="lede">Four-plus years across consumer and enterprise products: launches, positioning and growth, built on an engineer's habit of testing everything.</p>
+  </header>
+
+  <div class="work-grid">
+    <ol class="timeline">
+      {experience.map((j) => (
+        <li class="t-entry reveal" style={`--dc: var(${j.color})`}>
+          <span class="t-dot" aria-hidden="true">{j.initial}</span>
+          <p class="t-date">{j.dates} · {j.place}</p>
+          <h2 class="t-role">{j.role}</h2>
+          <p class="t-org">{j.company}</p>
+          <ul class="t-list">{j.bullets.map((b) => <li>{b}</li>)}</ul>
+        </li>
+      ))}
+    </ol>
+
+    <aside class="resumes" aria-label="Résumés">
+      <p class="kicker">Take a copy</p>
+      {resumes.map((r, i) => (
+        <a
+          class="resume reveal"
+          href={site.resumes.ready ? site.resumes[r.key] : '#'}
+          download={site.resumes.ready ? '' : undefined}
+          data-resume={site.resumes.ready ? undefined : 'soon'}
+          data-sound
+          style={`--rc: var(${r.c}); --r: ${i ? 2 : -2}deg`}
+        >
+          <span class="clip" aria-hidden="true"></span>
+          <span class="r-title">{r.title}</span>
+          <span class="r-sub mono">{r.sub}</span>
+          <span class="r-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="r-cta mono">{site.resumes.ready ? 'Download PDF ↓' : 'Coming soon'}</span>
+        </a>
+      ))}
+    </aside>
+  </div>
+</Section>
+
+<style>
+  .work-grid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .resumes { position: sticky; top: calc(var(--header) + 24px); display: grid; gap: 30px; }
+  .resume {
+    position: relative; display: grid; gap: 6px; padding: 30px 24px 24px; text-decoration: none;
+    background: #fff; border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: 8px 8px 0 var(--rc); transform: rotate(var(--r));
+    transition: transform .45s var(--spring), box-shadow .45s var(--spring);
+  }
+  .resume:hover, .resume:focus-visible { transform: rotate(calc(var(--r) * -1.5)) translateY(-8px); box-shadow: 12px 14px 0 var(--rc); }
+  .resume .clip { top: -20px; right: 26px; transform: rotate(8deg); }
+  .r-title { font: 400 30px/1.05 var(--serif); }
+  .r-sub { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .r-lines { display: grid; gap: 7px; margin: 14px 0 10px; }
+  .r-lines i { height: 5px; border-radius: 3px; background: var(--paper2); }
+  .r-lines i:nth-child(2) { width: 80%; } .r-lines i:nth-child(4) { width: 64%; } .r-lines i:nth-child(5) { width: 86%; }
+  .r-cta { font-size: 12px; font-weight: 700; color: var(--rc); }
+  @media (max-width: 960px) {
+    .work-grid { grid-template-columns: 1fr; }
+    .resumes { position: static; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .resumes .kicker { grid-column: 1 / -1; }
+  }
+</style>
