@@ -311,7 +311,6 @@ export interface Book {
 }
 
 export interface FavouriteBook {
-  rank: 1 | 2 | 3;
   title: string;
   author: string;
   cover: string;
@@ -323,11 +322,11 @@ export const readingYear = 2026;
 export const readingGoal = 25;
 
 export const top3: FavouriteBook[] = [
-  { rank: 1, title: "Shoe Dog", author: "Phil Knight", cover: "shoe-dog",
+  { title: "Shoe Dog", author: "Phil Knight", cover: "shoe-dog",
     review: "Phil Knight's raw, honest story of building Nike from a borrowed $50 into a global brand. It first opened my eyes to entrepreneurship, brand building and what real grit looks like." },
-  { rank: 2, title: "Educated", author: "Tara Westover", cover: "educated",
+  { title: "Educated", author: "Tara Westover", cover: "educated",
     review: "A memoir of a girl raised off the grid in rural Idaho who never set foot in a classroom until 17, and went on to earn a PhD from Cambridge. It's close to my heart because it showed me how much of a privilege education truly is." },
-  { rank: 3, title: "Harry Potter (series)", author: "J.K. Rowling", cover: "harry-potter-and-the-sorcerers-stone",
+  { title: "Harry Potter (series)", author: "J.K. Rowling", cover: "harry-potter-and-the-sorcerers-stone",
     review: "A boy discovers he's a wizard and finds his place in a world of magic, friendship and courage. Everyone needs to read this series at least once." },
 ];
 
