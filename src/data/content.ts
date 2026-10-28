@@ -299,32 +299,93 @@ export const hobbies = [
 export interface Book {
   title: string;
   author: string;
-  color: string;      // spine colour (hex)
-  textColor: string;
-  rating: number;     // 1–5
+  cover: string;      // file name (without .jpg) in src/assets/books/
+  color: string;      // spine colour, picked from the cover
+  textColor: string;  // spine text colour
+  rating: number;     // out of 5; halves and quarters are fine (4.5, 3.25)
   review: string;
-  year: number;
-  top3?: 1 | 2 | 3;
   style?: 'serif' | 'sans' | 'type';
-  w?: number;         // spine width px
-  h?: number;         // spine height px
-  lean?: number;      // degrees
+  w?: number;         // spine width px (30–70)
+  h?: number;         // spine height px (200–290)
+  lean?: number;      // tilt in degrees
 }
 
-// TODO(Bhavana): replace with your real list, ratings and one-line reviews.
+export interface FavouriteBook {
+  rank: 1 | 2 | 3;
+  title: string;
+  author: string;
+  cover: string;
+  review: string;
+}
+
+// To add a book: put its cover in src/assets/books/ (e.g. my-new-book.jpg) and add a line below.
+export const readingYear = 2026;
+export const readingGoal = 25;
+
+export const top3: FavouriteBook[] = [
+  { rank: 1, title: "Shoe Dog", author: "Phil Knight", cover: "shoe-dog",
+    review: "Phil Knight's raw, honest story of building Nike from a borrowed $50 into a global brand. It first opened my eyes to entrepreneurship, brand building and what real grit looks like." },
+  { rank: 2, title: "Educated", author: "Tara Westover", cover: "educated",
+    review: "A memoir of a girl raised off the grid in rural Idaho who never set foot in a classroom until 17, and went on to earn a PhD from Cambridge. It's close to my heart because it showed me how much of a privilege education truly is." },
+  { rank: 3, title: "Harry Potter (series)", author: "J.K. Rowling", cover: "harry-potter-and-the-sorcerers-stone",
+    review: "A boy discovers he's a wizard and finds his place in a world of magic, friendship and courage. Everyone needs to read this series at least once." },
+];
+
 export const books: Book[] = [
-  { title: 'Obviously Awesome', author: 'April Dunford', color: '#C8202F', textColor: '#FBF8F2', rating: 5, review: 'Positioning finally made clear.', year: 2026, top3: 1, style: 'sans', w: 52, h: 262 },
-  { title: 'The Mom Test', author: 'Rob Fitzpatrick', color: '#F3D35B', textColor: '#3A1E12', rating: 5, review: 'Read before every customer interview.', year: 2026, top3: 2, style: 'type', w: 38, h: 228 },
-  { title: 'Tomorrow, and Tomorrow, and Tomorrow', author: 'Gabrielle Zevin', color: '#3D78BC', textColor: '#FBF8F2', rating: 5, review: 'A love letter to making things together.', year: 2026, top3: 3, style: 'serif', w: 58, h: 280 },
-  { title: 'Inspired', author: 'Marty Cagan', color: '#4A2516', textColor: '#F3D35B', rating: 4, review: 'How strong product teams actually work.', year: 2026, style: 'sans', w: 44, h: 250 },
-  { title: 'Building a StoryBrand', author: 'Donald Miller', color: '#E9849F', textColor: '#3A1E12', rating: 4, review: 'Make the customer the hero.', year: 2026, style: 'serif', w: 46, h: 238, lean: -6 },
-  { title: 'Atomic Habits', author: 'James Clear', color: '#FBF8F2', textColor: '#3A1E12', rating: 4, review: 'Small systems over big goals.', year: 2026, style: 'type', w: 40, h: 214 },
-  { title: 'Crossing the Chasm', author: 'Geoffrey Moore', color: '#5B2A86', textColor: '#FBF8F2', rating: 4, review: 'Why early adopters aren’t the mainstream.', year: 2026, style: 'serif', w: 50, h: 270 },
-  { title: 'Contagious', author: 'Jonah Berger', color: '#E8622A', textColor: '#FBF8F2', rating: 4, review: 'A checklist before any campaign.', year: 2026, style: 'sans', w: 66, h: 222 },
-  { title: 'The Midnight Library', author: 'Matt Haig', color: '#1F3A5F', textColor: '#CFE0F5', rating: 4, review: 'Gentle and hopeful.', year: 2026, style: 'serif', w: 36, h: 244 },
-  { title: 'Shape Up', author: 'Ryan Singer', color: '#CFE0F5', textColor: '#3A1E12', rating: 4, review: 'Appetite over estimates.', year: 2026, style: 'type', w: 34, h: 206 },
-  { title: 'Range', author: 'David Epstein', color: '#F3D35B', textColor: '#C8202F', rating: 5, review: 'For every generalist who switched fields.', year: 2026, style: 'sans', w: 56, h: 258, lean: 5 },
-  { title: 'Never Split the Difference', author: 'Chris Voss', color: '#3A1E12', textColor: '#E9849F', rating: 4, review: 'Tactical empathy, surprisingly useful.', year: 2026, style: 'sans', w: 48, h: 236 },
+  { title: "Final Girls", author: "Riley Sager", cover: "final-girls", color: '#FB1515', textColor: '#3A1E12', rating: 3, style: 'sans', w: 39, h: 259,
+    review: "A massacre survivor is dragged back into her past when another \"final girl\" dies. Gripping, but I called the ending from page one." },
+  { title: "Ariadne", author: "Jennifer Saint", cover: "ariadne", color: '#AE3727', textColor: '#FBF8F2', rating: 4.5, style: 'type', w: 44, h: 228, lean: -6,
+    review: "A beautiful retelling of the Minotaur myth from the Cretan princess's point of view. The ending made me cry." },
+  { title: "This Immortal Heart", author: "Jennifer Saint", cover: "this-immortal-heart", color: '#500233', textColor: '#FBF8F2', rating: 4.5, style: 'serif', w: 49, h: 281,
+    review: "Aphrodite finally tells her own story, and it's so refreshing. I loved every page." },
+  { title: "The Only One Left", author: "Riley Sager", cover: "the-only-one-left", color: '#111230', textColor: '#FBF8F2', rating: 4, style: 'sans', w: 54, h: 250,
+    review: "A caregiver moves in with an elderly woman accused of killing her family decades ago. Addictive, though the ending packs in too much at once." },
+  { title: "Lock Every Door", author: "Riley Sager", cover: "lock-every-door", color: '#2E0F0D', textColor: '#FBF8F2', rating: 5, style: 'serif', w: 59, h: 219, lean: 5,
+    review: "An apartment sitter learns why an exclusive New York building has such strict rules. I finished it in a day and my mind was blown." },
+  { title: "Strangers: A Memoir of Marriage", author: "Belle Burden", cover: "strangers-a-memoir-of-marriage", color: '#F9EFDD', textColor: '#3A1E12', rating: 4, style: 'sans', w: 64, h: 272,
+    review: "A heartbreaking memoir of a marriage that ends without warning. A powerful reminder for women to stay financially independent and mentally strong." },
+  { title: "Count My Lies", author: "Sophie Stava", cover: "count-my-lies", color: '#050C0D', textColor: '#FBF8F2', rating: 3.25, style: 'type', w: 37, h: 241,
+    review: "A compulsive liar becomes a nanny for a wealthy family. An intriguing premise, but the ending didn't land for me." },
+  { title: "Home Before Dark", author: "Riley Sager", cover: "home-before-dark", color: '#051605', textColor: '#FBF8F2', rating: 4, style: 'serif', w: 42, h: 210,
+    review: "A woman returns to the house her father made famous in a bestselling horror memoir. It gave me goosebumps, and I was scared to be home alone." },
+  { title: "Anatomy of an Alibi", author: "Ashley Elston", cover: "anatomy-of-an-alibi", color: '#062B13', textColor: '#FBF8F2', rating: 3, style: 'sans', w: 47, h: 263, lean: -5,
+    review: "A twisty thriller about a murder and the alibi that binds two women together. A clever concept, but the execution fell a little short." },
+  { title: "Yesteryear", author: "Caro Claire Burke", cover: "yesteryear", color: '#C89751', textColor: '#3A1E12', rating: 4, style: 'serif', w: 52, h: 232,
+    review: "A tradwife influencer wakes up actually living in the 1800s. A sharp look at how blurry the line is between real life and the life we perform online." },
+  { title: "The Assistants", author: "Camille Perri", cover: "the-assistants", color: '#EF4E60', textColor: '#3A1E12', rating: 2, style: 'sans', w: 57, h: 285,
+    review: "An executive assistant gets swept into a scheme to pay off her student loans. This one just wasn't for me." },
+  { title: "The Last Time I Lied", author: "Riley Sager", cover: "the-last-time-i-lied", color: '#07142B', textColor: '#FBF8F2', rating: 5, style: 'type', w: 62, h: 254, lean: -6,
+    review: "A woman returns to the summer camp where her three friends vanished fifteen years ago. So vivid it felt like watching a movie." },
+  { title: "Two Can Play", author: "Ali Hazelwood", cover: "two-can-play", color: '#100CF4', textColor: '#FBF8F2', rating: 4, style: 'serif', w: 35, h: 223,
+    review: "A cute, fun enemies-to-lovers romance. I'm a sucker for a good love story." },
+  { title: "Hot Girl Murder Club", author: "Ashley Winstead", cover: "hot-girl-murder-club", color: '#30100C', textColor: '#FBF8F2', rating: 5, style: 'sans', w: 40, h: 276,
+    review: "Badass women, murder and so much drama. I loved the ending." },
+  { title: "Archie Comics Spectacular: School Daze", author: "Archie Comics", cover: "archie-comics-spectacular-school-daze", color: '#8D8D96', textColor: '#3A1E12', rating: 5, style: 'serif', w: 45, h: 245, lean: 5,
+    review: "The Riverdale gang's classic school-day adventures. Who doesn't love Archie?" },
+  { title: "My Husband's Wife", author: "Alice Feeney", cover: "my-husbands-wife", color: '#033235', textColor: '#FBF8F2', rating: 5, style: 'sans', w: 50, h: 214,
+    review: "A twisty thriller about a marriage built on secrets. I was reeling for a week and never guessed who did what, or why." },
+  { title: "Not Quite Dead Yet", author: "Holly Jackson", cover: "not-quite-dead-yet", color: '#160B2F', textColor: '#FBF8F2', rating: 5, style: 'type', w: 55, h: 267,
+    review: "After a brutal attack, a woman has seven days to live and solve her own murder. What a premise, and I loved every twist." },
+  { title: "The Inheritance Games", author: "Jennifer Lynn Barnes", cover: "the-inheritance-games", color: '#326E53', textColor: '#FBF8F2', rating: 5, style: 'serif', w: 60, h: 236,
+    review: "A teenager inherits a stranger's billion-dollar fortune and must solve his puzzles to learn why. Mystery and intrigue that kept me hooked." },
+  { title: "Beautiful Ugly", author: "Alice Feeney", cover: "beautiful-ugly", color: '#11354D', textColor: '#FBF8F2', rating: 3, style: 'sans', w: 65, h: 289, lean: -5,
+    review: "A grieving writer retreats to a remote Scottish island after his wife disappears. Atmospheric, but a pass for me." },
+  { title: "Archie Giant Comics Collection", author: "Archie Comics", cover: "archie-giant-comics-collection", color: '#F9941A', textColor: '#3A1E12', rating: 4, style: 'serif', w: 38, h: 258,
+    review: "A bumper collection of classic Archie stories. Nothing beats a good old comic book." },
+  { title: "The Wedding People", author: "Alison Espach", cover: "the-wedding-people", color: '#E4CAB0', textColor: '#3A1E12', rating: 5, style: 'sans', w: 43, h: 227,
+    review: "Two strangers become unlikely best friends during someone else's wedding week. A beautiful, tender story." },
+  { title: "Don't Let Him In", author: "Lisa Jewell", cover: "dont-let-him-in", color: '#034F74', textColor: '#FBF8F2', rating: 5, style: 'type', w: 48, h: 280, lean: -6,
+    review: "A charming man works his way into a widow's family. Chilling, and I couldn't believe how much he got away with." },
+  { title: "Five Survive", author: "Holly Jackson", cover: "five-survive", color: '#0C0C13', textColor: '#FBF8F2', rating: 5, style: 'serif', w: 53, h: 249,
+    review: "Six friends on a road trip are trapped in an RV by a sniper. Terrifying and impossible to put down." },
+  { title: "The Paradise Problem", author: "Christina Lauren", cover: "the-paradise-problem", color: '#F4CD0C', textColor: '#3A1E12', rating: 3, style: 'sans', w: 58, h: 218,
+    review: "A fake-married couple must keep up the act at a lavish island family wedding. Not my favorite Christina Lauren." },
+  { title: "Serial Killer Games", author: "Kate Posey", cover: "serial-killer-games", color: '#13D3BA', textColor: '#3A1E12', rating: 4, style: 'serif', w: 63, h: 271, lean: 5,
+    review: "A thriller built around a deadly game. A fun, twisty page-turner." },
+  { title: "Days at the Morisaki Bookshop", author: "Satoshi Yagisawa", cover: "days-at-the-morisaki-bookshop", color: '#726A53', textColor: '#FBF8F2', rating: 4, style: 'sans', w: 36, h: 240,
+    review: "After a heartbreak, a young woman finds comfort living above her uncle's Tokyo bookshop. So cozy, and it made me cry so much." },
+  { title: "Finding My Way: A Memoir", author: "Malala Yousafzai", cover: "finding-my-way-a-memoir", color: '#D2D0AE', textColor: '#3A1E12', rating: 5, style: 'type', w: 41, h: 209,
+    review: "Malala reflects on finding herself during and after university. As an admirer of everything she stands for, I loved this glimpse into her life." },
 ];
 
 // TODO(Bhavana): add painting photos to src/assets/photos/ and list them here.

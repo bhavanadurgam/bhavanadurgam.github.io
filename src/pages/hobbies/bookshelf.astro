@@ -1,42 +1,49 @@
 ---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Section from '../../layouts/Section.astro';
-import { books } from '../../data/content';
+import { books, top3, readingYear, readingGoal } from '../../data/content';
 
-const top3 = books.filter((b) => b.top3).sort((a, b) => a.top3! - b.top3!);
-const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
-const shelf = books.map((b, i) => ({
+// Covers live in src/assets/books/<cover>.jpg and are optimised at build time.
+const files = import.meta.glob<{ default: ImageMetadata }>('../../assets/books/*.jpg', { eager: true });
+const coverUrl = async (name: string, width: number) => {
+  const file = files[`../../assets/books/${name}.jpg`];
+  if (!file) throw new Error(`Missing book cover: src/assets/books/${name}.jpg`);
+  return (await getImage({ src: file.default, width, format: 'webp' })).src;
+};
+const favourites = await Promise.all(top3.map(async (b) => ({ ...b, img: await coverUrl(b.cover, 440) })));
+const shelf = await Promise.all(books.map(async (b, i) => ({
   ...b,
   i,
   w: b.w ?? 44,
   h: b.h ?? 240,
-  cw: Math.round((b.h ?? 240) * 0.68),
+  cw: Math.round((b.h ?? 240) * 0.66),
   style: b.style ?? 'serif',
-}));
+  img: await coverUrl(b.cover, 400),
+})));
 ---
-<Section id="hobbies" sub="Bookshelf" back={{ href: '/hobbies/', label: 'Back to hobbies' }} holes={false} title="My Bookshelf — Bhavana Durgam" description="Bhavana Durgam's bookshelf: her top 3 books, everything she's read this year, ratings and one-line reviews.">
+<Section id="hobbies" sub="Bookshelf" back={{ href: '/hobbies/', label: 'Back to hobbies' }} holes={false} title="My Bookshelf — Bhavana Durgam" description={`Bhavana Durgam's bookshelf: her all-time top 3 and the ${books.length} books she read in ${readingYear}, with ratings and one-line reviews.`}>
   <header class="shelf-head">
     <p class="kicker">Part I</p>
     <h1 class="big">My personal <span>bookshelf</span></h1>
-    <p class="lede">The books that shaped how I think about products, people and stories. <span class="todo">Placeholder list until I add my real one.</span></p>
+    <p class="lede">My three all-time favourites, and every book I read in {readingYear}: {books.length} of them, against a goal of {readingGoal}.</p>
   </header>
 
-  <!-- Top 3 -->
+  <!-- Top 3 of all time -->
   <section class="top3" aria-labelledby="top3-h">
-    <h2 class="sec-h" id="top3-h">The top <em>three</em></h2>
+    <h2 class="sec-h" id="top3-h">My top three, <em>all time</em></h2>
     <p class="hint mono">Tap a cover to flip it</p>
     <ul class="covers">
-      {top3.map((b) => (
+      {favourites.map((b) => (
         <li class="reveal">
-          <button class="flip" type="button" aria-pressed="false" aria-label={`${b.title} by ${b.author}. Flip for rating and review`} data-sound>
+          <button class="flip" type="button" aria-pressed="false" aria-label={`Number ${b.rank}: ${b.title} by ${b.author}. Flip to read why`} data-sound>
             <span class="flip-in">
-              <span class="face front" style={`--bc: ${b.color}; --bt: ${b.textColor}`}>
-                <span class="badge" aria-hidden="true">{b.top3}</span>
-                <span class={`c-title s-${b.style ?? 'serif'}`}>{b.title}</span>
-                <span class="c-rule" aria-hidden="true"></span>
-                <span class="c-author">{b.author}</span>
+              <span class="face front cover-img">
+                <img src={b.img} alt={`${b.title} by ${b.author}, book cover`} loading="lazy" decoding="async" width="220" height="330" />
+                <span class="badge" aria-hidden="true">{b.rank}</span>
               </span>
               <span class="face back">
-                <span class="stars" aria-label={`${b.rating} out of 5 stars`}>{stars(b.rating)}</span>
+                <span class="mono fav">All-time No.{b.rank}</span>
                 <span class="review">“{b.review}”</span>
                 <span class="c-author dark">{b.title} · {b.author}</span>
               </span>
@@ -51,8 +58,8 @@ const shelf = books.map((b, i) => ({
   <section class="shelf-sec" aria-labelledby="shelf-h">
     <div class="shelf-bar">
       <div>
-        <h2 class="sec-h" id="shelf-h">Books read <em>this year</em></h2>
-        <p class="hint mono">Hover a spine · click to pull a book out</p>
+        <h2 class="sec-h" id="shelf-h">Books I read in <em>{readingYear}</em></h2>
+        <p class="hint mono">{books.length} read · goal {readingGoal} ✓ · hover a spine · click to pull a book out</p>
       </div>
       <div class="shelf-ctrl">
         <button class="icon-btn" type="button" data-nudge="-1" aria-label="Scroll shelf left">←</button>
@@ -65,17 +72,13 @@ const shelf = books.map((b, i) => ({
       <ul class="track" data-track>
         {[0, 1].map((copy) => shelf.map((b) => (
           <li class="slot" style={`--w: ${b.w}px; --h: ${b.h}px; --cw: ${b.cw}px; --lean: ${b.lean ?? 0}deg; --bc: ${b.color}; --bt: ${b.textColor}; --k: ${b.i}`} data-dup={copy}>
-            <button class="book" type="button" data-book={b.i} tabindex={copy ? -1 : undefined} aria-hidden={copy ? 'true' : undefined} aria-label={`${b.title} by ${b.author}`} data-sound="open">
+            <button class="book" type="button" data-book={b.i} tabindex={copy ? -1 : undefined} aria-hidden={copy ? 'true' : undefined} aria-label={`${b.title} by ${b.author}, ${b.rating} out of 5`} data-sound="open">
               <span class="b3d">
                 <span class={`spine s-${b.style}`}>
-                  <span class="sp-title">{b.title}</span>
+                  <span class="sp-title">{b.title.split(':')[0]}</span>
                   <span class="sp-author">{b.author.split(' ').slice(-1)[0]}</span>
                 </span>
-                <span class="cover">
-                  <span class={`c-title s-${b.style}`}>{b.title}</span>
-                  <span class="c-rule" aria-hidden="true"></span>
-                  <span class="c-author">{b.author}</span>
-                </span>
+                <span class="cover" style={`background-image: url(${b.img})`}></span>
               </span>
               <span class="tip" aria-hidden="true">{b.title} · {b.author}</span>
             </button>
@@ -91,13 +94,12 @@ const shelf = books.map((b, i) => ({
       <button class="modal-close" type="button" aria-label="Put the book back">✕</button>
       <button class="pulled flip" type="button" aria-pressed="false" aria-label="Flip for rating and review">
         <span class="flip-in">
-          <span class="face front" data-p-front>
-            <span class="c-title" data-p-title></span>
-            <span class="c-rule" aria-hidden="true"></span>
-            <span class="c-author" data-p-author></span>
+          <span class="face front cover-img">
+            <img data-p-img src="data:," alt="" decoding="async" />
           </span>
           <span class="face back">
-            <span class="stars" data-p-stars></span>
+            <span class="stars" data-p-stars role="img"><span class="s-off" aria-hidden="true">★★★★★</span><span class="s-on" aria-hidden="true">★★★★★</span></span>
+            <span class="score mono" data-p-score></span>
             <span class="review" data-p-review></span>
             <span class="c-author dark" data-p-meta></span>
           </span>
@@ -108,7 +110,7 @@ const shelf = books.map((b, i) => ({
     </div>
   </div>
 
-  <script type="application/json" id="books-data" set:html={JSON.stringify(shelf.map(({ title, author, color, textColor, rating, review, year, style }) => ({ title, author, color, textColor, rating, review, year, style })))} />
+  <script type="application/json" id="books-data" set:html={JSON.stringify(shelf.map(({ title, author, rating, review, img }) => ({ title, author, rating, review, img, year: readingYear })))} />
 </Section>
 
 <style>
@@ -142,8 +144,22 @@ const shelf = books.map((b, i) => ({
   .c-rule { width: 40px; height: 2px; background: currentColor; opacity: .6; }
   .c-author { font: 700 10px/1.3 var(--mono); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
   .c-author.dark { color: var(--muted); }
-  .stars { color: var(--orange); font-size: 20px; letter-spacing: 3px; }
+  .stars { position: relative; display: inline-block; font-size: 22px; letter-spacing: 3px; line-height: 1; color: var(--orange); }
+  .stars .s-off { opacity: .22; }
+  .stars .s-on { position: absolute; left: 0; top: 0; width: var(--p, 0%); overflow: hidden; white-space: nowrap; }
+  .score { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .fav { font-size: 11px; font-weight: 700; color: var(--red); letter-spacing: .14em; }
+  .front.cover-img { padding: 0; background: var(--paper2); overflow: hidden; }
+  .front.cover-img::after { display: none; }
+  .front.cover-img img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+  .front.cover-img .badge { z-index: 2; }
+  .top3 .flip { width: 220px; height: 330px; }
+  .top3 .face.front.cover-img { overflow: visible; }
+  .top3 .back { gap: 12px; padding: 22px 18px; }
+  .top3 .review { font-size: 14.5px; line-height: 1.38; }
+  .top3 .back { overflow-y: auto; align-content: start; padding-top: 26px; }
   .review { font: italic 400 21px/1.3 var(--serif); }
+  .cover { background-size: cover; background-position: center; background-color: var(--bc); }
 
   /* Shelf */
   .shelf-bar { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
@@ -216,7 +232,7 @@ const shelf = books.map((b, i) => ({
 <script>
   import { openModal, reducedMotion } from '../../scripts/shared';
 
-  type BookData = { title: string; author: string; color: string; textColor: string; rating: number; review: string; year: number; style: string };
+  type BookData = { title: string; author: string; rating: number; review: string; img: string; year: number };
 
   function initBookshelf() {
     const shelf = document.querySelector<HTMLElement>('[data-shelf]');
@@ -308,16 +324,13 @@ const shelf = books.map((b, i) => ({
       const btn = (e.target as Element).closest<HTMLElement>('[data-book]');
       if (!btn) return;
       const b = data[Number(btn.dataset.book)];
-      const front = modal.querySelector<HTMLElement>('[data-p-front]')!;
-      front.style.setProperty('--bc', b.color);
-      front.style.setProperty('--bt', b.textColor);
-      const title = modal.querySelector<HTMLElement>('[data-p-title]')!;
-      title.textContent = b.title;
-      title.className = `c-title s-${b.style}`;
-      modal.querySelector('[data-p-author]')!.textContent = b.author;
+      const img = modal.querySelector<HTMLImageElement>('[data-p-img]')!;
+      img.src = b.img;
+      img.alt = `${b.title} by ${b.author}, book cover`;
       const stars = modal.querySelector<HTMLElement>('[data-p-stars]')!;
-      stars.textContent = '★'.repeat(b.rating) + '☆'.repeat(5 - b.rating);
+      stars.style.setProperty('--p', `${Math.max(0, Math.min(5, b.rating)) * 20}%`);
       stars.setAttribute('aria-label', `${b.rating} out of 5 stars`);
+      modal.querySelector('[data-p-score]')!.textContent = `${b.rating} / 5`;
       modal.querySelector('[data-p-review]')!.textContent = `“${b.review}”`;
       modal.querySelector('[data-p-meta]')!.textContent = `${b.title} · ${b.author} · ${b.year}`;
       modal.querySelector('[data-p-sr]')!.textContent = `${b.title} by ${b.author}`;
