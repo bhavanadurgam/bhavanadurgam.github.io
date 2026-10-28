@@ -60,13 +60,13 @@ export const marquee = [
 // "A few things to know about me…" polaroids. Keep each caption short.
 // To add a photo: put it in public/photos/notes/ and add  photo: '/photos/notes/your-file.jpg'
 export const notes: { icon: string; text: string; photo?: string }[] = [
-  { icon: '✎', text: 'I read around 50 books a year' },
-  { icon: '⌂', text: 'Grew up in Bangalore, India' },
-  { icon: '✐', text: 'Volunteer teacher for kids in underserved communities across Bangalore' },
-  { icon: '♛', text: 'Miss India title holder' },
-  { icon: '✧', text: 'Modelling since I was six' },
-  { icon: '♡', text: 'Animal lover and proud dog mom to Nora' },
-  { icon: '∞', text: 'A polymath: always learning something new' },
+  { icon: '✎', text: 'I read around 50 books a year', photo: '/photos/notes/books.jpg' },
+  { icon: '⌂', text: 'Grew up in Bangalore, India', photo: '/photos/notes/bangalore.jpg' },
+  { icon: '✐', text: 'Volunteer teacher for kids in underserved communities across Bangalore', photo: '/photos/notes/teaching.jpg' },
+  { icon: '♛', text: 'Miss India title holder', photo: '/photos/notes/miss-india.jpg' },
+  { icon: '✧', text: 'Modelling since I was six', photo: '/photos/notes/modelling.jpg' },
+  { icon: '♡', text: 'Animal lover and proud dog mom to Nora', photo: '/photos/notes/nora.jpg' },
+  { icon: '∞', text: 'A polymath: always learning something new', photo: '/photos/notes/polymath.jpg' },
 ];
 
 export const philosophy = {

@@ -15,8 +15,8 @@ export function toast(msg: string) {
   toastTimer = window.setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-/* ── Sounds: typewriter keys, carriage bell, camera shutter (Web Audio, no files) ── */
-type Sfx = 'key' | 'open' | 'shutter';
+/* ── Sounds: typewriter keys and the carriage-return bell (Web Audio, no files) ── */
+type Sfx = 'key' | 'open';
 let ctx: AudioContext | null = null;
 const soundOn = () => {
   try { return localStorage.getItem('bd-sound') === 'on'; } catch { return false; }
@@ -55,7 +55,7 @@ export function sfx(kind: Sfx = 'key') {
     // typewriter key: sharp strike + low thunk of the typebar
     burst(a, t, 0.035, 3800, 1.2, 0.5);
     burst(a, t + 0.012, 0.06, 900, 2.5, 0.35);
-  } else if (kind === 'open') {
+  } else {
     // carriage return: a quick zip, then the little bell
     const zip = noise(a, 0.22, 1);
     const f = a.createBiquadFilter();
@@ -67,11 +67,6 @@ export function sfx(kind: Sfx = 'key') {
     zip.start(t);
     tone(a, t + 0.2, 2093, 0.9, 0.16);
     tone(a, t + 0.2, 4186, 0.5, 0.05);
-  } else {
-    // camera shutter: two mechanical clicks around a short whir
-    burst(a, t, 0.03, 2600, 1.5, 0.55);
-    burst(a, t + 0.02, 0.09, 6000, 0.7, 0.12, 'highpass');
-    burst(a, t + 0.11, 0.035, 1900, 1.5, 0.5);
   }
 }
 
@@ -215,8 +210,7 @@ function globalOnce() {
   document.addEventListener('click', (e) => {
     const el = (e.target as Element).closest<HTMLElement>('[data-sound]');
     if (!el) return;
-    const kind = el.dataset.sound;
-    sfx(kind === 'open' || kind === 'shutter' ? kind : 'key');
+    sfx(el.dataset.sound === 'open' ? 'open' : 'key');
   });
 }
 

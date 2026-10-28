@@ -105,20 +105,19 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
     <div class="wrap">
       <p class="kicker">Off the record</p>
       <h2 class="h2" id="notes-h">A few things <em>to know</em> about me…</h2>
-      <p class="pola-hint mono">Click a polaroid to take the shot</p>
     </div>
     <div class="notes-row">
       <ul class="notes-track">
         {[0, 1].map((k) => notes.map((n, i) => (
           <li class="pola" style={`--tone: ${pastel[i % pastel.length]}; --r: ${[-4, 3, -2, 5, -5, 2, -3, 4][i % 8]}deg`} aria-hidden={k === 1 ? 'true' : undefined}>
-            <button class="pola-card" type="button" tabindex={k === 1 ? -1 : undefined} data-sound="shutter" aria-label={n.text}>
+            <figure class="pola-card">
               <span class="pola-photo">
                 {n.photo
-                  ? <img src={n.photo} alt="" loading="lazy" decoding="async" />
+                  ? <img src={n.photo} alt={k === 1 ? '' : `Bhavana Durgam: ${n.text}`} width="600" height="600" loading="lazy" decoding="async" />
                   : <span class="pola-ph" aria-hidden="true">{n.icon}</span>}
               </span>
-              <span class="pola-cap" aria-hidden="true" data-text={n.text}><span class="typed">{n.text}</span><span class="caret"></span></span>
-            </button>
+              <figcaption class="pola-cap">{n.text}</figcaption>
+            </figure>
           </li>
         )))}
       </ul>
@@ -271,14 +270,13 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   .notes-row { margin-top: 18px; overflow: hidden; padding: 34px 0 40px; }
   .notes-track { display: flex; gap: 26px; width: max-content; padding: 0; list-style: none; animation: marquee 60s linear infinite; }
   .notes-row:hover .notes-track { animation-play-state: paused; }
-  .pola-hint { margin-top: 10px; font-size: 11px; font-weight: 700; color: rgba(251,248,242,.6); }
   .pola { flex: none; }
   .pola-card {
-    position: relative; display: block; width: 230px; padding: 12px 12px 0; background: #fff; text-align: left; color: var(--ink);
+    position: relative; display: block; width: 230px; margin: 0; padding: 12px 12px 0; background: #fff; text-align: left; color: var(--ink);
     transform: rotate(var(--r)); box-shadow: 0 18px 26px -14px rgba(0,0,0,.55), 0 1px 2px rgba(0,0,0,.2);
     transition: transform .45s var(--spring), box-shadow .4s;
   }
-  .pola-card:hover, .pola-card:focus-visible { transform: rotate(0) translateY(-8px) scale(1.05); box-shadow: 0 26px 34px -16px rgba(0,0,0,.6); }
+  .pola-card:hover { transform: rotate(0) translateY(-8px) scale(1.05); box-shadow: 0 26px 34px -16px rgba(0,0,0,.6); }
   .pola-photo { display: block; aspect-ratio: 1; overflow: hidden; background: var(--tone); }
   .pola-photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92) contrast(1.02); }
   .pola-ph { display: grid; place-items: center; height: 100%; font-size: 54px; color: rgba(58,30,18,.28); }
@@ -286,12 +284,6 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
     display: block; min-height: 74px; padding: 12px 4px 14px;
     font: 400 14px/1.35 var(--mono); color: var(--ink);
   }
-  .caret { display: inline-block; width: 7px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--red); opacity: 0; }
-  .pola-cap.typing .caret { opacity: 1; animation: blink .7s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-  .pola-card::after { content: ''; position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
-  .pola-card.flash::after { animation: flash .55s ease-out; }
-  @keyframes flash { 0% { opacity: .95; } 100% { opacity: 0; } }
 
   /* ── Stripes + quote ──────────────────────────── */
   .stripes {
@@ -323,34 +315,6 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
       }, { threshold: 0.15 });
       io.observe(stack);
     }
-
-    // Polaroid captions type themselves out as each one slides into view.
-    const caps = [...document.querySelectorAll<HTMLElement>('.pola-cap')];
-    if (!reducedMotion() && 'IntersectionObserver' in window) {
-      caps.forEach((c) => { c.querySelector('.typed')!.textContent = ''; });
-      const typer = new IntersectionObserver((entries) => entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        typer.unobserve(e.target);
-        const cap = e.target as HTMLElement;
-        const full = cap.dataset.text ?? '';
-        const out = cap.querySelector('.typed')!;
-        let i = 0;
-        cap.classList.add('typing');
-        const step = () => {
-          out.textContent = full.slice(0, ++i);
-          if (i < full.length) setTimeout(step, 30 + Math.random() * 45);
-          else setTimeout(() => cap.classList.remove('typing'), 1200);
-        };
-        setTimeout(step, 300);
-      }), { threshold: 0.6 });
-      caps.forEach((c) => typer.observe(c));
-    }
-    // Click a polaroid: camera flash (the shutter sound comes from data-sound).
-    document.querySelectorAll<HTMLElement>('.pola-card').forEach((card) => card.addEventListener('click', () => {
-      card.classList.remove('flash');
-      void card.offsetWidth;
-      card.classList.add('flash');
-    }));
 
     // Mosby-style open: the other files fall away, the picked one rises into its page.
     stack.querySelectorAll<HTMLAnchorElement>('.file').forEach((a) => {
