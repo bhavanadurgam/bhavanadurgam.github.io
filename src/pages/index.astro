@@ -1,9 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import Stamp from '../components/Stamp.astro';
 import headshot from '../assets/photos/headshot.jpg';
-import { site, folders, marquee, notes, philosophy, currently } from '../data/content';
+import { site, folders, marquee, notes, philosophy } from '../data/content';
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -33,24 +32,12 @@ const jsonld = {
 };
 
 const tagline = site.tagline.replace(/\*(.+?)\*/g, '<em>$1</em>');
-const backFolders = [
-  { label: 'Work', href: '/work/', c: '--brown', t: '--sheet', x: '70%' },
-  { label: 'Education', href: '/education/', c: '--pink', t: '--brown', x: '24%' },
-  { label: 'Projects', href: '/projects/', c: '--red', t: '--sheet', x: '50%' },
-];
 const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'];
 ---
 <Base title="Bhavana Durgam — Product Marketing Manager & PM · Chicago" jsonld={jsonld}>
   <!-- ═══ A. Hero: postfolio folder stack ═══ -->
   <section class="hero" aria-label="Introduction">
     <div class="wrap hero-stack">
-      {backFolders.map((b, i) => (
-        <a class="hf" href={b.href} style={`--c: var(${b.c}); --t: var(${b.t}); --x: ${b.x}; --i: ${i}`} data-sound>
-          <span class="hf-tab">{b.label}</span>
-          <span class="sr-only">Open {b.label}</span>
-        </a>
-      ))}
-
       <div class="front">
         <span class="front-tab">Portfolio · Vol. 01</span>
         <div class="front-grid">
@@ -72,19 +59,7 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
             <figure class="headshot">
               <Image src={headshot} alt="Bhavana Durgam headshot" widths={[260, 520]} sizes="260px" loading="eager" fetchpriority="high" />
             </figure>
-            <aside class="currently" aria-label="Currently">
-              <p class="mono">Currently</p>
-              <dl>
-                {currently.map((c) => <><dt>{c.label}</dt><dd>{c.value}</dd></>)}
-              </dl>
-            </aside>
           </div>
-        </div>
-        <div class="hero-stamp">
-          <Stamp color="--pink" rotate={-6}>
-            <span class="st-big">PM × PMM</span>
-            <span class="st-small">Est. Chicago</span>
-          </Stamp>
         </div>
       </div>
     </div>
@@ -100,7 +75,6 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   <!-- ═══ C. The files ═══ -->
   <section class="files" id="files" aria-labelledby="files-h">
     <div class="wrap files-head">
-      <p class="kicker">Six folders, one person</p>
       <h2 class="h2" id="files-h">The <em>files</em></h2>
       <p class="files-hint mono">Hover to peek · click to open</p>
     </div>
@@ -131,13 +105,20 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
     <div class="wrap">
       <p class="kicker">Off the record</p>
       <h2 class="h2" id="notes-h">A few things <em>to know</em> about me…</h2>
+      <p class="pola-hint mono">Click a polaroid to take the shot</p>
     </div>
     <div class="notes-row">
       <ul class="notes-track">
         {[0, 1].map((k) => notes.map((n, i) => (
-          <li class="note" style={`--bg: ${pastel[i % pastel.length]}; --r: ${[-4, 3, -2, 5, -5, 2, -3, 4][i % 8]}deg`} aria-hidden={k === 1 ? 'true' : undefined}>
-            <span class="note-icon" aria-hidden="true">{n.icon}</span>
-            <span class="note-text">{n.text}</span>
+          <li class="pola" style={`--tone: ${pastel[i % pastel.length]}; --r: ${[-4, 3, -2, 5, -5, 2, -3, 4][i % 8]}deg`} aria-hidden={k === 1 ? 'true' : undefined}>
+            <button class="pola-card" type="button" tabindex={k === 1 ? -1 : undefined} data-sound="shutter" aria-label={n.text}>
+              <span class="pola-photo">
+                {n.photo
+                  ? <img src={n.photo} alt="" loading="lazy" decoding="async" />
+                  : <span class="pola-ph" aria-hidden="true">{n.icon}</span>}
+              </span>
+              <span class="pola-cap" aria-hidden="true" data-text={n.text}><span class="typed">{n.text}</span><span class="caret"></span></span>
+            </button>
           </li>
         )))}
       </ul>
@@ -151,14 +132,8 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
         <div class="scallop-in">
           <p class="kicker">{philosophy.by}</p>
           <blockquote>“{philosophy.quote}”</blockquote>
-          <p class="sig">Bhavana</p>
+          <p class="sig">Bhavana Durgam</p>
         </div>
-      </div>
-      <div class="quote-stamp">
-        <Stamp color="--butter" rotate={8}>
-          <span class="st-script">bd</span>
-          <span class="st-small">2026</span>
-        </Stamp>
       </div>
     </div>
   </section>
@@ -166,22 +141,8 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
 
 <style>
   /* ── Hero ─────────────────────────────────────── */
-  .hero { padding: 28px 0 88px; overflow-x: clip; }
+  .hero { padding: 28px 0 64px; overflow-x: clip; }
   .hero-stack { position: relative; }
-  .hf {
-    position: relative; display: block; height: 100px; margin-top: 46px; margin-bottom: -66px;
-    background: var(--c); border-radius: 6px 6px 0 0; text-decoration: none;
-    box-shadow: 0 -2px 8px rgba(0,0,0,.06);
-    animation: drop .7s var(--spring) both; animation-delay: calc(var(--i) * 160ms);
-  }
-  .hf-tab {
-    position: absolute; bottom: calc(100% - 1px); left: var(--x); height: 46px; padding: 0 26px;
-    display: grid; place-items: center; background: var(--c); color: var(--t); border-radius: 14px 14px 0 0;
-    font: 700 14px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
-    transition: transform .35s var(--spring);
-  }
-  .hf:hover .hf-tab, .hf:focus-visible .hf-tab { transform: translateY(-6px); }
-  @keyframes drop { from { opacity: 0; transform: translateY(-40px); } }
 
   .front {
     position: relative; margin-top: 46px; padding: clamp(28px, 4vw, 56px) clamp(16px, 4vw, 56px) clamp(56px, 6vw, 80px);
@@ -190,7 +151,7 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
       repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px),
       repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px);
     box-shadow: 0 -4px 14px rgba(0,0,0,.1);
-    animation: rise .8s var(--spring) .48s both;
+    animation: rise .8s var(--spring) .05s both;
   }
   .front-tab {
     position: absolute; bottom: calc(100% - 1px); left: 0; height: 46px; padding: 0 24px; display: grid; place-items: center;
@@ -203,10 +164,10 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   .hero-sheet {
     --hole: var(--blue);
     padding: clamp(36px, 5vw, 60px) clamp(22px, 4vw, 52px) clamp(30px, 4vw, 48px) 76px;
-    transform: rotate(-1.2deg); animation: slide .9s var(--smooth) .7s both;
+    transform: rotate(-1.2deg); animation: slide .9s var(--smooth) .3s both;
   }
   @keyframes slide { from { opacity: 0; transform: translateX(-80px) rotate(-6deg); } }
-  .hero-clip { top: -22px; left: 46%; transform: rotate(8deg); animation: snap .45s var(--spring) 1.15s both; }
+  .hero-clip { top: -22px; left: 46%; transform: rotate(8deg); animation: snap .45s var(--spring) .75s both; }
   @keyframes snap { from { opacity: 0; transform: translateY(-30px) rotate(-20deg) scale(1.3); } }
 
   .name { margin: 0; line-height: 1; }
@@ -220,7 +181,7 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   /* "durgam" writes itself. The clip box is padded so the g descender is never cut. */
   .name .last .ink {
     display: inline-block; padding: .18em .25em .42em .05em; margin: -.18em -.25em -.42em -.05em;
-    animation: write 1.3s cubic-bezier(.6,.05,.3,1) .95s both;
+    animation: write 1.3s cubic-bezier(.6,.05,.3,1) .55s both;
   }
   @keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
   .tagline { margin-top: 26px; max-width: 560px; font: 400 clamp(22px, 2.4vw, 28px)/1.3 var(--serif); }
@@ -230,46 +191,25 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
 
   .hero-side { display: grid; gap: 28px; justify-items: center; }
   .headshot {
-    width: 250px; aspect-ratio: 25 / 32; border-radius: 50%; overflow: hidden; margin: 0;
-    background: var(--sky); border: 9px solid var(--sheet); transform: rotate(4deg);
+    width: 260px; aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin: 0;
+    background: var(--sky); border: 9px solid var(--sheet);
     box-shadow: 0 16px 30px -12px rgba(0,0,0,.35);
-    animation: pop .6s var(--spring) 1.5s both;
+    animation: pop .6s var(--spring) 1.1s both;
   }
-  .headshot img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
-  @keyframes pop { from { opacity: 0; transform: scale(.6) rotate(-6deg); } }
+  .headshot img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 14%; }
+  @keyframes pop { from { opacity: 0; transform: scale(.6); } }
 
-  .currently {
-    width: 220px; padding: 16px 18px 18px; background: #F6E7A6; transform: rotate(3deg);
-    box-shadow: 0 10px 20px -10px rgba(0,0,0,.35); animation: pop .6s var(--spring) 1.7s both;
-  }
-  .currently::before { content: ''; display: block; width: 60px; height: 18px; margin: -26px auto 8px; background: rgba(255,255,255,.55); transform: rotate(-3deg); }
-  .currently .mono { font-size: 12px; font-weight: 700; color: var(--red); }
-  .currently dl { margin-top: 6px; display: grid; gap: 2px; font-size: 14px; }
-  .currently dd + dt { margin-top: 8px; }
-  .currently dt { font: 700 11px/1.6 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
-  .currently dd { margin: 0; font: italic 400 16px/1.3 var(--serif); }
 
-  .hero-stamp { position: absolute; right: clamp(24px, 9%, 140px); bottom: -46px; z-index: 4; animation: pop .6s var(--spring) 1.85s both; }
-  .st-big { font: 700 22px/1 var(--sans); letter-spacing: -.02em; color: var(--brown); }
-  .st-small { font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brown); }
-  .st-script { font: 400 40px/1 var(--script); color: var(--red); }
 
   @media (max-width: 960px) {
     .front-grid { grid-template-columns: 1fr; }
     .hero-side { order: -1; grid-template-columns: auto auto; align-items: center; justify-content: center; }
     .headshot { width: 170px; }
-    .currently { width: 190px; }
   }
   @media (max-width: 640px) {
-    .hf-tab { padding: 0 14px; font-size: 12px; }
-    .hf:nth-child(1) .hf-tab { left: auto; right: 0; }
-    .hf:nth-child(2) .hf-tab { left: 0; }
-    .hf:nth-child(3) .hf-tab { left: 38%; }
     .hero-sheet { transform: none; padding-left: 58px; padding-right: 18px; }
     @keyframes slide { from { opacity: 0; transform: translateX(-40px); } }
     .hero-side { grid-template-columns: 1fr; }
-    .currently { display: none; }
-    .hero-stamp { right: 16px; bottom: -40px; }
     .name .last { margin-left: 12%; }
   }
 
@@ -328,17 +268,30 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   .notes { background: var(--brown); color: var(--sheet); padding: 80px 0 90px; overflow: hidden; }
   .notes .kicker { color: var(--pink); }
   .notes .h2 em { color: var(--pink); }
-  .notes-row { margin-top: 40px; overflow: hidden; padding: 20px 0; }
+  .notes-row { margin-top: 18px; overflow: hidden; padding: 34px 0 40px; }
   .notes-track { display: flex; gap: 26px; width: max-content; padding: 0; list-style: none; animation: marquee 60s linear infinite; }
   .notes-row:hover .notes-track { animation-play-state: paused; }
-  .note {
-    width: 220px; min-height: 190px; padding: 22px 20px; display: grid; align-content: center; gap: 14px; justify-items: center; text-align: center;
-    background: var(--bg); color: var(--ink); transform: rotate(var(--r)); box-shadow: 0 14px 22px -12px rgba(0,0,0,.5);
-    transition: transform .4s var(--spring);
+  .pola-hint { margin-top: 10px; font-size: 11px; font-weight: 700; color: rgba(251,248,242,.6); }
+  .pola { flex: none; }
+  .pola-card {
+    position: relative; display: block; width: 230px; padding: 12px 12px 0; background: #fff; text-align: left; color: var(--ink);
+    transform: rotate(var(--r)); box-shadow: 0 18px 26px -14px rgba(0,0,0,.55), 0 1px 2px rgba(0,0,0,.2);
+    transition: transform .45s var(--spring), box-shadow .4s;
   }
-  .note:hover { transform: rotate(0) scale(1.06); }
-  .note-icon { font-size: 30px; line-height: 1; color: var(--brown); }
-  .note-text { font: italic 400 21px/1.25 var(--serif); }
+  .pola-card:hover, .pola-card:focus-visible { transform: rotate(0) translateY(-8px) scale(1.05); box-shadow: 0 26px 34px -16px rgba(0,0,0,.6); }
+  .pola-photo { display: block; aspect-ratio: 1; overflow: hidden; background: var(--tone); }
+  .pola-photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92) contrast(1.02); }
+  .pola-ph { display: grid; place-items: center; height: 100%; font-size: 54px; color: rgba(58,30,18,.28); }
+  .pola-cap {
+    display: block; min-height: 74px; padding: 12px 4px 14px;
+    font: 400 14px/1.35 var(--mono); color: var(--ink);
+  }
+  .caret { display: inline-block; width: 7px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--red); opacity: 0; }
+  .pola-cap.typing .caret { opacity: 1; animation: blink .7s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .pola-card::after { content: ''; position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+  .pola-card.flash::after { animation: flash .55s ease-out; }
+  @keyframes flash { 0% { opacity: .95; } 100% { opacity: 0; } }
 
   /* ── Stripes + quote ──────────────────────────── */
   .stripes {
@@ -350,8 +303,6 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   .scallop-in { text-align: center; display: grid; gap: 16px; }
   blockquote { font: 400 clamp(26px, 3.4vw, 40px)/1.2 var(--serif); }
   .sig { font: 400 48px/1 var(--script); color: var(--red); }
-  .quote-stamp { position: absolute; right: -18px; bottom: -26px; }
-  @media (max-width: 640px) { .quote-stamp { right: 0; } }
 </style>
 
 <script>
@@ -372,6 +323,34 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
       }, { threshold: 0.15 });
       io.observe(stack);
     }
+
+    // Polaroid captions type themselves out as each one slides into view.
+    const caps = [...document.querySelectorAll<HTMLElement>('.pola-cap')];
+    if (!reducedMotion() && 'IntersectionObserver' in window) {
+      caps.forEach((c) => { c.querySelector('.typed')!.textContent = ''; });
+      const typer = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        typer.unobserve(e.target);
+        const cap = e.target as HTMLElement;
+        const full = cap.dataset.text ?? '';
+        const out = cap.querySelector('.typed')!;
+        let i = 0;
+        cap.classList.add('typing');
+        const step = () => {
+          out.textContent = full.slice(0, ++i);
+          if (i < full.length) setTimeout(step, 30 + Math.random() * 45);
+          else setTimeout(() => cap.classList.remove('typing'), 1200);
+        };
+        setTimeout(step, 300);
+      }), { threshold: 0.6 });
+      caps.forEach((c) => typer.observe(c));
+    }
+    // Click a polaroid: camera flash (the shutter sound comes from data-sound).
+    document.querySelectorAll<HTMLElement>('.pola-card').forEach((card) => card.addEventListener('click', () => {
+      card.classList.remove('flash');
+      void card.offsetWidth;
+      card.classList.add('flash');
+    }));
 
     // Mosby-style open: the other files fall away, the picked one rises into its page.
     stack.querySelectorAll<HTMLAnchorElement>('.file').forEach((a) => {

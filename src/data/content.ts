@@ -53,12 +53,13 @@ export const folders: Folder[] = [
 ];
 
 export const marquee = [
-  'Product Marketing', 'Positioning', 'Go-to-Market', 'Launches', 'Creator Partnerships', 'Storytelling',
-  'Product Strategy', 'User Research', 'Northwestern MEM', 'Medical Electronics', 'Chicago',
+  'Product Marketing', 'Positioning', 'Messaging', 'Go-to-Market', 'Product Launches', 'Creator Partnerships',
+  'Storytelling', 'Product Strategy', 'Roadmapping', 'User Research', 'Competitive Intelligence', 'A/B Testing',
 ];
 
-// "A few things to know about me…" sticky notes. Keep each one short.
-export const notes = [
+// "A few things to know about me…" polaroids. Keep each caption short.
+// To add a photo: put it in public/photos/notes/ and add  photo: '/photos/notes/your-file.jpg'
+export const notes: { icon: string; text: string; photo?: string }[] = [
   { icon: '✎', text: 'I read around 50 books a year' },
   { icon: '⌂', text: 'Grew up in Bangalore, India' },
   { icon: '✐', text: 'Volunteer teacher for kids in underserved communities across Bangalore' },

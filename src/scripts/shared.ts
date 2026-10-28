@@ -15,28 +15,64 @@ export function toast(msg: string) {
   toastTimer = window.setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-/* ── Paper sounds (Web Audio, no files) ───────────────── */
+/* ── Sounds: typewriter keys, carriage bell, camera shutter (Web Audio, no files) ── */
+type Sfx = 'key' | 'open' | 'shutter';
 let ctx: AudioContext | null = null;
 const soundOn = () => {
   try { return localStorage.getItem('bd-sound') === 'on'; } catch { return false; }
 };
-export function paper(kind: 'open' | 'tap' = 'tap') {
+function noise(a: AudioContext, dur: number, shape = 2) {
+  const buf = a.createBuffer(1, Math.ceil(a.sampleRate * dur), a.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length) ** shape;
+  const src = a.createBufferSource();
+  src.buffer = buf;
+  return src;
+}
+function burst(a: AudioContext, at: number, dur: number, freq: number, q: number, vol: number, type: BiquadFilterType = 'bandpass') {
+  const src = noise(a, dur, 3);
+  const f = a.createBiquadFilter();
+  f.type = type; f.frequency.value = freq; f.Q.value = q;
+  const g = a.createGain();
+  g.gain.value = vol;
+  src.connect(f).connect(g).connect(a.destination);
+  src.start(at);
+}
+function tone(a: AudioContext, at: number, freq: number, dur: number, vol: number) {
+  const o = a.createOscillator();
+  const g = a.createGain();
+  o.type = 'sine'; o.frequency.value = freq;
+  g.gain.setValueAtTime(vol, at);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g).connect(a.destination);
+  o.start(at); o.stop(at + dur);
+}
+export function sfx(kind: Sfx = 'key') {
   if (!soundOn()) return;
   ctx ??= new AudioContext();
-  const dur = kind === 'open' ? 0.32 : 0.12;
-  const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * dur), ctx.sampleRate);
-  const data = buf.getChannelData(0);
-  for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length) ** 2;
-  const src = ctx.createBufferSource();
-  src.buffer = buf;
-  const band = ctx.createBiquadFilter();
-  band.type = 'bandpass';
-  band.frequency.value = kind === 'open' ? 2400 : 3600;
-  band.Q.value = 0.8;
-  const gain = ctx.createGain();
-  gain.gain.value = kind === 'open' ? 0.22 : 0.14;
-  src.connect(band).connect(gain).connect(ctx.destination);
-  src.start();
+  const a = ctx, t = a.currentTime + 0.005;
+  if (kind === 'key') {
+    // typewriter key: sharp strike + low thunk of the typebar
+    burst(a, t, 0.035, 3800, 1.2, 0.5);
+    burst(a, t + 0.012, 0.06, 900, 2.5, 0.35);
+  } else if (kind === 'open') {
+    // carriage return: a quick zip, then the little bell
+    const zip = noise(a, 0.22, 1);
+    const f = a.createBiquadFilter();
+    f.type = 'bandpass'; f.Q.value = 3;
+    f.frequency.setValueAtTime(1800, t);
+    f.frequency.exponentialRampToValueAtTime(5200, t + 0.2);
+    const g = a.createGain(); g.gain.value = 0.18;
+    zip.connect(f).connect(g).connect(a.destination);
+    zip.start(t);
+    tone(a, t + 0.2, 2093, 0.9, 0.16);
+    tone(a, t + 0.2, 4186, 0.5, 0.05);
+  } else {
+    // camera shutter: two mechanical clicks around a short whir
+    burst(a, t, 0.03, 2600, 1.5, 0.55);
+    burst(a, t + 0.02, 0.09, 6000, 0.7, 0.12, 'highpass');
+    burst(a, t + 0.11, 0.035, 1900, 1.5, 0.5);
+  }
 }
 
 function bindSound() {
@@ -45,14 +81,14 @@ function bindSound() {
   const sync = () => {
     const on = soundOn();
     btn.setAttribute('aria-pressed', String(on));
-    btn.setAttribute('aria-label', `Paper sounds: ${on ? 'on' : 'off'}`);
+    btn.setAttribute('aria-label', `Sounds: ${on ? 'on' : 'off'}`);
   };
   sync();
   btn.addEventListener('click', () => {
     try { localStorage.setItem('bd-sound', soundOn() ? 'off' : 'on'); } catch { /* storage blocked */ }
     sync();
-    paper('open');
-    toast(soundOn() ? 'Paper sounds on' : 'Paper sounds off');
+    sfx('key');
+    toast(soundOn() ? 'Sounds on' : 'Sounds off');
   });
 }
 
@@ -143,7 +179,7 @@ function bindCopy() {
       }
       toast('Selected — press ⌘C to copy');
     }
-    paper('tap');
+    sfx('key');
   }));
 }
 
@@ -160,7 +196,7 @@ let typed = '';
 let taps: number[] = [];
 function openSecret() {
   const m = $('#secret');
-  if (m && !m.classList.contains('open')) { paper('open'); openModal(m); }
+  if (m && !m.classList.contains('open')) { sfx('open'); openModal(m); }
 }
 function bindSecret() {
   $('.secret-trigger')?.addEventListener('click', () => {
@@ -177,8 +213,10 @@ function globalOnce() {
     if (typed === 'bhavana') openSecret();
   });
   document.addEventListener('click', (e) => {
-    if ((e.target as Element).closest('[data-sound="open"]')) paper('open');
-    else if ((e.target as Element).closest('[data-sound]')) paper('tap');
+    const el = (e.target as Element).closest<HTMLElement>('[data-sound]');
+    if (!el) return;
+    const kind = el.dataset.sound;
+    sfx(kind === 'open' || kind === 'shutter' ? kind : 'key');
   });
 }
 

@@ -98,7 +98,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   border-bottom: 1px solid var(--line);
 }
 .site-header .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.logo { font: 400 40px/1 var(--script); color: var(--red); text-decoration: none; padding: 6px 4px 0; }
+.logo { font: 400 36px/1 var(--script); color: var(--red); text-decoration: none; padding: 6px 4px 0; white-space: nowrap; }
 .nav { display: flex; align-items: center; gap: 22px; }
 .nav a {
   position: relative; font: 700 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
