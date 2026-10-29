@@ -366,7 +366,7 @@ export const creator = {
 export const hobbies = [
   { no: '01', title: 'Reading', label: 'My bookshelf', href: '/hobbies/bookshelf/' },
   { no: '02', title: 'Painting', label: 'My paintings', href: '/hobbies/painting/' },
-  { no: '03', title: 'Music', label: 'My songs', href: '/hobbies/singing/' },
+  { no: '03', title: 'Music', label: 'On my playlist', href: '/hobbies/singing/' },
   { no: '04', title: 'Content creation', label: 'My creator story', href: '/accomplishments/#creator' },
 ];
 
@@ -471,8 +471,15 @@ export const paintings = [
 ];
 
 // TODO(Bhavana): put MP3s in public/audio/ and set `src`, or add a link.
-export const songs = [
-  { title: 'Cover No. 1', note: 'Recording coming soon', src: '', link: '', color: '--rose' },
-  { title: 'Cover No. 2', note: 'Recording coming soon', src: '', link: '', color: '--lime' },
-  { title: 'Cover No. 3', note: 'Recording coming soon', src: '', link: '', color: '--rose-soft' },
-];
+// Music page. Previews are Apple's official 30-second clips; art is in src/assets/music/.
+export const music = {
+  story: [
+    'I’m trained in Carnatic classical music, the South Indian tradition of ragas, rhythm and endless patient practice. It taught me discipline and listening long before anything else did.',
+    'But music has never felt like homework. Singing and listening are how I heal. On hard days a song does what nothing else can: it slows my breathing, quiets my head and brings me back to myself. Music is my therapy, my reset button and the soundtrack to everything I do.',
+  ],
+  playlist: [
+    { slug: 'roobaroo', title: 'Roobaroo', artist: 'A.R. Rahman & Naresh Iyer', preview: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/8b/85/4d/8b854d26-a52a-0f83-4553-28be3647abec/mzaf_9536950054419619173.plus.aac.p.m4a', url: 'https://music.apple.com/us/album/roobaroo/316981871?i=316981894' },
+    { slug: 'midnight-sun', title: 'Midnight Sun', artist: 'Zara Larsson', preview: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/59/bb/60/59bb60aa-1a0b-ff4c-3343-d7cb9e7d375a/mzaf_16759827430963483039.plus.aac.p.m4a', url: 'https://music.apple.com/us/album/midnight-sun/1817499239?i=1817499251' },
+    { slug: 'housewife', title: 'Housewife', artist: 'Tate McRae', preview: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/05/27/d4/0527d4f3-f6af-1ef8-6a32-25477b7b00ba/mzaf_18270786579537755861.plus.aac.p.m4a', url: 'https://music.apple.com/us/album/housewife/6822497770?i=6822497774' },
+  ],
+};
