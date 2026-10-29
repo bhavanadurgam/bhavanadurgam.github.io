@@ -464,8 +464,8 @@ export const books: Book[] = [
 // Painting page. Cleaned-up photos live in src/assets/paintings/.
 export const painting = {
   story: [
-    'I picked up a paintbrush when stress had me at my lowest. I needed somewhere to put everything I couldn’t say out loud, and a blank canvas didn’t ask any questions.',
-    'I haven’t stopped since. When I paint, time disappears: I sit down for “just twenty minutes” and look up hours later, paint on my hands and my head finally quiet. Every canvas on my wall holds a little of whatever I was carrying that day, and the lightness I felt when I let it go.',
+    'Painting is how I manage my anxiety. When my mind won’t slow down, picking up a brush gives it one small, simple thing to focus on: this colour, this line, this corner of the canvas. Somewhere in there, the noise fades.',
+    'I started painting to cope, and I haven’t stopped since. When I paint, time disappears: I sit down for “just twenty minutes” and look up hours later, paint on my hands and my head finally quiet. Every canvas on my wall holds a little of whatever I was carrying that day, and the lightness I felt when I let it go.',
   ],
   wall: { img: 'gallery-wall' },
   works: [

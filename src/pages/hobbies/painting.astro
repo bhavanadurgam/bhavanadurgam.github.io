@@ -13,7 +13,7 @@ const wall = { m: pic(painting.wall.img) };
 const wallBig = await big(wall.m);
 const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(w.img), big: await big(pic(w.img)) })));
 ---
-<Section id="hobbies" sub="Painting" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Painting — Bhavana Durgam" description="Bhavana Durgam's paintings: she started painting to cope with stress and hasn't stopped since. Her gallery wall and her favourite canvases.">
+<Section id="hobbies" sub="Painting" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Painting — Bhavana Durgam" description="Bhavana Durgam's paintings: painting is how she manages her anxiety, and she hasn't stopped since. Her gallery wall and her favourite canvases.">
   <header class="frame-head">
     <p class="kicker">Hobby · Painting</p>
     <h1 class="title">Where I get <em>lost</em></h1>
