@@ -1,51 +1,235 @@
 ---
 import Section from '../../layouts/Section.astro';
 import { hobbies } from '../../data/content';
+
+// Where each object sits on the table: x, y, width (% of the board), tilt. m* = phone layout.
+const spots: Record<string, { x: number; y: number; w: number; r: number; mx: number; my: number; mw: number }> = {
+  Reading:            { x: 5,  y: 13, w: 24, r: -6, mx: 4,  my: 31, mw: 44 },
+  Music:              { x: 63, y: 8,  w: 30, r: 5,  mx: 50, my: 29, mw: 46 },
+  Painting:           { x: 9,  y: 56, w: 27, r: 4,  mx: 4,  my: 62, mw: 46 },
+  'Content creation': { x: 64, y: 58, w: 24, r: -5, mx: 53, my: 63, mw: 42 },
+};
 ---
-<Section id="hobbies" title="Hobbies — Bhavana Durgam" description="What Bhavana Durgam does off the clock: her bookshelf, painting, singing and content creation.">
+<Section id="hobbies" title="Hobbies — Bhavana Durgam" description="Bhavana Durgam off the clock: reading (her bookshelf), painting, music and content creation.">
   <header class="frame-head">
     <p class="kicker">File No.05</p>
-    <h1 class="title">Off the <em>clock</em></h1>
-    <p class="lede">I think personality makes a product person better. Here's what I do when I'm not thinking about product. Every folder opens a page of its own.</p>
+    <p class="lede">I think personality makes a product person better. Here's my table of things I love when I'm off the clock: pick something up.</p>
   </header>
 
-  <ul class="h-grid">
-    {hobbies.map((h, i) => (
-      <li class="reveal">
-        <a class="h-card" href={h.href} style={`--hc: var(${h.color}); --pk: var(${h.peek}); --tilt: ${i % 2 ? 4 : -4}deg`} data-sound="open">
-          <span class="h-photo" aria-hidden="true"><span>{h.icon}</span></span>
-          <span class="h-folder">
-            <span class="h-tab mono">Hobby {h.no}</span>
-            <span class="h-title">{h.title}</span>
-            <span class="h-copy">{h.copy}</span>
-            <span class="h-open mono">Open →</span>
-          </span>
+  <div class="board">
+    <h1 class="board-title">The hobby <em>archive</em></h1>
+
+    <!-- decoration -->
+    <svg class="string" viewBox="0 0 100 62.5" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M44 9 C 50 2, 58 14, 52 18 S 60 26, 68 12" />
+    </svg>
+    <div class="deco beads" aria-hidden="true">{'BHAVANA'.split('').map((c, i) => <span style={`--i:${i}`}>{c}</span>)}<span class="heart">♥</span></div>
+    <div class="deco sticky" aria-hidden="true">pick<br />one ♡</div>
+    <svg class="deco flower f1" viewBox="0 0 100 100" aria-hidden="true">
+      {[0, 72, 144, 216, 288].map((a) => <ellipse cx="50" cy="28" rx="15" ry="24" transform={`rotate(${a} 50 50)`} />)}
+      <circle cx="50" cy="50" r="10" class="core" />
+    </svg>
+    <svg class="deco flower f2" viewBox="0 0 100 100" aria-hidden="true">
+      {[0, 60, 120, 180, 240, 300].map((a) => <ellipse cx="50" cy="26" rx="12" ry="22" transform={`rotate(${a} 50 50)`} />)}
+      <circle cx="50" cy="50" r="11" class="core" />
+    </svg>
+    <div class="deco ticket" aria-hidden="true">
+      <span class="t-l mono">Admit one</span>
+      <span class="t-m">Off the clock</span>
+      <span class="t-r mono">No. 05</span>
+    </div>
+    <svg class="deco cherries" viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M48 8 C 40 30, 30 44, 30 60 M48 8 C 56 32, 66 46, 68 64" class="stem" />
+      <path d="M48 8 C 60 2, 74 6, 78 16 C 66 18, 54 14, 48 8 Z" class="leaf" />
+      <circle cx="30" cy="70" r="15" /><circle cx="68" cy="74" r="15" />
+      <circle cx="25" cy="65" r="4" class="shine" /><circle cx="63" cy="69" r="4" class="shine" />
+    </svg>
+
+    <!-- the four hobbies -->
+    {hobbies.map((h, i) => {
+      const s = spots[h.title];
+      return (
+        <a
+          class:list={['obj', `obj-${h.no}`]}
+          href={h.href}
+          style={`--x:${s.x}%; --y:${s.y}%; --w:${s.w}%; --r:${s.r}deg; --mx:${s.mx}%; --my:${s.my}%; --mw:${s.mw}%; --i:${i}`}
+          data-sound="open"
+          aria-label={`${h.title}: ${h.label}`}
+        >
+          {h.no === '01' && (
+            <svg class="art books" viewBox="0 0 220 190" aria-hidden="true">
+              <rect class="b1" x="8" y="140" width="204" height="42" rx="4" />
+              <rect x="8" y="140" width="10" height="42" class="edge" /><line x1="40" y1="152" x2="150" y2="152" class="txt" /><line x1="40" y1="166" x2="110" y2="166" class="txt" />
+              <g class="b2"><rect x="22" y="100" width="176" height="40" rx="4" /><rect x="186" y="100" width="12" height="40" class="pages" /><line x1="44" y1="114" x2="136" y2="114" class="txt" /><line x1="44" y1="126" x2="104" y2="126" class="txt" /></g>
+              <g class="b3"><rect x="14" y="62" width="186" height="38" rx="4" /><rect x="14" y="62" width="12" height="38" class="edge" /><line x1="44" y1="76" x2="160" y2="76" class="txt dark" /><line x1="44" y1="88" x2="120" y2="88" class="txt dark" /></g>
+              <g class="b4"><path d="M40 62 L40 18 Q 72 6 106 18 Q 140 6 172 18 L172 62 Q 140 50 106 62 Q 72 50 40 62 Z" /><path d="M106 18 L106 62" class="spine" /><path d="M52 26 Q 74 20 96 26 M52 36 Q 74 30 96 36 M116 26 Q 138 20 160 26 M116 36 Q 138 30 160 36" class="lines" /><path d="M140 14 L140 44 L146 38 L152 44 L152 12" class="ribbon" /></g>
+            </svg>
+          )}
+          {h.no === '02' && (
+            <svg class="art palette" viewBox="0 0 260 190" aria-hidden="true">
+              <path class="board-p" d="M128 12 C 200 8 252 46 248 98 C 244 140 210 156 186 146 C 166 138 170 118 150 118 C 126 118 142 166 106 176 C 58 188 10 150 12 98 C 14 48 64 14 128 12 Z" />
+              <ellipse cx="150" cy="96" rx="13" ry="10" class="hole" />
+              <circle cx="66" cy="70" r="16" class="p1" /><circle cx="112" cy="46" r="15" class="p2" /><circle cx="168" cy="44" r="14" class="p3" />
+              <circle cx="212" cy="80" r="14" class="p4" /><circle cx="52" cy="122" r="15" class="p5" /><circle cx="92" cy="142" r="12" class="p1" />
+              <g class="brush"><rect x="60" y="88" width="170" height="10" rx="5" transform="rotate(-24 145 93)" class="handle" /><path d="M58 128 L 46 142 Q 38 154 50 150 L 66 136 Z" class="tip" /><rect x="58" y="120" width="16" height="12" rx="2" transform="rotate(-24 66 126)" class="ferrule" /></g>
+            </svg>
+          )}
+          {h.no === '03' && (
+            <svg class="art vinyl" viewBox="0 0 280 210" aria-hidden="true">
+              <g class="record">
+                <circle cx="176" cy="105" r="96" class="disc" />
+                {[86, 74, 62, 50].map((r) => <circle cx="176" cy="105" r={r} class="groove" />)}
+                <circle cx="176" cy="105" r="30" class="label" /><text x="176" y="102" class="label-t">SIDE B</text><text x="176" y="116" class="label-s">BHAVANA</text>
+                <circle cx="176" cy="105" r="4" class="hole" />
+              </g>
+              <g class="sleeve">
+                <rect x="6" y="9" width="192" height="192" rx="6" />
+                <text x="22" y="52" class="s-big">SIDE</text><text x="22" y="92" class="s-big">B</text>
+                <path d="M30 150 Q 60 110 90 150 T 150 150 T 190 140" class="squig" />
+                <circle cx="150" cy="70" r="20" class="sun" />
+                <rect x="22" y="172" width="64" height="14" class="bar" />
+              </g>
+            </svg>
+          )}
+          {h.no === '04' && (
+            <svg class="art camera" viewBox="0 0 230 170" aria-hidden="true">
+              <rect x="10" y="34" width="210" height="126" rx="22" class="body" />
+              <rect x="30" y="20" width="56" height="22" rx="8" class="top" /><rect x="168" y="22" width="34" height="16" rx="6" class="shutter" />
+              <rect x="150" y="50" width="52" height="26" rx="6" class="flashbox" />
+              <circle cx="104" cy="100" r="46" class="ring" /><circle cx="104" cy="100" r="34" class="lens" /><circle cx="104" cy="100" r="20" class="glass" />
+              <circle cx="94" cy="90" r="7" class="glint" />
+              <path d="M180 110 c -8 -12 -26 -6 -18 8 l 18 16 l 18 -16 c 8 -14 -10 -20 -18 -8 z" class="sticker-h" />
+              <path d="M38 130 l 5 10 l 11 2 l -8 8 l 2 11 l -10 -5 l -10 5 l 2 -11 l -8 -8 l 11 -2 z" class="sticker-s" />
+              <circle cx="190" cy="150" r="8" class="dot" />
+            </svg>
+          )}
+          <span class="tag mono"><b>{h.no}</b> {h.title}</span>
+          {h.no === '04' && <span class="flash" aria-hidden="true"></span>}
         </a>
-      </li>
-    ))}
-  </ul>
+      );
+    })}
+  </div>
+  <p class="hint mono">Hover to pick something up · click to open</p>
 </Section>
 
 <style>
-  .h-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 36px; padding-top: 40px; }
-  .h-card { position: relative; display: block; text-decoration: none; color: var(--sheet); padding-top: 90px; }
-  .h-photo {
-    position: absolute; left: 12%; right: 18%; top: 0; height: 170px; display: grid; place-items: center;
-    background: var(--pk); border: 8px solid #fff; box-shadow: 0 10px 20px -10px rgba(0,0,0,.35);
-    transform: rotate(-3deg); transition: transform .5s var(--spring);
+  .frame-head { margin-bottom: 20px; }
+  .board {
+    position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; isolation: isolate;
+    background-color: var(--plum-deep);
+    background-image: radial-gradient(rgba(247,246,215,.06) 1px, transparent 1.4px), radial-gradient(circle at 50% 45%, rgba(234,176,200,.16), transparent 60%);
+    background-size: 6px 6px, 100% 100%;
+    box-shadow: inset 0 0 0 1.5px var(--plum), 0 30px 50px -30px rgba(45,10,23,.6);
   }
-  .h-photo span { font-size: 54px; transform: translateY(-18px); }
-  .h-card:hover .h-photo, .h-card:focus-visible .h-photo { transform: translateY(-34px) rotate(var(--tilt)); }
-  .h-folder {
-    position: relative; display: grid; gap: 6px; padding: 28px 26px 24px; min-height: 210px; background: var(--hc);
-    border-radius: 0 12px 12px 12px; box-shadow: 0 14px 26px -16px rgba(0,0,0,.45);
-    transition: transform .45s var(--spring);
+  .board-title {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; margin: 0; text-align: center; pointer-events: none;
+    font: 800 clamp(36px, 6.4vw, 92px)/.86 var(--display); letter-spacing: -0.045em; font-stretch: 88%; color: var(--ivory);
+    animation: settle-in .9s var(--spring) .1s both;
   }
-  .h-folder::before { content: ''; position: absolute; left: 0; top: -22px; width: 42%; height: 24px; background: var(--hc); border-radius: 12px 12px 0 0; }
-  .h-card:hover .h-folder { transform: translateY(-6px); }
-  .h-tab { position: relative; font-size: 11px; font-weight: 700; opacity: .85; }
-  .h-title { font: 400 clamp(30px, 3.4vw, 40px)/1.05 var(--serif); }
-  .h-copy { opacity: .9; }
-  .h-open { margin-top: 10px; font-size: 12px; font-weight: 700; }
-  @media (max-width: 640px) { .h-grid { grid-template-columns: 1fr; } }
+  .board-title em { display: block; font: italic 400 1.1em/1 var(--serif); letter-spacing: -0.01em; color: var(--rose); }
+  @keyframes settle-in { from { opacity: 0; transform: translate(-50%, -40%) scale(.92); } }
+
+  /* objects */
+  .obj {
+    position: absolute; left: var(--x); top: var(--y); width: var(--w); z-index: 3; display: block; text-decoration: none;
+    transform: rotate(var(--r)); transition: transform .5s var(--spring), filter .4s;
+    filter: drop-shadow(0 14px 14px rgba(0,0,0,.35));
+    animation: drop .7s var(--spring) both; animation-delay: calc(.25s + var(--i) * .12s);
+  }
+  @keyframes drop { from { opacity: 0; translate: 0 -40px; scale: 1.12; } }
+  .obj:hover, .obj:focus-visible { z-index: 6; transform: rotate(0deg) translateY(-10px) scale(1.06); filter: drop-shadow(0 26px 22px rgba(0,0,0,.45)); }
+  .obj:focus-visible { outline: 2px dashed var(--lime); outline-offset: 8px; border-radius: 10px; }
+  .art { width: 100%; height: auto; overflow: visible; }
+  .tag {
+    position: absolute; left: 50%; bottom: -12px; translate: -50% 0; white-space: nowrap; padding: 7px 12px; border-radius: 4px;
+    background: var(--ivory); color: var(--ink); font-size: clamp(10px, .9vw, 12px); font-weight: 700; letter-spacing: .1em;
+    box-shadow: 0 6px 12px rgba(0,0,0,.25); transform: rotate(calc(var(--r) * -1)); transition: background .25s, transform .4s var(--spring);
+  }
+  .tag b { color: var(--plum); margin-right: 4px; }
+  .obj:hover .tag, .obj:focus-visible .tag { background: var(--lime); transform: rotate(0) translateY(4px); }
+
+  /* books */
+  .books rect, .books path { stroke: rgba(45,10,23,.35); stroke-width: 1.5; }
+  .books .b1 { fill: var(--rose); } .books .b2 rect:first-child { fill: var(--lime); } .books .b3 rect:first-child { fill: var(--ivory); }
+  .books .edge { fill: rgba(45,10,23,.18); stroke: none; } .books .pages { fill: #fff; }
+  .books .txt { stroke: rgba(45,10,23,.35); stroke-width: 4; stroke-linecap: round; } .books .txt.dark { stroke: var(--plum); }
+  .books .b4 > path:first-child { fill: #FFFDF2; } .books .spine { stroke: rgba(45,10,23,.3); fill: none; }
+  .books .lines { fill: none; stroke: rgba(45,10,23,.25); stroke-width: 2.5; stroke-linecap: round; }
+  .books .ribbon { fill: var(--plum); stroke: none; }
+  .books .b4, .books .b3 { transition: transform .5s var(--spring); transform-origin: 50% 100%; }
+  .obj-01:hover .b4 { transform: translateY(-14px) rotate(-4deg); } .obj-01:hover .b3 { transform: translateX(6px); }
+
+  /* palette */
+  .palette .board-p { fill: #F2E3C6; stroke: rgba(45,10,23,.3); stroke-width: 1.5; }
+  .palette .hole { fill: var(--plum-deep); }
+  .palette .p1 { fill: var(--plum); } .palette .p2 { fill: var(--rose); } .palette .p3 { fill: var(--lime); } .palette .p4 { fill: #7FB7E2; } .palette .p5 { fill: #F2A65A; }
+  .palette circle[class^='p'] { transition: transform .5s var(--spring); transform-box: fill-box; transform-origin: center; }
+  .obj-02:hover circle[class^='p'] { transform: scale(1.15); }
+  .palette .handle { fill: #C98A5B; } .palette .ferrule { fill: #B9B4AE; } .palette .tip { fill: var(--plum); }
+  .palette .brush { transition: transform .6s var(--spring); }
+  .obj-02:hover .brush { transform: translate(-10px, 8px) rotate(-6deg); }
+
+  /* vinyl */
+  .vinyl .disc { fill: #1d1418; } .vinyl .groove { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 1.5; }
+  .vinyl .label { fill: var(--lime); } .vinyl .hole { fill: var(--plum-deep); }
+  .vinyl .label-t { font: 800 11px var(--display); fill: var(--plum); text-anchor: middle; } .vinyl .label-s { font: 700 6px var(--mono); fill: var(--plum); text-anchor: middle; letter-spacing: 1px; }
+  .vinyl .record { transform-box: fill-box; transform-origin: 176px 105px; transition: translate .6s var(--spring); }
+  .obj-03:hover .record, .obj-03:focus-visible .record { translate: 40px 0; animation: spin 2.4s linear infinite; }
+  @keyframes spin { to { rotate: 360deg; } }
+  .vinyl .sleeve rect { fill: var(--rose); stroke: rgba(45,10,23,.3); stroke-width: 1.5; }
+  .vinyl .s-big { font: 800 44px/1 var(--display); fill: var(--plum); letter-spacing: -2px; }
+  .vinyl .squig { fill: none; stroke: var(--plum); stroke-width: 6; stroke-linecap: round; }
+  .vinyl .sun { fill: var(--lime); } .vinyl .bar { fill: var(--plum-deep); }
+
+  /* camera */
+  .camera .body { fill: #F4B9CF; stroke: rgba(45,10,23,.3); stroke-width: 1.5; } .camera .top { fill: #E39BB8; } .camera .shutter { fill: var(--plum); }
+  .camera .flashbox { fill: #FFF8E8; stroke: rgba(45,10,23,.25); } .camera .ring { fill: #D9D4DA; stroke: rgba(45,10,23,.3); }
+  .camera .lens { fill: #3B2730; } .camera .glass { fill: #6B5A7A; } .camera .glint { fill: rgba(255,255,255,.7); }
+  .camera .sticker-h { fill: var(--lime); stroke: #fff; stroke-width: 3; } .camera .sticker-s { fill: #FFF3A6; stroke: #fff; stroke-width: 2; } .camera .dot { fill: var(--plum); }
+  .flash { position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.95), transparent 60%); opacity: 0; pointer-events: none; }
+  .obj-04:hover .flash, .obj-04:focus-visible .flash { animation: flash .5s ease-out; }
+  @keyframes flash { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
+
+  /* decoration */
+  .deco { position: absolute; z-index: 1; pointer-events: none; }
+  .string { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  .string path { fill: none; stroke: var(--rose); stroke-width: .35; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-width: 2.5; }
+  .beads { left: 32%; top: 6%; display: flex; gap: .4vw; transform: rotate(-5deg); }
+  .beads span {
+    display: grid; place-items: center; width: clamp(18px, 2.2vw, 30px); aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, #EDE7E0); color: var(--ink); font: 700 clamp(9px, 1vw, 13px)/1 var(--sans);
+    box-shadow: 0 3px 4px rgba(0,0,0,.35); translate: 0 calc(sin(var(--i) * 1rad) * 4px);
+  }
+  .beads .heart { color: var(--plum); }
+  .sticky {
+    left: 44%; top: 18%; width: 13%; aspect-ratio: 1; padding: 1.2%; display: grid; place-items: center; text-align: center;
+    background: var(--lime); color: var(--plum-deep); font: 400 clamp(16px, 2vw, 28px)/1 var(--script);
+    transform: rotate(7deg); box-shadow: 4px 8px 10px rgba(0,0,0,.35);
+  }
+  .flower { width: 9%; } .flower ellipse { fill: var(--rose); opacity: .92; } .flower .core { fill: var(--lime); }
+  .f1 { left: 33%; top: 64%; transform: rotate(18deg); }
+  .f2 { left: 88%; top: 40%; width: 8%; } .f2 ellipse { fill: #F3D3E0; } .f2 .core { fill: #F2A65A; }
+  .ticket {
+    left: 40%; top: 80%; width: 22%; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; padding: .7% 1.2%;
+    background: var(--ivory); color: var(--plum); border-radius: 4px; transform: rotate(-4deg); box-shadow: 0 8px 10px rgba(0,0,0,.35);
+    background-image: radial-gradient(circle at 0 50%, var(--plum-deep) 6px, transparent 6.5px), radial-gradient(circle at 100% 50%, var(--plum-deep) 6px, transparent 6.5px);
+  }
+  .t-l, .t-r { font-size: clamp(7px, .7vw, 10px); font-weight: 700; } .t-m { font: 800 clamp(11px, 1.3vw, 18px)/1 var(--display); text-align: center; border-left: 1.5px dashed var(--rose); border-right: 1.5px dashed var(--rose); padding: 0 6px; }
+  .cherries { left: 89%; top: 74%; width: 7%; transform: rotate(-12deg); }
+  .cherries circle { fill: var(--plum); } .cherries .shine { fill: rgba(255,255,255,.5); } .cherries .stem { fill: none; stroke: #6E8A3A; stroke-width: 3; } .cherries .leaf { fill: var(--lime); }
+
+  .hint { margin-top: 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; }
+
+  /* phone: a taller table */
+  @media (max-width: 640px) {
+    .board { aspect-ratio: 3 / 5.4; }
+    .obj { left: var(--mx); top: var(--my); width: var(--mw); }
+    .board-title { top: 15%; font-size: clamp(32px, 10vw, 44px); }
+    .beads { left: 50%; top: 83%; translate: -50% 0; gap: 3px; } .beads span { width: 22px; font-size: 10px; }
+    .sticky { left: 38%; top: 51%; width: 24%; font-size: 15px; z-index: 2; }
+    .f1 { left: 4%; top: 52%; width: 13%; } .f2 { left: 82%; top: 50%; width: 13%; }
+    .ticket { left: 20%; top: 91%; width: 60%; } .cherries { left: 84%; top: 21%; width: 11%; }
+    .string { display: none; }
+    .tag { font-size: 9.5px; padding: 5px 7px; letter-spacing: .06em; white-space: normal; width: max-content; max-width: 100%; text-align: center; }
+  }
 </style>

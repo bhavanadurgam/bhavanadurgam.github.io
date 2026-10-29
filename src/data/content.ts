@@ -47,7 +47,7 @@ export const folders: Folder[] = [
   { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM (Technical MBA) · BMS College of Engineering', teaser: 'Biomedical engineer → technical MBA', tabX: 22 },
   { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
   { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · model & actor · 125K creator', teaser: 'Crowns, cameras & content', tabX: 58 },
-  { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'My bookshelf · painting · singing · content', teaser: 'The fun folder', tabX: 74 },
+  { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'Reading · painting · music · content', teaser: 'The fun folder', tabX: 74 },
   { id: 'contact', no: '06', label: 'Contact', title: 'Contact', href: '/contact/', color: '--lime', ink: '--ink', peek: 'LinkedIn · Instagram · email', teaser: "Let's talk", tabX: 6 },
 ];
 
@@ -377,10 +377,10 @@ export const creator = {
 };
 
 export const hobbies = [
-  { no: '01', title: 'My Bookshelf', href: '/hobbies/bookshelf/', copy: 'Top 3, the year’s reads, and a shelf you can pull books from.', color: '--plum', peek: '--lime', icon: '📚' },
-  { no: '02', title: 'Painting', href: '/hobbies/painting/', copy: 'Acrylics, watercolour and a lot of happy accidents.', color: '--plum-deep', peek: '--rose', icon: '🎨' },
-  { no: '03', title: 'Singing', href: '/hobbies/singing/', copy: 'A few recordings, pressed onto imaginary cassettes.', color: '--plum', peek: '--rose-soft', icon: '🎙' },
-  { no: '04', title: 'Content Creation', href: '/hobbies/content/', copy: 'Reels, stories and a 125K community.', color: '--plum-deep', peek: '--lime', icon: '🎬' },
+  { no: '01', title: 'Reading', label: 'My bookshelf', href: '/hobbies/bookshelf/' },
+  { no: '02', title: 'Painting', label: 'My paintings', href: '/hobbies/painting/' },
+  { no: '03', title: 'Music', label: 'Side B', href: '/hobbies/singing/' },
+  { no: '04', title: 'Content creation', label: 'My creator story', href: '/accomplishments/#creator' },
 ];
 
 export interface Book {

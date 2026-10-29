@@ -8,4 +8,6 @@ export default defineConfig({
   site: 'https://bhavanadurgam.github.io',
   integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
   build: { format: 'directory' },
+  // The old Content page now lives on Accomplishments.
+  redirects: { '/hobbies/content/': '/accomplishments/#creator' },
 });
