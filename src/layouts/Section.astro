@@ -22,7 +22,7 @@ const light = f.ink === '--ink';
     transition:animate="initial"
   >
     <div class="frame-in">
-      <span class="frame-tab">{f.no} · {f.label}{sub && <> › {sub}</>}</span>
+      <span class="frame-tab">{f.label}{sub && <> › {sub}</>}</span>
       <a class="frame-back" href={back.href} data-sound>← {back.label}</a>
       <div class:list={['sheet', 'frame-sheet', { holes }]} style={`--hole: var(${f.color})`}>
         <slot />

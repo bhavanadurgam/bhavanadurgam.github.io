@@ -81,7 +81,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
           data-sound="open"
           transition:name={`folder-${f.id}`}
         >
-          <span class="file-tab"><span class="no">No.{f.no}</span>{f.title}</span>
+          <span class="file-tab">{f.title}</span>
           <span class="file-body">
             <span class="peek">
               <span class="peek-l mono">{f.peek}</span>
@@ -145,11 +145,10 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   /* A framed photo at a modest size, sitting in its own column */
   .hello-photo { margin: 0; display: grid; place-items: center; padding: clamp(24px, 3vw, 44px); border-right: 1.5px solid var(--plum); }
   .hello-photo img {
-    width: min(100%, 300px); aspect-ratio: 1 / 1.05; height: auto; object-fit: cover; object-position: 50% 14%;
-    border: 1.5px solid var(--plum); border-radius: 4px; box-shadow: 10px 10px 0 var(--rose);
-    transform: rotate(-2deg); transition: transform .5s var(--spring), box-shadow .5s; animation: settle 1.4s var(--smooth) both;
+    width: min(100%, 280px); aspect-ratio: 3 / 4; height: auto; object-fit: cover; object-position: 50% 18%;
+    border: 1.5px solid var(--plum); border-radius: 2px; box-shadow: 10px 10px 0 var(--rose); transition: transform .5s var(--spring), box-shadow .5s; animation: settle 1.4s var(--smooth) both;
   }
-  .hello-photo img:hover { transform: rotate(0) scale(1.02); box-shadow: 14px 14px 0 var(--lime); }
+  .hello-photo img:hover { transform: translateY(-4px); box-shadow: 14px 14px 0 var(--lime); }
   @keyframes settle { from { transform: scale(1.08); } }
   .hello-text {
     display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 56px) clamp(24px, 5vw, 80px);
@@ -178,7 +177,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   @media (max-width: 860px) {
     .hello { grid-template-columns: 1fr; min-height: 0; }
     .hello-photo { border-right: 0; border-bottom: 1.5px solid var(--plum); padding: 28px 24px 30px; }
-    .hello-photo img { width: min(68%, 240px); }
+    .hello-photo img { width: min(62%, 220px); }
     .hello-copy p { text-align: left; }
   }
 
@@ -207,7 +206,6 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
     display: flex; align-items: center; gap: 12px; background: var(--c); border-radius: 14px 14px 0 0;
     font: 400 22px/1 var(--serif); white-space: nowrap;
   }
-  .file-tab .no { font: 700 11px/1 var(--mono); letter-spacing: .14em; opacity: .8; }
   .file-body {
     display: block; box-sizing: border-box; min-height: 150px; padding: 20px 26px 0; background: var(--c); border-radius: 0 10px 0 0;
     background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 3px);

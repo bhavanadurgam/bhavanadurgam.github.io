@@ -100,7 +100,7 @@ export const impact = [
 
 export const experience: Job[] = [
   {
-    role: 'Product Marketing Manager',
+    role: 'Product Manager',
     company: 'Salmalita Cosmetics',
     place: 'Chicago, IL',
     dates: 'Sep 2025 – Present',
