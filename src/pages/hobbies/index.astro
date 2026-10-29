@@ -2,151 +2,166 @@
 import Section from '../../layouts/Section.astro';
 import { hobbies } from '../../data/content';
 
-// Where each object sits on the table: x, y, width (% of the board), tilt. m* = phone layout.
-const spots: Record<string, { x: number; y: number; w: number; r: number; mx: number; my: number; mw: number }> = {
-  Reading:            { x: 5,  y: 13, w: 24, r: -6, mx: 4,  my: 31, mw: 44 },
-  Music:              { x: 63, y: 8,  w: 30, r: 5,  mx: 50, my: 29, mw: 46 },
-  Painting:           { x: 9,  y: 56, w: 27, r: 4,  mx: 4,  my: 62, mw: 46 },
-  'Content creation': { x: 64, y: 58, w: 24, r: -5, mx: 53, my: 63, mw: 42 },
+// Where each object rests on the table: x, y, width (% of the board), tilt, depth (parallax strength).
+// m* = phone layout (a taller table with a 2x2 grid).
+const spots: Record<string, { x: number; y: number; w: number; r: number; d: number; mx: number; my: number; mw: number }> = {
+  Reading:            { x: 7,  y: 9,  w: 21, r: -6, d: 1.0, mx: 6,  my: 31, mw: 40 },
+  Music:              { x: 63, y: 8,  w: 24, r: 5,  d: 1.4, mx: 52, my: 30, mw: 43 },
+  Painting:           { x: 6,  y: 60, w: 23, r: 4,  d: 1.2, mx: 5,  my: 64, mw: 43 },
+  'Content creation': { x: 71, y: 61, w: 21, r: -5, d: 0.8, mx: 53, my: 65, mw: 40 },
 };
 ---
 <Section id="hobbies" title="Hobbies — Bhavana Durgam" description="Bhavana Durgam off the clock: reading (her bookshelf), painting, music and content creation.">
   <header class="frame-head">
     <p class="kicker">File No.05</p>
-    <p class="lede">I think personality makes a product person better. Here's my table of things I love when I'm off the clock: pick something up.</p>
+    <p class="lede">I think personality makes a product person better. Here's what I love when I'm off the clock.</p>
   </header>
 
-  <div class="board">
-    <h1 class="board-title">The hobby <em>archive</em></h1>
+  <div class="board" data-board>
+    <div class="board-center">
+      <h1 class="board-title">The hobby <em>archive</em></h1>
+      <p class="now mono" aria-hidden="true">
+        <span class="n-0">Pick something up</span>
+        {hobbies.map((h) => <span class={`n-${h.no}`}>{h.label} →</span>)}
+      </p>
+    </div>
 
-    <!-- decoration -->
-    <svg class="string" viewBox="0 0 100 62.5" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M44 9 C 50 2, 58 14, 52 18 S 60 26, 68 12" />
-    </svg>
-    <div class="deco beads" aria-hidden="true">{'BHAVANA'.split('').map((c, i) => <span style={`--i:${i}`}>{c}</span>)}<span class="heart">♥</span></div>
-    <div class="deco sticky" aria-hidden="true">pick<br />one ♡</div>
-    <svg class="deco flower f1" viewBox="0 0 100 100" aria-hidden="true">
+    <svg class="flower f1" viewBox="0 0 100 100" aria-hidden="true">
       {[0, 72, 144, 216, 288].map((a) => <ellipse cx="50" cy="28" rx="15" ry="24" transform={`rotate(${a} 50 50)`} />)}
       <circle cx="50" cy="50" r="10" class="core" />
     </svg>
-    <svg class="deco flower f2" viewBox="0 0 100 100" aria-hidden="true">
+    <svg class="flower f2" viewBox="0 0 100 100" aria-hidden="true">
       {[0, 60, 120, 180, 240, 300].map((a) => <ellipse cx="50" cy="26" rx="12" ry="22" transform={`rotate(${a} 50 50)`} />)}
       <circle cx="50" cy="50" r="11" class="core" />
     </svg>
-    <div class="deco ticket" aria-hidden="true">
-      <span class="t-l mono">Admit one</span>
-      <span class="t-m">Off the clock</span>
-      <span class="t-r mono">No. 05</span>
-    </div>
-    <svg class="deco cherries" viewBox="0 0 100 100" aria-hidden="true">
-      <path d="M48 8 C 40 30, 30 44, 30 60 M48 8 C 56 32, 66 46, 68 64" class="stem" />
-      <path d="M48 8 C 60 2, 74 6, 78 16 C 66 18, 54 14, 48 8 Z" class="leaf" />
-      <circle cx="30" cy="70" r="15" /><circle cx="68" cy="74" r="15" />
-      <circle cx="25" cy="65" r="4" class="shine" /><circle cx="63" cy="69" r="4" class="shine" />
-    </svg>
 
-    <!-- the four hobbies -->
     {hobbies.map((h, i) => {
       const s = spots[h.title];
       return (
         <a
           class:list={['obj', `obj-${h.no}`]}
           href={h.href}
-          style={`--x:${s.x}%; --y:${s.y}%; --w:${s.w}%; --r:${s.r}deg; --mx:${s.mx}%; --my:${s.my}%; --mw:${s.mw}%; --i:${i}`}
+          style={`--x:${s.x}%; --y:${s.y}%; --w:${s.w}%; --r:${s.r}deg; --d:${s.d}; --mx:${s.mx}%; --my:${s.my}%; --mw:${s.mw}%; --i:${i}`}
           data-sound="open"
           aria-label={`${h.title}: ${h.label}`}
         >
-          {h.no === '01' && (
-            <svg class="art books" viewBox="0 0 220 190" aria-hidden="true">
-              <rect class="b1" x="8" y="140" width="204" height="42" rx="4" />
-              <rect x="8" y="140" width="10" height="42" class="edge" /><line x1="40" y1="152" x2="150" y2="152" class="txt" /><line x1="40" y1="166" x2="110" y2="166" class="txt" />
-              <g class="b2"><rect x="22" y="100" width="176" height="40" rx="4" /><rect x="186" y="100" width="12" height="40" class="pages" /><line x1="44" y1="114" x2="136" y2="114" class="txt" /><line x1="44" y1="126" x2="104" y2="126" class="txt" /></g>
-              <g class="b3"><rect x="14" y="62" width="186" height="38" rx="4" /><rect x="14" y="62" width="12" height="38" class="edge" /><line x1="44" y1="76" x2="160" y2="76" class="txt dark" /><line x1="44" y1="88" x2="120" y2="88" class="txt dark" /></g>
-              <g class="b4"><path d="M40 62 L40 18 Q 72 6 106 18 Q 140 6 172 18 L172 62 Q 140 50 106 62 Q 72 50 40 62 Z" /><path d="M106 18 L106 62" class="spine" /><path d="M52 26 Q 74 20 96 26 M52 36 Q 74 30 96 36 M116 26 Q 138 20 160 26 M116 36 Q 138 30 160 36" class="lines" /><path d="M140 14 L140 44 L146 38 L152 44 L152 12" class="ribbon" /></g>
-            </svg>
-          )}
-          {h.no === '02' && (
-            <svg class="art palette" viewBox="0 0 260 190" aria-hidden="true">
-              <path class="board-p" d="M128 12 C 200 8 252 46 248 98 C 244 140 210 156 186 146 C 166 138 170 118 150 118 C 126 118 142 166 106 176 C 58 188 10 150 12 98 C 14 48 64 14 128 12 Z" />
-              <ellipse cx="150" cy="96" rx="13" ry="10" class="hole" />
-              <circle cx="66" cy="70" r="16" class="p1" /><circle cx="112" cy="46" r="15" class="p2" /><circle cx="168" cy="44" r="14" class="p3" />
-              <circle cx="212" cy="80" r="14" class="p4" /><circle cx="52" cy="122" r="15" class="p5" /><circle cx="92" cy="142" r="12" class="p1" />
-              <g class="brush"><rect x="60" y="88" width="170" height="10" rx="5" transform="rotate(-24 145 93)" class="handle" /><path d="M58 128 L 46 142 Q 38 154 50 150 L 66 136 Z" class="tip" /><rect x="58" y="120" width="16" height="12" rx="2" transform="rotate(-24 66 126)" class="ferrule" /></g>
-            </svg>
-          )}
-          {h.no === '03' && (
-            <svg class="art vinyl" viewBox="0 0 280 210" aria-hidden="true">
-              <g class="record">
-                <circle cx="176" cy="105" r="96" class="disc" />
-                {[86, 74, 62, 50].map((r) => <circle cx="176" cy="105" r={r} class="groove" />)}
-                <circle cx="176" cy="105" r="30" class="label" /><text x="176" y="102" class="label-t">SIDE B</text><text x="176" y="116" class="label-s">BHAVANA</text>
-                <circle cx="176" cy="105" r="4" class="hole" />
-              </g>
-              <g class="sleeve">
-                <rect x="6" y="9" width="192" height="192" rx="6" />
-                <text x="22" y="52" class="s-big">SIDE</text><text x="22" y="92" class="s-big">B</text>
-                <path d="M30 150 Q 60 110 90 150 T 150 150 T 190 140" class="squig" />
-                <circle cx="150" cy="70" r="20" class="sun" />
-                <rect x="22" y="172" width="64" height="14" class="bar" />
-              </g>
-            </svg>
-          )}
-          {h.no === '04' && (
-            <svg class="art camera" viewBox="0 0 230 170" aria-hidden="true">
-              <rect x="10" y="34" width="210" height="126" rx="22" class="body" />
-              <rect x="30" y="20" width="56" height="22" rx="8" class="top" /><rect x="168" y="22" width="34" height="16" rx="6" class="shutter" />
-              <rect x="150" y="50" width="52" height="26" rx="6" class="flashbox" />
-              <circle cx="104" cy="100" r="46" class="ring" /><circle cx="104" cy="100" r="34" class="lens" /><circle cx="104" cy="100" r="20" class="glass" />
-              <circle cx="94" cy="90" r="7" class="glint" />
-              <path d="M180 110 c -8 -12 -26 -6 -18 8 l 18 16 l 18 -16 c 8 -14 -10 -20 -18 -8 z" class="sticker-h" />
-              <path d="M38 130 l 5 10 l 11 2 l -8 8 l 2 11 l -10 -5 l -10 5 l 2 -11 l -8 -8 l 11 -2 z" class="sticker-s" />
-              <circle cx="190" cy="150" r="8" class="dot" />
-            </svg>
-          )}
+          <span class="par"><span class="bob">
+              {h.no === '01' && (
+                <svg class="art books" viewBox="0 0 220 190" aria-hidden="true">
+                  <rect class="b1" x="8" y="140" width="204" height="42" rx="4" />
+                  <rect x="8" y="140" width="10" height="42" class="edge" /><line x1="40" y1="152" x2="150" y2="152" class="txt" /><line x1="40" y1="166" x2="110" y2="166" class="txt" />
+                  <g class="b2"><rect x="22" y="100" width="176" height="40" rx="4" /><rect x="186" y="100" width="12" height="40" class="pages" /><line x1="44" y1="114" x2="136" y2="114" class="txt" /><line x1="44" y1="126" x2="104" y2="126" class="txt" /></g>
+                  <g class="b3"><rect x="14" y="62" width="186" height="38" rx="4" /><rect x="14" y="62" width="12" height="38" class="edge" /><line x1="44" y1="76" x2="160" y2="76" class="txt dark" /><line x1="44" y1="88" x2="120" y2="88" class="txt dark" /></g>
+                  <g class="b4"><path d="M40 62 L40 18 Q 72 6 106 18 Q 140 6 172 18 L172 62 Q 140 50 106 62 Q 72 50 40 62 Z" /><path d="M106 18 L106 62" class="spine" /><path d="M52 26 Q 74 20 96 26 M52 36 Q 74 30 96 36 M116 26 Q 138 20 160 26 M116 36 Q 138 30 160 36" class="lines" /><path d="M140 14 L140 44 L146 38 L152 44 L152 12" class="ribbon" /></g>
+                </svg>
+              )}
+              {h.no === '02' && (
+                <svg class="art palette" viewBox="0 0 260 190" aria-hidden="true">
+                  <path class="board-p" d="M128 12 C 200 8 252 46 248 98 C 244 140 210 156 186 146 C 166 138 170 118 150 118 C 126 118 142 166 106 176 C 58 188 10 150 12 98 C 14 48 64 14 128 12 Z" />
+                  <ellipse cx="150" cy="96" rx="13" ry="10" class="hole" />
+                  <circle cx="66" cy="70" r="16" class="p1" /><circle cx="112" cy="46" r="15" class="p2" /><circle cx="168" cy="44" r="14" class="p3" />
+                  <circle cx="212" cy="80" r="14" class="p4" /><circle cx="52" cy="122" r="15" class="p5" /><circle cx="92" cy="142" r="12" class="p1" />
+                  <g class="brush"><rect x="60" y="88" width="170" height="10" rx="5" transform="rotate(-24 145 93)" class="handle" /><path d="M58 128 L 46 142 Q 38 154 50 150 L 66 136 Z" class="tip" /><rect x="58" y="120" width="16" height="12" rx="2" transform="rotate(-24 66 126)" class="ferrule" /></g>
+                </svg>
+              )}
+              {h.no === '03' && (
+                <svg class="art vinyl" viewBox="0 0 280 210" aria-hidden="true">
+                  <g class="record">
+                    <circle cx="176" cy="105" r="96" class="disc" />
+                    {[86, 74, 62, 50].map((r) => <circle cx="176" cy="105" r={r} class="groove" />)}
+                    <circle cx="176" cy="105" r="30" class="label" /><text x="176" y="102" class="label-t">SIDE B</text><text x="176" y="116" class="label-s">BHAVANA</text>
+                    <circle cx="176" cy="105" r="4" class="hole" />
+                  </g>
+                  <g class="sleeve">
+                    <rect x="6" y="9" width="192" height="192" rx="6" />
+                    <text x="22" y="52" class="s-big">SIDE</text><text x="22" y="92" class="s-big">B</text>
+                    <path d="M30 150 Q 60 110 90 150 T 150 150 T 190 140" class="squig" />
+                    <circle cx="150" cy="70" r="20" class="sun" />
+                    <rect x="22" y="172" width="64" height="14" class="bar" />
+                  </g>
+                </svg>
+              )}
+              {h.no === '04' && (
+                <svg class="art camera" viewBox="0 0 230 170" aria-hidden="true">
+                  <rect x="10" y="34" width="210" height="126" rx="22" class="body" />
+                  <rect x="30" y="20" width="56" height="22" rx="8" class="top" /><rect x="168" y="22" width="34" height="16" rx="6" class="shutter" />
+                  <rect x="150" y="50" width="52" height="26" rx="6" class="flashbox" />
+                  <circle cx="104" cy="100" r="46" class="ring" /><circle cx="104" cy="100" r="34" class="lens" /><circle cx="104" cy="100" r="20" class="glass" />
+                  <circle cx="94" cy="90" r="7" class="glint" />
+                  <path d="M180 110 c -8 -12 -26 -6 -18 8 l 18 16 l 18 -16 c 8 -14 -10 -20 -18 -8 z" class="sticker-h" />
+                  <path d="M38 130 l 5 10 l 11 2 l -8 8 l 2 11 l -10 -5 l -10 5 l 2 -11 l -8 -8 l 11 -2 z" class="sticker-s" />
+                  <circle cx="190" cy="150" r="8" class="dot" />
+                </svg>
+              )}
+          </span></span>
           <span class="tag mono"><b>{h.no}</b> {h.title}</span>
           {h.no === '04' && <span class="flash" aria-hidden="true"></span>}
         </a>
       );
     })}
   </div>
-  <p class="hint mono">Hover to pick something up · click to open</p>
 </Section>
 
 <style>
   .frame-head { margin-bottom: 20px; }
   .board {
-    position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; isolation: isolate;
+    --px: 0; --py: 0;
+    position: relative; aspect-ratio: 16 / 9.4; border-radius: 18px; overflow: hidden; isolation: isolate;
     background-color: var(--plum-deep);
-    background-image: radial-gradient(rgba(247,246,215,.06) 1px, transparent 1.4px), radial-gradient(circle at 50% 45%, rgba(234,176,200,.16), transparent 60%);
+    background-image: radial-gradient(rgba(247,246,215,.05) 1px, transparent 1.4px), radial-gradient(circle at 50% 48%, rgba(234,176,200,.18), transparent 58%);
     background-size: 6px 6px, 100% 100%;
     box-shadow: inset 0 0 0 1.5px var(--plum), 0 30px 50px -30px rgba(45,10,23,.6);
   }
+
+  /* centre: title + a line that names whatever you're hovering */
+  .board-center {
+    position: absolute; left: 50%; top: 50%; z-index: 2; text-align: center; pointer-events: none;
+    transform: translate(calc(-50% + var(--px) * -6px), calc(-50% + var(--py) * -6px)); transition: transform .6s var(--smooth);
+  }
   .board-title {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; margin: 0; text-align: center; pointer-events: none;
-    font: 800 clamp(36px, 6.4vw, 92px)/.86 var(--display); letter-spacing: -0.045em; font-stretch: 88%; color: var(--ivory);
-    animation: settle-in .9s var(--spring) .1s both;
+    margin: 0; font: 800 clamp(36px, 6.4vw, 92px)/.86 var(--display); letter-spacing: -0.045em; font-stretch: 88%; color: var(--ivory);
+    animation: rise-in 1s var(--spring) .1s both;
   }
   .board-title em { display: block; font: italic 400 1.1em/1 var(--serif); letter-spacing: -0.01em; color: var(--rose); }
-  @keyframes settle-in { from { opacity: 0; transform: translate(-50%, -40%) scale(.92); } }
+  @keyframes rise-in { from { opacity: 0; transform: translateY(24px) scale(.94); } }
+  .now { position: relative; height: 1.4em; margin-top: 18px; font-size: clamp(10px, .95vw, 13px); font-weight: 700; letter-spacing: .14em; color: var(--lime); }
+  .now span { position: absolute; inset: 0; transition: opacity .3s, transform .4s var(--spring); }
+  .now span:not(.n-0) { opacity: 0; transform: translateY(8px); }
+  .board:has(.obj:hover, .obj:focus-visible) .n-0 { opacity: 0; transform: translateY(-8px); }
+  .board:has(.obj-01:hover, .obj-01:focus-visible) .n-01,
+  .board:has(.obj-02:hover, .obj-02:focus-visible) .n-02,
+  .board:has(.obj-03:hover, .obj-03:focus-visible) .n-03,
+  .board:has(.obj-04:hover, .obj-04:focus-visible) .n-04 { opacity: 1; transform: none; }
 
-  /* objects */
+  /* objects: placed (a) > parallax (.par) > idle float (.bob) > art */
   .obj {
     position: absolute; left: var(--x); top: var(--y); width: var(--w); z-index: 3; display: block; text-decoration: none;
-    transform: rotate(var(--r)); transition: transform .5s var(--spring), filter .4s;
-    filter: drop-shadow(0 14px 14px rgba(0,0,0,.35));
-    animation: drop .7s var(--spring) both; animation-delay: calc(.25s + var(--i) * .12s);
+    transform: rotate(var(--r)); transition: transform .6s var(--spring), opacity .4s, filter .4s;
+    animation: place 1s var(--spring) both; animation-delay: calc(.35s + var(--i) * .14s);
   }
-  @keyframes drop { from { opacity: 0; translate: 0 -40px; scale: 1.12; } }
-  .obj:hover, .obj:focus-visible { z-index: 6; transform: rotate(0deg) translateY(-10px) scale(1.06); filter: drop-shadow(0 26px 22px rgba(0,0,0,.45)); }
-  .obj:focus-visible { outline: 2px dashed var(--lime); outline-offset: 8px; border-radius: 10px; }
-  .art { width: 100%; height: auto; overflow: visible; }
+  /* each one slides onto the table from its own corner */
+  @keyframes place { from { opacity: 0; translate: calc((var(--x) - 40%) * .5) 60px; rotate: calc(var(--r) * -3); } }
+  .par { display: block; transform: translate(calc(var(--px) * var(--d) * 14px), calc(var(--py) * var(--d) * 14px)); transition: transform .5s var(--smooth); }
+  .bob { display: block; animation: bob 6s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -1.7s); }
+  @keyframes bob { from { translate: 0 -5px; rotate: -1deg; } to { translate: 0 6px; rotate: 1.2deg; } }
+  .art { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 16px 14px rgba(0,0,0,.38)); transition: filter .5s; }
+
+  .obj:hover, .obj:focus-visible { z-index: 6; transform: rotate(0deg) translateY(-12px) scale(1.08); }
+  .obj:hover .art, .obj:focus-visible .art { filter: drop-shadow(0 30px 24px rgba(0,0,0,.5)); }
+  .obj:hover .bob, .obj:focus-visible .bob { animation-play-state: paused; }
+  /* everything else steps back */
+  .board:has(.obj:hover, .obj:focus-visible) .obj:not(:hover, :focus-visible) { opacity: .45; filter: saturate(.6) blur(1.5px); transform: rotate(var(--r)) scale(.96); }
+  .board:has(.obj:hover, .obj:focus-visible) .flower { opacity: .25; }
+  .obj:focus-visible { outline: none; }
+  .obj:focus-visible .tag { outline: 2px solid var(--lime); outline-offset: 3px; }
+
   .tag {
-    position: absolute; left: 50%; bottom: -12px; translate: -50% 0; white-space: nowrap; padding: 7px 12px; border-radius: 4px;
+    position: absolute; left: 50%; bottom: -14px; translate: -50% 0; white-space: nowrap; padding: 7px 12px; border-radius: 4px;
     background: var(--ivory); color: var(--ink); font-size: clamp(10px, .9vw, 12px); font-weight: 700; letter-spacing: .1em;
-    box-shadow: 0 6px 12px rgba(0,0,0,.25); transform: rotate(calc(var(--r) * -1)); transition: background .25s, transform .4s var(--spring);
+    box-shadow: 0 6px 12px rgba(0,0,0,.25); transform: rotate(calc(var(--r) * -1)); transition: background .25s, transform .45s var(--spring);
   }
   .tag b { color: var(--plum); margin-right: 4px; }
-  .obj:hover .tag, .obj:focus-visible .tag { background: var(--lime); transform: rotate(0) translateY(4px); }
+  .obj:hover .tag, .obj:focus-visible .tag { background: var(--lime); transform: rotate(0) translateY(6px); }
 
   /* books */
   .books rect, .books path { stroke: rgba(45,10,23,.35); stroke-width: 1.5; }
@@ -173,8 +188,8 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; mx: nu
   .vinyl .disc { fill: #1d1418; } .vinyl .groove { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 1.5; }
   .vinyl .label { fill: var(--lime); } .vinyl .hole { fill: var(--plum-deep); }
   .vinyl .label-t { font: 800 11px var(--display); fill: var(--plum); text-anchor: middle; } .vinyl .label-s { font: 700 6px var(--mono); fill: var(--plum); text-anchor: middle; letter-spacing: 1px; }
-  .vinyl .record { transform-box: fill-box; transform-origin: 176px 105px; transition: translate .6s var(--spring); }
-  .obj-03:hover .record, .obj-03:focus-visible .record { translate: 40px 0; animation: spin 2.4s linear infinite; }
+  .vinyl .record { transform-box: view-box; transform-origin: 176px 105px; transition: translate .6s var(--spring); }
+  .obj-03:hover .record, .obj-03:focus-visible .record { translate: 28px 0; animation: spin 2.4s linear infinite; }
   @keyframes spin { to { rotate: 360deg; } }
   .vinyl .sleeve rect { fill: var(--rose); stroke: rgba(45,10,23,.3); stroke-width: 1.5; }
   .vinyl .s-big { font: 800 44px/1 var(--display); fill: var(--plum); letter-spacing: -2px; }
@@ -190,46 +205,39 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; mx: nu
   .obj-04:hover .flash, .obj-04:focus-visible .flash { animation: flash .5s ease-out; }
   @keyframes flash { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
 
-  /* decoration */
-  .deco { position: absolute; z-index: 1; pointer-events: none; }
-  .string { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-  .string path { fill: none; stroke: var(--rose); stroke-width: .35; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-width: 2.5; }
-  .beads { left: 32%; top: 6%; display: flex; gap: .4vw; transform: rotate(-5deg); }
-  .beads span {
-    display: grid; place-items: center; width: clamp(18px, 2.2vw, 30px); aspect-ratio: 1; border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #fff, #EDE7E0); color: var(--ink); font: 700 clamp(9px, 1vw, 13px)/1 var(--sans);
-    box-shadow: 0 3px 4px rgba(0,0,0,.35); translate: 0 calc(sin(var(--i) * 1rad) * 4px);
-  }
-  .beads .heart { color: var(--plum); }
-  .sticky {
-    left: 44%; top: 18%; width: 13%; aspect-ratio: 1; padding: 1.2%; display: grid; place-items: center; text-align: center;
-    background: var(--lime); color: var(--plum-deep); font: 400 clamp(16px, 2vw, 28px)/1 var(--script);
-    transform: rotate(7deg); box-shadow: 4px 8px 10px rgba(0,0,0,.35);
-  }
-  .flower { width: 9%; } .flower ellipse { fill: var(--rose); opacity: .92; } .flower .core { fill: var(--lime); }
-  .f1 { left: 33%; top: 64%; transform: rotate(18deg); }
-  .f2 { left: 88%; top: 40%; width: 8%; } .f2 ellipse { fill: #F3D3E0; } .f2 .core { fill: #F2A65A; }
-  .ticket {
-    left: 40%; top: 80%; width: 22%; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; padding: .7% 1.2%;
-    background: var(--ivory); color: var(--plum); border-radius: 4px; transform: rotate(-4deg); box-shadow: 0 8px 10px rgba(0,0,0,.35);
-    background-image: radial-gradient(circle at 0 50%, var(--plum-deep) 6px, transparent 6.5px), radial-gradient(circle at 100% 50%, var(--plum-deep) 6px, transparent 6.5px);
-  }
-  .t-l, .t-r { font-size: clamp(7px, .7vw, 10px); font-weight: 700; } .t-m { font: 800 clamp(11px, 1.3vw, 18px)/1 var(--display); text-align: center; border-left: 1.5px dashed var(--rose); border-right: 1.5px dashed var(--rose); padding: 0 6px; }
-  .cherries { left: 89%; top: 74%; width: 7%; transform: rotate(-12deg); }
-  .cherries circle { fill: var(--plum); } .cherries .shine { fill: rgba(255,255,255,.5); } .cherries .stem { fill: none; stroke: #6E8A3A; stroke-width: 3; } .cherries .leaf { fill: var(--lime); }
+  /* two pressed flowers, drifting slowly */
+  .flower { position: absolute; z-index: 1; pointer-events: none; opacity: .85; transition: opacity .4s; animation: drift 14s ease-in-out infinite alternate; }
+  .flower ellipse { fill: var(--rose); } .flower .core { fill: var(--lime); }
+  .f1 { left: 34%; top: 74%; width: 7%; }
+  .f2 { left: 60%; top: 12%; width: 6%; animation-delay: -6s; } .f2 ellipse { fill: #F3D3E0; } .f2 .core { fill: #F2A65A; }
+  @keyframes drift { from { rotate: -8deg; translate: 0 0; } to { rotate: 14deg; translate: 6px -6px; } }
 
-  .hint { margin-top: 14px; font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; }
-
-  /* phone: a taller table */
   @media (max-width: 640px) {
-    .board { aspect-ratio: 3 / 5.4; }
+    .board { aspect-ratio: 3 / 5; }
     .obj { left: var(--mx); top: var(--my); width: var(--mw); }
-    .board-title { top: 15%; font-size: clamp(32px, 10vw, 44px); }
-    .beads { left: 50%; top: 83%; translate: -50% 0; gap: 3px; } .beads span { width: 22px; font-size: 10px; }
-    .sticky { left: 38%; top: 51%; width: 24%; font-size: 15px; z-index: 2; }
-    .f1 { left: 4%; top: 52%; width: 13%; } .f2 { left: 82%; top: 50%; width: 13%; }
-    .ticket { left: 20%; top: 91%; width: 60%; } .cherries { left: 84%; top: 21%; width: 11%; }
-    .string { display: none; }
+    .board-center { top: 15%; }
+    .board-title { font-size: clamp(32px, 10vw, 44px); }
+    .now { display: none; }
+    .f1 { left: 40%; top: 52%; width: 14%; } .f2 { left: 78%; top: 8%; width: 12%; }
     .tag { font-size: 9.5px; padding: 5px 7px; letter-spacing: .06em; white-space: normal; width: max-content; max-width: 100%; text-align: center; }
   }
 </style>
+
+<script>
+  import { reducedMotion } from '../../scripts/shared';
+
+  // The table tilts gently towards the cursor: each object moves by its own depth.
+  function initBoard() {
+    const board = document.querySelector<HTMLElement>('[data-board]');
+    if (!board || reducedMotion() || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let raf = 0, x = 0, y = 0;
+    board.addEventListener('pointermove', (e) => {
+      const r = board.getBoundingClientRect();
+      x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      y = ((e.clientY - r.top) / r.height) * 2 - 1;
+      if (!raf) raf = requestAnimationFrame(() => { raf = 0; board.style.setProperty('--px', x.toFixed(3)); board.style.setProperty('--py', y.toFixed(3)); });
+    });
+    board.addEventListener('pointerleave', () => { board.style.setProperty('--px', '0'); board.style.setProperty('--py', '0'); });
+  }
+  document.addEventListener('astro:page-load', initBoard);
+</script>

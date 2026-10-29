@@ -379,7 +379,7 @@ export const creator = {
 export const hobbies = [
   { no: '01', title: 'Reading', label: 'My bookshelf', href: '/hobbies/bookshelf/' },
   { no: '02', title: 'Painting', label: 'My paintings', href: '/hobbies/painting/' },
-  { no: '03', title: 'Music', label: 'Side B', href: '/hobbies/singing/' },
+  { no: '03', title: 'Music', label: 'My songs', href: '/hobbies/singing/' },
   { no: '04', title: 'Content creation', label: 'My creator story', href: '/accomplishments/#creator' },
 ];
 
