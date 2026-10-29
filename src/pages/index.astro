@@ -136,22 +136,22 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   /* ── About: hello card ───────────────────────── */
   .hero { padding: clamp(24px, 4vw, 48px) 0 clamp(56px, 7vw, 88px); background: var(--rose); }
   .hello {
-    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: min(640px, 78vh);
+    display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
     background: var(--ivory); border: 1.5px solid var(--plum); border-radius: 22px; overflow: hidden;
     box-shadow: 0 30px 60px -34px rgba(45,10,23,.55);
     animation: rise .8s var(--spring) .05s both;
   }
   @keyframes rise { from { opacity: 0; transform: translateY(40px); } }
   .hello-photo { margin: 0; border-right: 1.5px solid var(--plum); background: var(--rose-soft); overflow: hidden; }
-  .hello-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; animation: settle 1.4s var(--smooth) both; }
+  .hello-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; animation: settle 1.4s var(--smooth) both; }
   @keyframes settle { from { transform: scale(1.08); } }
   .hello-text {
-    display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 6vw, 88px) clamp(24px, 6vw, 96px);
+    display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 56px) clamp(24px, 5vw, 80px);
     /* soft paper grain like the inspiration card */
     background-image: radial-gradient(rgba(45,10,23,.05) 1px, transparent 1.2px), radial-gradient(rgba(45,10,23,.035) 1px, transparent 1.2px);
     background-size: 5px 5px, 7px 7px; background-position: 0 0, 2px 3px;
   }
-  .hello-h { margin: 0; font: 800 clamp(54px, 8.4vw, 124px)/.88 var(--display); letter-spacing: -0.045em; font-stretch: 88%; color: var(--ink); }
+  .hello-h { margin: 0; font: 800 clamp(50px, 6.4vw, 96px)/.88 var(--display); letter-spacing: -0.045em; font-stretch: 88%; color: var(--ink); }
   .hello-h > span { display: block; animation: up .7s var(--spring) both; }
   .hello-h .hi { animation-delay: .25s; }
   .hello-h .im { animation-delay: .38s; }
@@ -164,14 +164,14 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
     stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.1s cubic-bezier(.6,.05,.3,1) .9s forwards;
   }
   @keyframes draw { to { stroke-dashoffset: 0; } }
-  .hello-copy { display: grid; gap: 1.1em; margin-top: clamp(28px, 4vw, 48px); max-width: 600px; animation: up .7s ease .55s both; }
-  .hello-copy p { font: 400 clamp(16px, 1.35vw, 18px)/1.6 var(--sans); color: var(--ink); text-align: justify; }
+  .hello-copy { display: grid; gap: 1.1em; margin-top: clamp(22px, 3vw, 34px); max-width: 620px; animation: up .7s ease .55s both; }
+  .hello-copy p { font: 400 clamp(15.5px, 1.2vw, 17px)/1.55 var(--sans); color: var(--ink); text-align: justify; }
   .meta { margin-top: 26px; font-size: 12px; font-weight: 700; color: var(--muted); }
   .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
 
   @media (max-width: 860px) {
     .hello { grid-template-columns: 1fr; min-height: 0; }
-    .hello-photo { border-right: 0; border-bottom: 1.5px solid var(--plum); aspect-ratio: 4 / 4.2; }
+    .hello-photo { border-right: 0; border-bottom: 1.5px solid var(--plum); aspect-ratio: 4 / 3; }
     .hello-copy p { text-align: left; }
   }
 

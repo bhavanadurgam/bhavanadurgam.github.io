@@ -31,8 +31,8 @@ export const site = {
     "Bhavana Durgam is a biomedical engineer turned Product Manager with product marketing experience, based in Chicago. Master of Engineering Management (Technical MBA), Northwestern University. Open to PM and PMM opportunities.",
   socials: {
     linkedin: 'https://www.linkedin.com/in/bhavanadurgam/',
-    instagram: 'https://www.instagram.com/bhavanadurgam/',
-    instagramHandle: '@bhavanadurgam',
+    instagram: 'https://www.instagram.com/bhavana.durgam/',
+    instagramHandle: '@bhavana.durgam',
   },
 };
 
@@ -59,13 +59,13 @@ export const marquee = [
 // "A few things to know about me…" polaroids. Keep each caption short.
 // To add a photo: put it in public/photos/notes/ and add  photo: '/photos/notes/your-file.jpg'
 export const notes: { icon: string; text: string; photo?: string }[] = [
-  { icon: '✎', text: 'Around 50 books a year. Ask me for a recommendation!', photo: '/photos/notes/books.jpg' },
-  { icon: '⌂', text: 'Bangalore girl at heart, Chicago by address', photo: '/photos/notes/bangalore.jpg' },
-  { icon: '✐', text: 'Volunteer teacher for kids in underserved schools across Bangalore', photo: '/photos/notes/teaching.jpg' },
-  { icon: '♛', text: 'Femina Miss India Karnataka 2018, crown and all', photo: '/photos/notes/miss-india.jpg' },
-  { icon: '✧', text: 'In front of the camera since I was six', photo: '/photos/notes/modelling.jpg' },
-  { icon: '♡', text: 'Animal lover, and Nora’s very proud dog mom', photo: '/photos/notes/nora.jpg' },
-  { icon: '∞', text: 'Forever a student: there’s always something new I’m learning', photo: '/photos/notes/polymath.jpg' },
+  { icon: '✎', text: 'Bookworm: I read around 50 books a year', photo: '/photos/notes/books.jpg' },
+  { icon: '⌂', text: 'Born and raised in Bangalore, now at home in Chicago', photo: '/photos/notes/bangalore.jpg' },
+  { icon: '✐', text: 'Volunteer teacher for kids in underserved schools in Bangalore', photo: '/photos/notes/teaching.jpg' },
+  { icon: '♛', text: 'Femina Miss India Karnataka 2018 and Top 10 at Miss India', photo: '/photos/notes/miss-india.jpg' },
+  { icon: '✧', text: 'Model and actor since I was six', photo: '/photos/notes/modelling.jpg' },
+  { icon: '♡', text: 'Animal lover and proud dog mom to Nora', photo: '/photos/notes/nora.jpg' },
+  { icon: '∞', text: 'Polymath: always learning something new', photo: '/photos/notes/polymath.jpg' },
 ];
 
 export const philosophy = {
