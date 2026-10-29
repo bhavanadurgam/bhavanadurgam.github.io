@@ -178,14 +178,6 @@ function bindCopy() {
   }));
 }
 
-/* ── Résumé links not ready yet ────────────────────────── */
-function bindResumes() {
-  $$('[data-resume="soon"]').forEach((a) => a.addEventListener('click', (e) => {
-    e.preventDefault();
-    toast('Résumé coming soon');
-  }));
-}
-
 /* ── Easter egg: type "bhavana", or tap the footer logo 5× ── */
 let typed = '';
 let taps: number[] = [];
@@ -221,7 +213,6 @@ export function initShared() {
   bindMenu();
   bindSound();
   bindCopy();
-  bindResumes();
   bindSecret();
   reveal();
 }

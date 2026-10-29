@@ -13,7 +13,6 @@ Search for `TODO(Bhavana)` to find everything still waiting on you.
 | Sticky notes, philosophy quote, "Currently" note | `notes`, `philosophy`, `currently` in `content.ts` |
 | Books on the shelf | `books` in `content.ts` (add `top3: 1` / `2` / `3` for your top three) |
 | Your headshot | replace `src/assets/photos/headshot.jpg` (keep the name) |
-| Résumés | put `DurgamBhavana_PM_Resume.pdf` and `DurgamBhavana_PMM_Resume.pdf` in `public/resumes/`, then set `resumes.ready: true` |
 | Singing recordings | MP3s in `public/audio/`, then set `src: '/audio/your-file.mp3'` in `songs` |
 | Instagram preview video | `public/video/instagram-preview.mp4` (+ `.jpg` poster), then `hasVideo = true` in `src/pages/hobbies/content.astro` |
 | The secret file text | the `#secret` block in `src/layouts/Base.astro` |

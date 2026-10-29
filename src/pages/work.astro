@@ -1,74 +1,141 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Section from '../layouts/Section.astro';
-import { experience, site } from '../data/content';
+import { experience, impact } from '../data/content';
 
-const resumes = [
-  { key: 'pm' as const, title: 'PM Résumé', sub: 'Product Management', c: '--plum' },
-  { key: 'pmm' as const, title: 'PMM Résumé', sub: 'Product Marketing', c: '--plum-deep' },
-];
+const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/logos/*.png', { eager: true });
+const logo = (name: string) => logos[`../assets/logos/${name}.png`]?.default;
+const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
-<Section id="work" title="Work Experience — Bhavana Durgam" description="Bhavana Durgam's work experience as a biomedical engineer turned Product Manager: product management at PatientXpress, Product Marketing Manager at Salmalita Cosmetics, product quality lead at Capgemini, and BCI research.">
+<Section id="work" title="Work Experience — Bhavana Durgam" description="Bhavana Durgam, biomedical engineer turned Product Manager: 0→1 launch to $100K+ first-year revenue, AI voice product strategy for 250 dental clinics, 40% faster releases at Capgemini, and BCI research.">
   <header class="frame-head">
     <p class="kicker">File No.01</p>
-    <h1 class="title">Where I've <em>worked</em></h1>
-    <p class="lede">Four-plus years across consumer and enterprise products: launches, positioning and growth, built on an engineer's habit of testing everything.</p>
+    <h1 class="title">Where I've <em>built</em></h1>
+    <p class="lede">Four-plus years building products across healthcare, consumer and enterprise: from customer discovery and PRDs to roadmaps, launches and the go-to-market that makes them land.</p>
   </header>
 
-  <div class="work-grid">
-    <ol class="timeline">
-      {experience.map((j) => (
-        <li class="t-entry reveal" style={`--dc: var(${j.color})`}>
-          <span class="t-dot" aria-hidden="true">{j.initial}</span>
+  <ul class="impact" aria-label="Impact at a glance">
+    {impact.map((m, i) => (
+      <li class="stat reveal" style={`--d: ${i * 80}ms`}>
+        <span class="s-trait mono">{m.trait}</span>
+        <span class="s-val">{m.value}</span>
+        <span class="s-label">{m.label}</span>
+      </li>
+    ))}
+  </ul>
+
+  <ol class="timeline work-line" data-work-line>
+    {experience.map((j) => {
+      const img = logo(j.logo);
+      return (
+        <li class="t-entry job" style={`--dc: var(${j.color})`}>
+          <span class="t-logo">
+            {img ? <Image src={img} alt={`${j.company} logo`} width={112} height={112} /> : null}
+          </span>
           <p class="t-date">{j.dates} · {j.place}</p>
           <h2 class="t-role">{j.role}</h2>
           <p class="t-org">{j.company}</p>
-          <ul class="t-list">{j.bullets.map((b) => <li>{b}</li>)}</ul>
+          <ul class="tags">{j.tags.map((t) => <li class="pill">{t}</li>)}</ul>
+          <ul class="t-list">{j.bullets.map((b) => <li class="line" set:html={bold(b)} />)}</ul>
         </li>
-      ))}
-    </ol>
-
-    <aside class="resumes" aria-label="Résumés">
-      <p class="kicker">Take a copy</p>
-      {resumes.map((r, i) => (
-        <a
-          class="resume reveal"
-          href={site.resumes.ready ? site.resumes[r.key] : '#'}
-          download={site.resumes.ready ? '' : undefined}
-          data-resume={site.resumes.ready ? undefined : 'soon'}
-          data-sound
-          style={`--rc: var(${r.c}); --r: ${i ? 2 : -2}deg`}
-        >
-          <span class="clip" aria-hidden="true"></span>
-          <span class="r-title">{r.title}</span>
-          <span class="r-sub mono">{r.sub}</span>
-          <span class="r-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-          <span class="r-cta mono">{site.resumes.ready ? 'Download PDF ↓' : 'Coming soon'}</span>
-        </a>
-      ))}
-    </aside>
-  </div>
+      );
+    })}
+  </ol>
 </Section>
 
 <style>
-  .work-grid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .resumes { position: sticky; top: calc(var(--header) + 24px); display: grid; gap: 30px; }
-  .resume {
-    position: relative; display: grid; gap: 6px; padding: 30px 24px 24px; text-decoration: none;
-    background: #fff; border: 1px solid var(--line); border-radius: 4px;
-    box-shadow: 8px 8px 0 var(--rc); transform: rotate(var(--r));
-    transition: transform .45s var(--spring), box-shadow .45s var(--spring);
+  /* ── Impact strip ─────────────────────────────── */
+  .impact { list-style: none; padding: 0; margin: 0 0 clamp(48px, 6vw, 72px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .stat {
+    display: grid; align-content: start; gap: 8px; padding: 22px 20px 20px; border-radius: 16px;
+    background: var(--ivory); border: 1.5px solid var(--plum); box-shadow: 5px 5px 0 var(--rose);
   }
-  .resume:hover, .resume:focus-visible { transform: rotate(calc(var(--r) * -1.5)) translateY(-8px); box-shadow: 12px 14px 0 var(--rc); }
-  .resume .clip { top: -20px; right: 26px; transform: rotate(8deg); }
-  .r-title { font: 400 30px/1.05 var(--serif); }
-  .r-sub { font-size: 11px; font-weight: 700; color: var(--muted); }
-  .r-lines { display: grid; gap: 7px; margin: 14px 0 10px; }
-  .r-lines i { height: 5px; border-radius: 3px; background: var(--paper2); }
-  .r-lines i:nth-child(2) { width: 80%; } .r-lines i:nth-child(4) { width: 64%; } .r-lines i:nth-child(5) { width: 86%; }
-  .r-cta { font-size: 12px; font-weight: 700; color: var(--rc); }
-  @media (max-width: 960px) {
-    .work-grid { grid-template-columns: 1fr; }
-    .resumes { position: static; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .resumes .kicker { grid-column: 1 / -1; }
+  .stat:nth-child(2) { box-shadow: 5px 5px 0 var(--lime); }
+  .stat:nth-child(4) { box-shadow: 5px 5px 0 var(--lime); }
+  .s-trait { font-size: 11px; font-weight: 700; color: var(--plum); }
+  .s-val { font: 800 clamp(40px, 4.6vw, 58px)/.9 var(--display); letter-spacing: -0.04em; color: var(--ink); }
+  .s-label { font-size: 14px; line-height: 1.4; color: var(--muted); }
+
+  /* ── Timeline with logos ──────────────────────── */
+  .work-line { padding-left: 86px; gap: 56px; }
+  .work-line::before { left: 31px; }
+  /* the spine fills with plum as you scroll down */
+  .work-line::after {
+    content: ''; position: absolute; left: 30px; top: 8px; width: 4px; border-radius: 2px;
+    height: calc((100% - 16px) * var(--prog, 0)); background: linear-gradient(var(--plum), var(--rose));
+  }
+  .t-logo {
+    position: absolute; left: -86px; top: -4px; z-index: 1; width: 64px; height: 64px; border-radius: 16px; overflow: hidden;
+    background: #fff; border: 1.5px solid var(--plum); box-shadow: 0 0 0 6px var(--sheet), 3px 3px 0 6px var(--rose-soft);
+    transition: transform .5s var(--spring), box-shadow .5s;
+  }
+  .t-logo :global(img) { width: 100%; height: 100%; object-fit: contain; }
+  .job.lit .t-logo { transform: rotate(-4deg) scale(1.06); box-shadow: 0 0 0 6px var(--sheet), 3px 3px 0 6px var(--lime); }
+  .tags { list-style: none; padding: 0; margin: 12px 0 4px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags .pill { background: var(--rose-soft); border-color: transparent; color: var(--plum); }
+
+  /* Lines dim until they reach the middle of the screen, then light up. */
+  .t-list { gap: 12px; margin-top: 14px; }
+  .line { font-size: 16.5px; line-height: 1.55; transition: opacity .5s ease, color .5s ease, transform .5s var(--smooth); }
+  .line :global(strong) { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 58%, transparent 0); transition: background .6s ease; }
+  .line::before { transition: transform .4s var(--spring), color .4s; }
+  :global(.js-dim) .line { opacity: .28; }
+  :global(.js-dim) .line.lit { opacity: 1; transform: translateX(4px); }
+  :global(.js-dim) .line.lit :global(strong) { background: linear-gradient(transparent 58%, var(--lime) 0); }
+  :global(.js-dim) .line.lit::before { transform: scale(1.4) rotate(45deg); color: var(--plum); }
+  :global(.js-dim) .job .t-role, :global(.js-dim) .job .t-org { transition: opacity .5s; opacity: .45; }
+  :global(.js-dim) .job.lit .t-role, :global(.js-dim) .job.lit .t-org { opacity: 1; }
+
+  @media (max-width: 960px) { .impact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    .work-line { padding-left: 0; gap: 44px; }
+    .work-line::before, .work-line::after { display: none; }
+    .t-logo { position: relative; left: 0; top: 0; display: block; width: 52px; height: 52px; margin-bottom: 12px; border-radius: 14px; box-shadow: 3px 3px 0 var(--rose-soft); }
+    .job.lit .t-logo { box-shadow: 3px 3px 0 var(--lime); }
+    .line { font-size: 15.5px; }
   }
 </style>
+
+<script>
+  import { reducedMotion } from '../scripts/shared';
+
+  let cleanup: (() => void) | undefined;
+
+  function initWork() {
+    cleanup?.();
+    const list = document.querySelector<HTMLElement>('[data-work-line]');
+    if (!list) return;
+    if (reducedMotion() || !('IntersectionObserver' in window)) { list.style.setProperty('--prog', '1'); return; }
+
+    document.documentElement.classList.add('js-dim');
+    const lines = list.querySelectorAll<HTMLElement>('.line');
+    const jobs = list.querySelectorAll<HTMLElement>('.job');
+
+    // A line is lit while it sits in the middle band of the screen; a role stays lit while any of its lines is.
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.target.classList.toggle('lit', e.isIntersecting));
+      jobs.forEach((j) => j.classList.toggle('lit', !!j.querySelector('.line.lit')));
+    }, { rootMargin: '-30% 0px -35% 0px' });
+    lines.forEach((l) => io.observe(l));
+
+    let raf = 0;
+    const fill = () => {
+      raf = 0;
+      const r = list.getBoundingClientRect();
+      const mid = innerHeight * 0.55;
+      const p = Math.min(1, Math.max(0, (mid - r.top) / r.height));
+      list.style.setProperty('--prog', p.toFixed(3));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(fill); };
+    addEventListener('scroll', onScroll, { passive: true });
+    fill();
+
+    cleanup = () => {
+      io.disconnect(); removeEventListener('scroll', onScroll);
+      document.documentElement.classList.remove('js-dim');
+    };
+  }
+  document.addEventListener('astro:page-load', initWork);
+  document.addEventListener('astro:before-swap', () => { cleanup?.(); cleanup = undefined; });
+</script>

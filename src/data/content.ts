@@ -34,13 +34,6 @@ export const site = {
     instagram: 'https://www.instagram.com/bhavanadurgam/',
     instagramHandle: '@bhavanadurgam',
   },
-  // TODO(Bhavana): drop your PDFs into public/resumes/ with these exact names,
-  // then set ready: true. Until then the buttons say "coming soon".
-  resumes: {
-    ready: false,
-    pm: '/resumes/DurgamBhavana_PM_Resume.pdf',
-    pmm: '/resumes/DurgamBhavana_PMM_Resume.pdf',
-  },
 };
 
 // Homepage "Hello, I'm Bhavana!" card. TODO(Bhavana): edit these two paragraphs in your own words.
@@ -91,10 +84,19 @@ export interface Job {
   company: string;
   place: string;
   dates: string;
-  initial: string;
+  logo: string;       // file name in src/assets/logos/
   color: string;
-  bullets: string[];
+  tags: string[];     // what the role was about, shown as chips
+  bullets: string[];  // Google XYZ: "Accomplished **[X]**, measured by [Y], by doing [Z]". **bold** = the result.
 }
+
+// Headline numbers for the Work page, all taken from the bullets below.
+export const impact = [
+  { value: '$100K+', label: 'first-year revenue from a product I took from 0 to 1', trait: 'Ships 0 → 1' },
+  { value: '250', label: 'dental clinics using the AI voice product I shaped', trait: 'Customer-obsessed' },
+  { value: '30%', label: 'less customer confusion after my research-led PRDs', trait: 'Data-led' },
+  { value: '40%', label: 'faster release cycles from automation I built', trait: 'Technical depth' },
+];
 
 export const experience: Job[] = [
   {
@@ -102,12 +104,27 @@ export const experience: Job[] = [
     company: 'Salmalita Cosmetics',
     place: 'Chicago, IL',
     dates: 'Sep 2025 – Present',
-    initial: 'S',
+    logo: 'salmalita',
     color: '--plum',
+    tags: ['0 → 1 launch', 'Vision & roadmap', 'KPIs', 'Go-to-market'],
     bullets: [
-      'Took Skin Perfecting Formula, a skincare-powered makeup product, from zero to over $100K in first-year revenue (2,000 units; 100 sales in the first 4 weeks) by defining its positioning, messaging and go-to-market.',
-      'Built and managed a creator and affiliate program of 200 partners, expanding reach through Oscar-featured celebrity placements and national campaigns.',
-      'Built a base of 100 repeat customers through post-launch engagement, and set up AI marketing workflows for story content, newsletters and trend research.',
+      'Launched Skin Perfecting Formula from concept to **over $100K in first-year revenue** (2,000 units, 100 sales in the first 4 weeks) by owning the product vision, roadmap and requirements end to end.',
+      'Validated **product-market fit and a data-backed roadmap**, measured against the acquisition, retention and engagement KPIs I defined, by analysing 200 customer, creator and retail touchpoints.',
+      'Grew reach to **a 200-partner creator and affiliate network and 100 repeat customers**, including Oscar-featured celebrity placements, by designing the go-to-market, positioning and messaging.',
+      'Streamlined the marketing team’s planning by **building AI workflows** that automate story content, newsletter production and market-trend research.',
+    ],
+  },
+  {
+    role: 'Teaching Assistant',
+    company: 'Kellogg School of Management, Northwestern University',
+    place: 'Evanston, IL',
+    dates: 'Mar 2026 – Present',
+    logo: 'kellogg',
+    color: '--plum-deep',
+    tags: ['Teaching', 'Mentoring'],
+    // TODO(Bhavana): course name, class size and what you do week to week.
+    bullets: [
+      'Teaching Assistant at the **Kellogg School of Management**, supporting graduate students at Northwestern.',
     ],
   },
   {
@@ -115,34 +132,28 @@ export const experience: Job[] = [
     company: 'PatientXpress',
     place: 'Evanston, IL',
     dates: 'Jul 2025 – Aug 2025',
-    initial: 'P',
-    color: '--plum-deep',
-    bullets: [
-      'Positioned an AI voice assistant used by 250 dental clinics, each handling 10–50 patient calls a day, through customer interviews and analysis of 3 competing solutions.',
-      'Cut customer confusion by 30% by turning research into new messaging and a full website redesign.',
-      'Helped onboard 7–8 new clients in 3 months by redesigning onboarding flows with the CEO, CTO and engineers.',
-    ],
-  },
-  {
-    role: 'Teaching Assistant',
-    company: 'Kellogg School of Management, Northwestern',
-    place: 'Evanston, IL',
-    dates: '2024 – 2025', // TODO(Bhavana): confirm dates and add the course name
-    initial: 'K',
+    logo: 'patientxpress',
     color: '--plum',
-    bullets: ['Supported students in the Master of Engineering Management program.'],
+    tags: ['AI product', 'Healthcare', 'Discovery', 'PRDs'],
+    bullets: [
+      'Defined **the product strategy and roadmap for an AI voice assistant used by 250 dental clinics**, each handling 10–50 patient calls a day, by running user interviews and a competitive analysis of 3 solutions.',
+      'Reduced **customer confusion by 30%** and helped onboard **7–8 new clients in 3 months** by writing PRDs and redesigning onboarding flows with the CEO, CTO and engineering team.',
+      'Improved **product clarity and sales readiness** by turning customer research into positioning that shaped a full website redesign.',
+    ],
   },
   {
     role: 'Product Quality Lead',
     company: 'Capgemini Technology Services',
     place: 'Bengaluru, India',
     dates: 'Jan 2021 – Jun 2024',
-    initial: 'C',
+    logo: 'capgemini',
     color: '--plum-deep',
+    tags: ['Enterprise platforms', 'Team lead', 'Automation', 'Healthcare GTM'],
     bullets: [
-      "Owned product quality for Meijer's billing, inventory and workforce platforms, including a Starbucks billing integration, leading a 5–7 person team.",
-      'Raised test automation coverage from 10% to 90% in one sprint and cut release cycles by 40% with Python, Selenium, Robot Framework and CI/CD.',
-      'Identified a $2M healthcare-imaging opportunity, adopted by leadership for go-to-market planning.',
+      'Owned **product quality for Meijer’s billing, inventory and workforce-management platforms**, including a Starbucks billing integration for Meijer stores, by leading a 5–7 person QA team and defining the test strategy.',
+      'Cut **release cycles by 40%** and raised **test automation coverage from 10% to 90% in one sprint** by building QA frameworks with Python, Selenium, Robot Framework and CI/CD pipelines.',
+      'Reduced **post-release defects by 35%** by partnering with product managers and engineers on root-cause analysis and upstream requirement and release decisions.',
+      'Identified **a $2M healthcare imaging opportunity**, adopted by leadership for go-to-market planning, through market research and competitive mapping.',
     ],
   },
   {
@@ -150,11 +161,12 @@ export const experience: Job[] = [
     company: 'Raman Research Institute',
     place: 'Bengaluru, India',
     dates: 'Jan 2019 – Jun 2019',
-    initial: 'R',
+    logo: 'raman',
     color: '--plum',
+    tags: ['Healthcare tech', 'User research', 'Specs'],
     bullets: [
-      'Improved model accuracy by 31% for a brain-computer interface by turning end-user research into product specifications.',
-      'Aligned leadership on next-stage priorities by synthesising user-behaviour data and test results.',
+      'Improved **model accuracy by 31%** for a brain-computer interface (a system that turns brain signals into computer commands) by translating end-user research into product specifications.',
+      'Aligned **leadership on next-stage development priorities** for the platform by synthesising user-behaviour data and test results from structured user sessions.',
     ],
   },
 ];
