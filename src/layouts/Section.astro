@@ -17,7 +17,7 @@ const light = f.ink === '--ink';
 <Base title={title} description={description} active={id}>
   <section
     class:list={['frame', { 'frame-light': light }]}
-    style={`--c: var(${f.color}); --t: var(${f.ink}); --accent: var(${light ? '--red' : f.color})`}
+    style={`--c: var(${f.color}); --t: var(${f.ink}); --accent: var(${light ? '--plum' : f.color})`}
     transition:name={sub ? undefined : `folder-${id}`}
     transition:animate="initial"
   >

@@ -43,13 +43,19 @@ export const site = {
   },
 };
 
+// Homepage "Hello, I'm Bhavana!" card. TODO(Bhavana): edit these two paragraphs in your own words.
+export const about = [
+  "I'm a product marketer and aspiring product manager based in Chicago, focused on building things people actually love and then telling the world about them. My work spans positioning, go-to-market launches, creator partnerships and the user research underneath it all.",
+  "An engineer by training and a Northwestern MEM grad, I'm happiest where strategy meets storytelling. I love shaping a product's story from scratch, turning messy data into clear decisions, and I'm always up for new collaborations and a good book recommendation.",
+];
+
 export const folders: Folder[] = [
-  { id: 'work', no: '01', label: 'Work', title: 'Work Experience', href: '/work/', color: '--red', ink: '--sheet', peek: 'Salmalita · PatientXpress · Capgemini · Raman Research', teaser: '$100K launch, year one', tabX: 4 },
-  { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--blue', ink: '--sheet', peek: 'Northwestern MEM · BMS College of Engineering', teaser: 'Engineer, then strategist', tabX: 22 },
-  { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--brown', ink: '--sheet', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
-  { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--pink', ink: '--ink', peek: 'Miss India Karnataka 2018 · a 125K community', teaser: 'The proud moments', tabX: 58 },
-  { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--orange', ink: '--ink', peek: 'My bookshelf · painting · singing · content', teaser: 'The fun folder', tabX: 74 },
-  { id: 'contact', no: '06', label: 'Contact', title: 'Contact', href: '/contact/', color: '--plum', ink: '--sheet', peek: 'LinkedIn · Instagram · email', teaser: "Let's talk", tabX: 6 },
+  { id: 'work', no: '01', label: 'Work', title: 'Work Experience', href: '/work/', color: '--plum', ink: '--sheet', peek: 'Salmalita · PatientXpress · Capgemini · Raman Research', teaser: '$100K launch, year one', tabX: 4 },
+  { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM · BMS College of Engineering', teaser: 'Engineer, then strategist', tabX: 22 },
+  { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
+  { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · a 125K community', teaser: 'The proud moments', tabX: 58 },
+  { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'My bookshelf · painting · singing · content', teaser: 'The fun folder', tabX: 74 },
+  { id: 'contact', no: '06', label: 'Contact', title: 'Contact', href: '/contact/', color: '--lime', ink: '--ink', peek: 'LinkedIn · Instagram · email', teaser: "Let's talk", tabX: 6 },
 ];
 
 export const marquee = [
@@ -97,7 +103,7 @@ export const experience: Job[] = [
     place: 'Chicago, IL',
     dates: 'Sep 2025 – Present',
     initial: 'S',
-    color: '--red',
+    color: '--plum',
     bullets: [
       'Took Skin Perfecting Formula, a skincare-powered makeup product, from zero to over $100K in first-year revenue (2,000 units; 100 sales in the first 4 weeks) by defining its positioning, messaging and go-to-market.',
       'Built and managed a creator and affiliate program of 200 partners, expanding reach through Oscar-featured celebrity placements and national campaigns.',
@@ -110,7 +116,7 @@ export const experience: Job[] = [
     place: 'Evanston, IL',
     dates: 'Jul 2025 – Aug 2025',
     initial: 'P',
-    color: '--blue',
+    color: '--plum-deep',
     bullets: [
       'Positioned an AI voice assistant used by 250 dental clinics, each handling 10–50 patient calls a day, through customer interviews and analysis of 3 competing solutions.',
       'Cut customer confusion by 30% by turning research into new messaging and a full website redesign.',
@@ -132,7 +138,7 @@ export const experience: Job[] = [
     place: 'Bengaluru, India',
     dates: 'Jan 2021 – Jun 2024',
     initial: 'C',
-    color: '--brown',
+    color: '--plum-deep',
     bullets: [
       "Owned product quality for Meijer's billing, inventory and workforce platforms, including a Starbucks billing integration, leading a 5–7 person team.",
       'Raised test automation coverage from 10% to 90% in one sprint and cut release cycles by 40% with Python, Selenium, Robot Framework and CI/CD.',
@@ -145,7 +151,7 @@ export const experience: Job[] = [
     place: 'Bengaluru, India',
     dates: 'Jan 2019 – Jun 2019',
     initial: 'R',
-    color: '--orange',
+    color: '--plum',
     bullets: [
       'Improved model accuracy by 31% for a brain-computer interface by turning end-user research into product specifications.',
       'Aligned leadership on next-stage priorities by synthesising user-behaviour data and test results.',
@@ -174,7 +180,7 @@ export const education = [
     place: 'Bengaluru, India',
     dates: 'Jun 2019',
     initial: 'BMS',
-    color: '--red',
+    color: '--plum-deep',
     bullets: [
       'Brain-computer interface research at the Raman Research Institute.',
       'Campus Recruitment Lead: drove an 85% placement rate for 60 students and lifted engagement 30%.',
@@ -184,8 +190,8 @@ export const education = [
 
 // TODO(Bhavana): add graduation photos to src/assets/photos/ and list them here.
 export const gradPolaroids = [
-  { caption: 'Northwestern, 2025', tone: '--sky' },
-  { caption: 'BMSCE, 2019', tone: '--butter' },
+  { caption: 'Northwestern, 2025', tone: '--rose-soft' },
+  { caption: 'BMSCE, 2019', tone: '--lime' },
 ];
 
 export interface Project {
@@ -208,7 +214,7 @@ export const projects: Project[] = [
     summary: 'Positioning and go-to-market for a skincare-powered makeup product at Salmalita Cosmetics.',
     tags: ['Launch', 'Positioning', 'GTM'],
     icon: '✦',
-    color: '--pink',
+    color: '--plum',
     problem: 'A new product in a crowded category, with no audience yet and a small team.',
     approach: 'Defined the positioning and messaging, then ran a creator and affiliate program of 200 partners alongside national campaigns.',
     outcome: 'Over $100K in first-year revenue: 2,000 units, 100 sales in the first 4 weeks, and 100 repeat customers.',
@@ -219,7 +225,7 @@ export const projects: Project[] = [
     summary: 'Customer research and messaging for an AI receptionist used by 250 dental clinics.',
     tags: ['Research', 'Messaging', 'B2B'],
     icon: '☏',
-    color: '--blue',
+    color: '--plum-deep',
     problem: 'Clinics were confused about what the product did and why it beat the alternatives.',
     approach: 'Led customer interviews and a competitive analysis of 3 solutions, then rewrote the messaging and redesigned the website.',
     outcome: '30% less customer confusion, and 7–8 new clients onboarded in 3 months.',
@@ -230,7 +236,7 @@ export const projects: Project[] = [
     summary: 'Northwestern project: US market sizing, competitor analysis and a risk-adjusted NPV.',
     tags: ['Strategy', 'Market sizing', 'Finance'],
     icon: '◎',
-    color: '--red',
+    color: '--plum',
     problem: 'Should the product push for deeper US market penetration?',
     approach: 'Sized the US market, mapped competitors, and built a scope, cost, schedule and risk analysis.',
     outcome: 'A risk-adjusted NPV that rolled every finding into one GO/NO-GO recommendation.',
@@ -241,7 +247,7 @@ export const projects: Project[] = [
     summary: 'Market research on web-based medical image viewers for hospitals, at Capgemini.',
     tags: ['Healthcare', 'GTM', 'Research'],
     icon: '✚',
-    color: '--brown',
+    color: '--plum-deep',
     problem: 'Hospitals needed medical images without installing heavy viewing software.',
     approach: 'Compared PACS with zero-footprint viewers, mapped competitors, and defined a go-to-market for hospitals.',
     outcome: 'Identified a $2M revenue opportunity that leadership adopted for go-to-market planning.',
@@ -252,7 +258,7 @@ export const projects: Project[] = [
     summary: 'Turning brain signals into computer commands at the Raman Research Institute.',
     tags: ['Research', 'Engineering'],
     icon: '☊',
-    color: '--orange',
+    color: '--plum',
     problem: 'A motor-imagery BCI was not accurate enough to be usable.',
     approach: 'Ran structured user sessions and turned end-user research into product specifications.',
     outcome: 'Model accuracy improved by 31%, and leadership aligned on next-stage priorities.',
@@ -263,7 +269,7 @@ export const projects: Project[] = [
     summary: 'PRD → Figma wireframes → a fast, folder-themed website.',
     tags: ['Product', 'Design', 'Web'],
     icon: '❒',
-    color: '--plum',
+    color: '--plum-deep',
     problem: 'Most PM portfolios read like a résumé in a different font.',
     approach: 'Wrote a PRD, wireframed it, and built it with Astro: real pages for Google, folders that open, a bookshelf you can pull books from.',
     outcome: 'A portfolio that is also a work sample: requirements, design and a shipped product.',
@@ -291,10 +297,10 @@ export const accomplishments = [
 ];
 
 export const hobbies = [
-  { no: '01', title: 'My Bookshelf', href: '/hobbies/bookshelf/', copy: 'Top 3, the year’s reads, and a shelf you can pull books from.', color: '--red', peek: '--butter', icon: '📚' },
-  { no: '02', title: 'Painting', href: '/hobbies/painting/', copy: 'Acrylics, watercolour and a lot of happy accidents.', color: '--blue', peek: '--pink', icon: '🎨' },
-  { no: '03', title: 'Singing', href: '/hobbies/singing/', copy: 'A few recordings, pressed onto imaginary cassettes.', color: '--plum', peek: '--sky', icon: '🎙' },
-  { no: '04', title: 'Content Creation', href: '/hobbies/content/', copy: 'Reels, stories and a 125K community.', color: '--brown', peek: '--orange', icon: '🎬' },
+  { no: '01', title: 'My Bookshelf', href: '/hobbies/bookshelf/', copy: 'Top 3, the year’s reads, and a shelf you can pull books from.', color: '--plum', peek: '--lime', icon: '📚' },
+  { no: '02', title: 'Painting', href: '/hobbies/painting/', copy: 'Acrylics, watercolour and a lot of happy accidents.', color: '--plum-deep', peek: '--rose', icon: '🎨' },
+  { no: '03', title: 'Singing', href: '/hobbies/singing/', copy: 'A few recordings, pressed onto imaginary cassettes.', color: '--plum', peek: '--rose-soft', icon: '🎙' },
+  { no: '04', title: 'Content Creation', href: '/hobbies/content/', copy: 'Reels, stories and a 125K community.', color: '--plum-deep', peek: '--lime', icon: '🎬' },
 ];
 
 export interface Book {
@@ -390,16 +396,16 @@ export const books: Book[] = [
 
 // TODO(Bhavana): add painting photos to src/assets/photos/ and list them here.
 export const paintings = [
-  { title: 'Monsoon Study', medium: 'Acrylic on canvas', year: 2024, art: 'linear-gradient(160deg,#3D78BC,#CFE0F5 55%,#5B8A7E)' },
-  { title: 'Marigold', medium: 'Watercolour', year: 2023, art: 'radial-gradient(circle at 45% 45%,#F3D35B,#E8622A 55%,#4A2516)' },
-  { title: 'Lake Michigan, Dusk', medium: 'Acrylic on canvas', year: 2025, art: 'linear-gradient(180deg,#E9849F 0 40%,#5B2A86 40% 42%,#1F3A5F 42%)' },
-  { title: 'Bloom', medium: 'Acrylic on paper', year: 2024, art: 'radial-gradient(circle at 50% 55%,#FBF8F2 0 12%,#E9849F 13% 38%,#C8202F 39%)' },
-  { title: 'Rooftops', medium: 'Gouache', year: 2022, art: 'linear-gradient(0deg,#4A2516 0 30%,#E8622A 30% 34%,#F3D35B 34%)' },
+  { title: 'Monsoon Study', medium: 'Acrylic on canvas', year: 2024, art: 'linear-gradient(160deg,#6E1E3B,#F3D3E0 55%,#C9D863)' },
+  { title: 'Marigold', medium: 'Watercolour', year: 2023, art: 'radial-gradient(circle at 45% 45%,#C9D863,#EAB0C8 55%,#4A1229)' },
+  { title: 'Lake Michigan, Dusk', medium: 'Acrylic on canvas', year: 2025, art: 'linear-gradient(180deg,#EAB0C8 0 40%,#6E1E3B 40% 42%,#4A1229 42%)' },
+  { title: 'Bloom', medium: 'Acrylic on paper', year: 2024, art: 'radial-gradient(circle at 50% 55%,#FDFCEE 0 12%,#EAB0C8 13% 38%,#6E1E3B 39%)' },
+  { title: 'Rooftops', medium: 'Gouache', year: 2022, art: 'linear-gradient(0deg,#4A1229 0 30%,#EAB0C8 30% 34%,#C9D863 34%)' },
 ];
 
 // TODO(Bhavana): put MP3s in public/audio/ and set `src`, or add a link.
 export const songs = [
-  { title: 'Cover No. 1', note: 'Recording coming soon', src: '', link: '', color: '--pink' },
-  { title: 'Cover No. 2', note: 'Recording coming soon', src: '', link: '', color: '--butter' },
-  { title: 'Cover No. 3', note: 'Recording coming soon', src: '', link: '', color: '--sky' },
+  { title: 'Cover No. 1', note: 'Recording coming soon', src: '', link: '', color: '--rose' },
+  { title: 'Cover No. 2', note: 'Recording coming soon', src: '', link: '', color: '--lime' },
+  { title: 'Cover No. 3', note: 'Recording coming soon', src: '', link: '', color: '--rose-soft' },
 ];

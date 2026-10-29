@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import headshot from '../assets/photos/headshot.jpg';
-import { site, folders, marquee, notes, philosophy } from '../data/content';
+import { site, folders, marquee, notes, philosophy, about } from '../data/content';
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -31,34 +31,28 @@ const jsonld = {
   ],
 };
 
-const tagline = site.tagline.replace(/\*(.+?)\*/g, '<em>$1</em>');
-const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'];
+const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'];
 ---
 <Base title="Bhavana Durgam — Product Marketing Manager & PM · Chicago" jsonld={jsonld}>
-  <!-- ═══ A. Hero: postfolio folder stack ═══ -->
-  <section class="hero" aria-label="Introduction">
-    <div class="wrap hero-stack">
-      <div class="front">
-        <span class="front-tab">Portfolio · Vol. 01</span>
-        <div class="front-grid">
-          <div class="hero-sheet sheet holes">
-            <span class="clip hero-clip" aria-hidden="true"></span>
-            <h1 class="name">
-              <span class="first">bhavana</span>
-              <span class="last"><span class="ink">durgam</span></span>
-            </h1>
-            <p class="tagline" set:html={tagline} />
-            <p class="meta mono">{site.meta}</p>
-            <div class="ctas">
-              <a class="btn btn-ink" href="#files" data-sound>Open the files ↓</a>
-              <a class="btn btn-line" href="/contact/" data-sound>Say hello</a>
-            </div>
+  <!-- ═══ A. About: photo + hello card ═══ -->
+  <section class="hero" aria-label="About Bhavana Durgam">
+    <div class="wrap">
+      <div class="hello">
+        <figure class="hello-photo">
+          <Image src={headshot} alt="Bhavana Durgam" widths={[480, 720, 900]} sizes="(max-width: 860px) 100vw, 42vw" loading="eager" fetchpriority="high" />
+        </figure>
+        <div class="hello-text">
+          <h1 class="hello-h">
+            <span class="hi">Hello,</span>
+            <span class="im">I’m <span class="circled">Bhavana!<svg class="ring" viewBox="0 0 400 130" preserveAspectRatio="none" aria-hidden="true"><path d="M206 14C120 8 30 26 14 62c-14 34 70 56 186 54 112-2 192-24 186-60C380 22 300 6 196 12 150 15 112 22 96 30" pathLength="1" /></svg></span></span>
+          </h1>
+          <div class="hello-copy">
+            {about.map((p) => <p>{p}</p>)}
           </div>
-
-          <div class="hero-side">
-            <figure class="headshot">
-              <Image src={headshot} alt="Bhavana Durgam headshot" widths={[260, 520]} sizes="260px" loading="eager" fetchpriority="high" />
-            </figure>
+          <p class="meta mono">{site.meta}</p>
+          <div class="ctas">
+            <a class="btn btn-ink" href="#files" data-sound>Open the files ↓</a>
+            <a class="btn btn-line" href="/contact/" data-sound>Say hello</a>
           </div>
         </div>
       </div>
@@ -139,85 +133,54 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
 </Base>
 
 <style>
-  /* ── Hero ─────────────────────────────────────── */
-  .hero { padding: 28px 0 64px; overflow-x: clip; }
-  .hero-stack { position: relative; }
-
-  .front {
-    position: relative; margin-top: 46px; padding: clamp(28px, 4vw, 56px) clamp(16px, 4vw, 56px) clamp(56px, 6vw, 80px);
-    background-color: var(--blue); border-radius: 0 14px 14px 14px;
-    background-image:
-      repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px),
-      repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, transparent 1px 3px);
-    box-shadow: 0 -4px 14px rgba(0,0,0,.1);
+  /* ── About: hello card ───────────────────────── */
+  .hero { padding: clamp(24px, 4vw, 48px) 0 clamp(56px, 7vw, 88px); background: var(--rose); }
+  .hello {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); min-height: min(640px, 78vh);
+    background: var(--ivory); border: 1.5px solid var(--plum); border-radius: 22px; overflow: hidden;
+    box-shadow: 0 30px 60px -34px rgba(45,10,23,.55);
     animation: rise .8s var(--spring) .05s both;
   }
-  .front-tab {
-    position: absolute; bottom: calc(100% - 1px); left: 0; height: 46px; padding: 0 24px; display: grid; place-items: center;
-    background: var(--blue); color: var(--sheet); border-radius: 14px 14px 0 0;
-    font: 700 13px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  @keyframes rise { from { opacity: 0; transform: translateY(40px); } }
+  .hello-photo { margin: 0; border-right: 1.5px solid var(--plum); background: var(--rose-soft); overflow: hidden; }
+  .hello-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; animation: settle 1.4s var(--smooth) both; }
+  @keyframes settle { from { transform: scale(1.08); } }
+  .hello-text {
+    display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 6vw, 88px) clamp(24px, 6vw, 96px);
+    /* soft paper grain like the inspiration card */
+    background-image: radial-gradient(rgba(45,10,23,.05) 1px, transparent 1.2px), radial-gradient(rgba(45,10,23,.035) 1px, transparent 1.2px);
+    background-size: 5px 5px, 7px 7px; background-position: 0 0, 2px 3px;
   }
-  @keyframes rise { from { opacity: 0; transform: translateY(60px); } }
+  .hello-h { margin: 0; font: 800 clamp(54px, 8.4vw, 124px)/.88 var(--display); letter-spacing: -0.045em; font-stretch: 88%; color: var(--ink); }
+  .hello-h > span { display: block; animation: up .7s var(--spring) both; }
+  .hello-h .hi { animation-delay: .25s; }
+  .hello-h .im { animation-delay: .38s; }
+  @keyframes up { from { opacity: 0; transform: translateY(.35em); } }
+  .circled { position: relative; display: inline-block; white-space: nowrap; }
+  .ring { position: absolute; left: -9%; top: -14%; width: 118%; height: 128%; overflow: visible; pointer-events: none; z-index: -1; }
+  .hello-h .im { position: relative; z-index: 0; }
+  .ring path {
+    fill: none; stroke: var(--lime); stroke-width: 7; stroke-linecap: round; vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.1s cubic-bezier(.6,.05,.3,1) .9s forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .hello-copy { display: grid; gap: 1.1em; margin-top: clamp(28px, 4vw, 48px); max-width: 600px; animation: up .7s ease .55s both; }
+  .hello-copy p { font: 400 clamp(16px, 1.35vw, 18px)/1.6 var(--sans); color: var(--ink); text-align: justify; }
+  .meta { margin-top: 26px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
 
-  .front-grid { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: clamp(24px, 4vw, 56px); align-items: start; }
-  .hero-sheet {
-    --hole: var(--blue);
-    padding: clamp(36px, 5vw, 60px) clamp(22px, 4vw, 52px) clamp(30px, 4vw, 48px) 76px;
-    transform: rotate(-1.2deg); animation: slide .9s var(--smooth) .3s both;
-  }
-  @keyframes slide { from { opacity: 0; transform: translateX(-80px) rotate(-6deg); } }
-  .hero-clip { top: -22px; left: 46%; transform: rotate(8deg); animation: snap .45s var(--spring) .75s both; }
-  @keyframes snap { from { opacity: 0; transform: translateY(-30px) rotate(-20deg) scale(1.3); } }
-
-  .name { margin: 0; line-height: 1; }
-  .name .first {
-    display: block; font: 600 clamp(64px, 11vw, 150px)/.86 var(--sans); letter-spacing: -0.04em; color: var(--red);
-  }
-  .name .last {
-    display: block; margin: -0.34em 0 -0.18em 20%;
-    font: 400 clamp(68px, 10vw, 138px)/1 var(--script); color: var(--pink);
-  }
-  /* "durgam" writes itself. The clip box is padded so the g descender is never cut. */
-  .name .last .ink {
-    display: inline-block; padding: .18em .25em .42em .05em; margin: -.18em -.25em -.42em -.05em;
-    animation: write 1.3s cubic-bezier(.6,.05,.3,1) .55s both;
-  }
-  @keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-  .tagline { margin-top: 26px; max-width: 560px; font: 400 clamp(22px, 2.4vw, 28px)/1.3 var(--serif); }
-  .tagline :global(em) { color: var(--red); }
-  .meta { margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--muted); }
-  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-
-  .hero-side { display: grid; gap: 28px; justify-items: center; }
-  .headshot {
-    width: 260px; aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin: 0;
-    background: var(--sky); border: 9px solid var(--sheet);
-    box-shadow: 0 16px 30px -12px rgba(0,0,0,.35);
-    animation: pop .6s var(--spring) 1.1s both;
-  }
-  .headshot img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 14%; }
-  @keyframes pop { from { opacity: 0; transform: scale(.6); } }
-
-
-
-  @media (max-width: 960px) {
-    .front-grid { grid-template-columns: 1fr; }
-    .hero-side { order: -1; grid-template-columns: auto auto; align-items: center; justify-content: center; }
-    .headshot { width: 170px; }
-  }
-  @media (max-width: 640px) {
-    .hero-sheet { transform: none; padding-left: 58px; padding-right: 18px; }
-    @keyframes slide { from { opacity: 0; transform: translateX(-40px); } }
-    .hero-side { grid-template-columns: 1fr; }
-    .name .last { margin-left: 12%; }
+  @media (max-width: 860px) {
+    .hello { grid-template-columns: 1fr; min-height: 0; }
+    .hello-photo { border-right: 0; border-bottom: 1.5px solid var(--plum); aspect-ratio: 4 / 4.2; }
+    .hello-copy p { text-align: left; }
   }
 
   /* ── Marquee ──────────────────────────────────── */
-  .marquee { background: var(--ink); color: var(--sheet); overflow: hidden; padding: 16px 0; }
+  .marquee { background: var(--plum); color: var(--ivory); overflow: hidden; padding: 16px 0; }
   .marquee-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
   .marquee:hover .marquee-track { animation-play-state: paused; }
   .marquee span { white-space: nowrap; font: italic 400 26px/1 var(--serif); padding-right: 28px; }
-  .marquee b { color: var(--pink); font-weight: 400; margin-left: 28px; font-style: normal; font-size: 18px; }
+  .marquee b { color: var(--lime); font-weight: 400; margin-left: 28px; font-style: normal; font-size: 18px; }
   @keyframes marquee { to { transform: translateX(-50%); } }
 
   /* ── The files ────────────────────────────────── */
@@ -264,9 +227,9 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   }
 
   /* ── Notes band ───────────────────────────────── */
-  .notes { background: var(--brown); color: var(--sheet); padding: 80px 0 90px; overflow: hidden; }
-  .notes .kicker { color: var(--pink); }
-  .notes .h2 em { color: var(--pink); }
+  .notes { background: var(--plum-deep); color: var(--sheet); padding: 80px 0 90px; overflow: hidden; }
+  .notes .kicker { color: var(--lime); }
+  .notes .h2 em { color: var(--rose); }
   .notes-row { margin-top: 18px; overflow: hidden; padding: 34px 0 40px; }
   .notes-track { display: flex; gap: 26px; width: max-content; padding: 0; list-style: none; animation: marquee 60s linear infinite; }
   .notes-row:hover .notes-track { animation-play-state: paused; }
@@ -279,7 +242,7 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   .pola-card:hover { transform: rotate(0) translateY(-8px) scale(1.05); box-shadow: 0 26px 34px -16px rgba(0,0,0,.6); }
   .pola-photo { display: block; aspect-ratio: 1; overflow: hidden; background: var(--tone); }
   .pola-photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92) contrast(1.02); }
-  .pola-ph { display: grid; place-items: center; height: 100%; font-size: 54px; color: rgba(58,30,18,.28); }
+  .pola-ph { display: grid; place-items: center; height: 100%; font-size: 54px; color: rgba(45,10,23,.28); }
   .pola-cap {
     display: block; min-height: 74px; padding: 12px 4px 14px;
     font: 400 14px/1.35 var(--mono); color: var(--ink);
@@ -288,13 +251,13 @@ const pastel = ['#F6E7A6', '#CFE0F5', '#F7D3DC', '#E4DCCB', '#D8E8D2', '#F3D9C4'
   /* ── Stripes + quote ──────────────────────────── */
   .stripes {
     padding: clamp(64px, 9vw, 120px) var(--gutter);
-    background: repeating-linear-gradient(90deg, var(--sky) 0 30px, var(--sheet) 30px 60px);
+    background: repeating-linear-gradient(90deg, var(--lime) 0 30px, var(--ivory) 30px 60px);
   }
   .quote-wrap { position: relative; max-width: 680px; margin: 0 auto; }
-  .scallop { filter: drop-shadow(0 18px 24px rgba(58,30,18,.18)); }
+  .scallop { filter: drop-shadow(0 18px 24px rgba(45,10,23,.18)); }
   .scallop-in { text-align: center; display: grid; gap: 16px; }
   blockquote { font: 400 clamp(26px, 3.4vw, 40px)/1.2 var(--serif); }
-  .sig { font: 400 48px/1 var(--script); color: var(--red); }
+  .sig { font: 400 48px/1 var(--script); color: var(--plum); }
 </style>
 
 <script>

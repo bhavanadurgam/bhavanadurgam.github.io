@@ -1,9 +1,8 @@
 ---
 import '@fontsource/instrument-serif/400.css';
 import '@fontsource/instrument-serif/400-italic.css';
-import '@fontsource/instrument-sans/400.css';
-import '@fontsource/instrument-sans/500.css';
-import '@fontsource/instrument-sans/600.css';
+import '@fontsource-variable/dm-sans/opsz.css';
+import '@fontsource-variable/bricolage-grotesque/standard.css';
 import '@fontsource/mrs-saint-delafield/400.css';
 import '@fontsource/courier-prime/400.css';
 import '@fontsource/courier-prime/700.css';
@@ -26,7 +25,7 @@ const { title, description, jsonld, noindex, active } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#F4EFE6" />
+    <meta name="theme-color" content="#F7F6D7" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -113,15 +112,15 @@ const { title, description, jsonld, noindex, active } = Astro.props;
       .sound-btn .wave { display: none; }
       .sound-btn[aria-pressed='true'] .mute { display: none; }
       .sound-btn[aria-pressed='true'] .wave { display: inline; }
-      .secret-trigger { font: 400 56px/1 var(--script); color: var(--red); padding: 6px; }
+      .secret-trigger { font: 400 56px/1 var(--script); color: var(--plum); padding: 6px; }
       .secret .modal-card { max-width: min(520px, 100%); overflow: visible; }
       .secret-folder { position: relative; background: var(--plum); border-radius: 0 14px 14px 14px; padding: 18px; margin-top: 44px; transform: scale(.9) rotate(-2deg); transition: transform .5s var(--spring); }
       .secret.open .secret-folder { transform: none; }
       .secret-tab { position: absolute; top: -40px; left: 0; height: 40px; padding: 0 18px; display: grid; place-items: center; border-radius: 12px 12px 0 0; background: var(--plum); color: var(--sheet); font: 700 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
       .secret-sheet { padding: 32px 28px; display: grid; gap: 14px; }
       .secret-sheet h2 em { color: var(--plum); }
-      .secret-stamp { position: absolute; top: 18px; right: 16px; transform: rotate(8deg); border: 2.5px solid var(--red); color: var(--red); padding: 4px 10px; border-radius: 4px; font: 700 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
-      .secret-sign { font: 400 40px/1 var(--script); color: var(--red); }
+      .secret-stamp { position: absolute; top: 18px; right: 16px; transform: rotate(8deg); border: 2.5px solid var(--plum); color: var(--plum); padding: 4px 10px; border-radius: 4px; font: 700 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
+      .secret-sign { font: 400 40px/1 var(--script); color: var(--plum); }
     </style>
 
     <script>
