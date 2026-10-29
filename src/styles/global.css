@@ -199,7 +199,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .polaroid .ph { aspect-ratio: 1; background: var(--tone, var(--paper2)); display: grid; place-items: center; overflow: hidden; }
 .polaroid .ph img { width: 100%; height: 100%; object-fit: cover; }
 .polaroid .ph span { font: 700 11px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: center; padding: 8px; }
-.polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: 400 26px/1 var(--script); color: var(--ink); }
+.polaroid figcaption { position: absolute; left: 8px; right: 8px; bottom: 12px; text-align: center; font: 700 13px/1.2 var(--mono); letter-spacing: .06em; color: var(--ink); }
 
 /* ─── Section frame (folder pages) ──────────────────────── */
 .frame {
@@ -261,6 +261,40 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .timeline { padding-left: 52px; }
   .timeline::before { left: 17px; }
   .t-dot { left: -52px; width: 36px; height: 36px; font-size: 15px; }
+}
+
+/* Lit timeline (Work, Education): logo tiles, tags, a spine that fills, lines that light up in view. */
+.work-line { padding-left: 86px; gap: 56px; }
+.work-line::before { left: 31px; }
+.work-line::after {
+  content: ''; position: absolute; left: 30px; top: 8px; width: 4px; border-radius: 2px;
+  height: calc((100% - 16px) * var(--prog, 0)); background: linear-gradient(var(--plum), var(--rose));
+}
+.t-logo {
+  position: absolute; left: -86px; top: -4px; z-index: 1; width: 64px; height: 64px; border-radius: 16px; overflow: hidden;
+  background: #fff; border: 1.5px solid var(--plum); box-shadow: 0 0 0 6px var(--sheet), 3px 3px 0 6px var(--rose-soft);
+  transition: transform .5s var(--spring), box-shadow .5s;
+}
+.t-logo img { width: 100%; height: 100%; object-fit: contain; }
+.job.lit .t-logo { transform: rotate(-4deg) scale(1.06); box-shadow: 0 0 0 6px var(--sheet), 3px 3px 0 6px var(--lime); }
+.tags { list-style: none; padding: 0; margin: 12px 0 4px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tags .pill { background: var(--rose-soft); border-color: transparent; color: var(--plum); }
+.work-line .t-list { gap: 12px; margin-top: 14px; }
+.line { font-size: 16.5px; line-height: 1.55; transition: opacity .5s ease, transform .5s var(--smooth); }
+.line strong { font-weight: 700; color: var(--ink); transition: background .6s ease; }
+.line::before { transition: transform .4s var(--spring), color .4s; }
+.js-dim .line { opacity: .28; }
+.js-dim .line.lit { opacity: 1; transform: translateX(4px); }
+.js-dim .line.lit strong { background: linear-gradient(transparent 58%, var(--lime) 0); }
+.js-dim .line.lit::before { transform: scale(1.4) rotate(45deg); color: var(--plum); }
+.js-dim .job .t-role, .js-dim .job .t-org { transition: opacity .5s; opacity: .45; }
+.js-dim .job.lit .t-role, .js-dim .job.lit .t-org { opacity: 1; }
+@media (max-width: 640px) {
+  .work-line { padding-left: 0; gap: 44px; }
+  .work-line::before, .work-line::after { display: none; }
+  .t-logo { position: relative; left: 0; top: 0; display: block; width: 52px; height: 52px; margin-bottom: 12px; border-radius: 14px; box-shadow: 3px 3px 0 var(--rose-soft); }
+  .job.lit .t-logo { box-shadow: 3px 3px 0 var(--lime); }
+  .line { font-size: 15.5px; }
 }
 
 /* ─── Reveal ─────────────────────────────────────────────── */

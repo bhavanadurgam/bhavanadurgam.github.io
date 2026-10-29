@@ -207,6 +207,39 @@ function globalOnce() {
 }
 
 let initialised = false;
+/* ── Timelines (Work, Education): lines light up as they reach the middle of the screen ── */
+let litCleanup: (() => void) | undefined;
+function bindLitTimelines() {
+  litCleanup?.(); litCleanup = undefined;
+  const lists = $$<HTMLElement>('[data-lit-line]');
+  if (!lists.length) return;
+  if (reducedMotion() || !('IntersectionObserver' in window)) { lists.forEach((l) => l.style.setProperty('--prog', '1')); return; }
+
+  document.documentElement.classList.add('js-dim');
+  const jobs = lists.flatMap((l) => [...l.querySelectorAll<HTMLElement>('.job')]);
+  // A line is lit while it sits in the middle band of the screen; an entry stays lit while any of its lines is.
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => e.target.classList.toggle('lit', e.isIntersecting));
+    jobs.forEach((j) => j.classList.toggle('lit', !!j.querySelector('.line.lit')));
+  }, { rootMargin: '-30% 0px -35% 0px' });
+  lists.forEach((l) => l.querySelectorAll('.line').forEach((x) => io.observe(x)));
+
+  // The spine fills down as you scroll.
+  let raf = 0;
+  const fill = () => {
+    raf = 0;
+    lists.forEach((l) => {
+      const r = l.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (innerHeight * 0.55 - r.top) / r.height));
+      l.style.setProperty('--prog', p.toFixed(3));
+    });
+  };
+  const onScroll = () => { if (!raf) raf = requestAnimationFrame(fill); };
+  addEventListener('scroll', onScroll, { passive: true });
+  fill();
+  litCleanup = () => { io.disconnect(); removeEventListener('scroll', onScroll); document.documentElement.classList.remove('js-dim'); };
+}
+
 export function initShared() {
   if (!initialised) { initialised = true; globalOnce(); }
   bindModals();
@@ -215,4 +248,5 @@ export function initShared() {
   bindCopy();
   bindSecret();
   reveal();
+  bindLitTimelines();
 }

@@ -177,13 +177,14 @@ export const education = [
     degree: 'Master of Engineering Management (Technical MBA)',
     place: 'Evanston, IL',
     dates: 'Dec 2025',
-    initial: 'NU',
+    logo: 'northwestern',
     color: '--plum',
+    tags: ['Technical MBA', 'Rubenstein Scholar', 'Kellogg TA', 'Lead@NUMEM President'],
+    photo: { src: 'northwestern', caption: 'Northwestern, 2025', alt: 'Bhavana Durgam in her purple graduation gown under the Northwestern arch' },
     bullets: [
-      'Albert H. Rubenstein Memorial Scholarship: merit award, top 3 of 60 admits.',
-      'Teaching Assistant, Kellogg School of Management.',
-      'President, Lead@NUMEM: designed career programming for 100+ MEM students, including bootcamps and mock interviews.',
-      'Voices of Impact storytelling series.', // TODO(Bhavana): one line on your role
+      'Albert H. Rubenstein Memorial Scholarship: **merit award, top 3 of 60 admits**.',
+      'Teaching Assistant, **Kellogg School of Management**.',
+      'President, Lead@NUMEM: designed **career programming for 100+ MEM students**, including bootcamps and mock interviews.',
     ],
   },
   {
@@ -191,19 +192,15 @@ export const education = [
     degree: 'B.E., Medical Electronics',
     place: 'Bengaluru, India',
     dates: 'Jun 2019',
-    initial: 'BMS',
+    logo: 'bms',
     color: '--plum-deep',
+    tags: ['Biomedical engineering', 'Class President', 'Recruitment Lead'],
+    photo: { src: 'bms', caption: 'BMSCE, with my parents', alt: 'Bhavana Durgam holding her Bachelor of Engineering certificate with her parents' },
     bullets: [
-      'Brain-computer interface research at the Raman Research Institute.',
-      'Campus Recruitment Lead: drove an 85% placement rate for 60 students and lifted engagement 30%.',
+      'Department Recruitment Lead: drove **an 85% placement rate for 60 students** and lifted engagement 30%.',
+      '**Class President** for the Medical Electronics class.',
     ],
   },
-];
-
-// TODO(Bhavana): add graduation photos to src/assets/photos/ and list them here.
-export const gradPolaroids = [
-  { caption: 'Northwestern, 2025', tone: '--rose-soft' },
-  { caption: 'BMSCE, 2019', tone: '--lime' },
 ];
 
 export interface Project {

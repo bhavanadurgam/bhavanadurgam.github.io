@@ -25,7 +25,7 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     ))}
   </ul>
 
-  <ol class="timeline work-line" data-work-line>
+  <ol class="timeline work-line" data-lit-line>
     {experience.map((j) => {
       const img = logo(j.logo);
       return (
@@ -57,85 +57,5 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   .s-val { font: 800 clamp(40px, 4.6vw, 58px)/.9 var(--display); letter-spacing: -0.04em; color: var(--ink); }
   .s-label { font-size: 14px; line-height: 1.4; color: var(--muted); }
 
-  /* ── Timeline with logos ──────────────────────── */
-  .work-line { padding-left: 86px; gap: 56px; }
-  .work-line::before { left: 31px; }
-  /* the spine fills with plum as you scroll down */
-  .work-line::after {
-    content: ''; position: absolute; left: 30px; top: 8px; width: 4px; border-radius: 2px;
-    height: calc((100% - 16px) * var(--prog, 0)); background: linear-gradient(var(--plum), var(--rose));
-  }
-  .t-logo {
-    position: absolute; left: -86px; top: -4px; z-index: 1; width: 64px; height: 64px; border-radius: 16px; overflow: hidden;
-    background: #fff; border: 1.5px solid var(--plum); box-shadow: 0 0 0 6px var(--sheet), 3px 3px 0 6px var(--rose-soft);
-    transition: transform .5s var(--spring), box-shadow .5s;
-  }
-  .t-logo :global(img) { width: 100%; height: 100%; object-fit: contain; }
-  .job.lit .t-logo { transform: rotate(-4deg) scale(1.06); box-shadow: 0 0 0 6px var(--sheet), 3px 3px 0 6px var(--lime); }
-  .tags { list-style: none; padding: 0; margin: 12px 0 4px; display: flex; flex-wrap: wrap; gap: 6px; }
-  .tags .pill { background: var(--rose-soft); border-color: transparent; color: var(--plum); }
-
-  /* Lines dim until they reach the middle of the screen, then light up. */
-  .t-list { gap: 12px; margin-top: 14px; }
-  .line { font-size: 16.5px; line-height: 1.55; transition: opacity .5s ease, color .5s ease, transform .5s var(--smooth); }
-  .line :global(strong) { font-weight: 700; color: var(--ink); background: linear-gradient(transparent 58%, transparent 0); transition: background .6s ease; }
-  .line::before { transition: transform .4s var(--spring), color .4s; }
-  :global(.js-dim) .line { opacity: .28; }
-  :global(.js-dim) .line.lit { opacity: 1; transform: translateX(4px); }
-  :global(.js-dim) .line.lit :global(strong) { background: linear-gradient(transparent 58%, var(--lime) 0); }
-  :global(.js-dim) .line.lit::before { transform: scale(1.4) rotate(45deg); color: var(--plum); }
-  :global(.js-dim) .job .t-role, :global(.js-dim) .job .t-org { transition: opacity .5s; opacity: .45; }
-  :global(.js-dim) .job.lit .t-role, :global(.js-dim) .job.lit .t-org { opacity: 1; }
-
   @media (max-width: 960px) { .impact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 640px) {
-    .work-line { padding-left: 0; gap: 44px; }
-    .work-line::before, .work-line::after { display: none; }
-    .t-logo { position: relative; left: 0; top: 0; display: block; width: 52px; height: 52px; margin-bottom: 12px; border-radius: 14px; box-shadow: 3px 3px 0 var(--rose-soft); }
-    .job.lit .t-logo { box-shadow: 3px 3px 0 var(--lime); }
-    .line { font-size: 15.5px; }
-  }
 </style>
-
-<script>
-  import { reducedMotion } from '../scripts/shared';
-
-  let cleanup: (() => void) | undefined;
-
-  function initWork() {
-    cleanup?.();
-    const list = document.querySelector<HTMLElement>('[data-work-line]');
-    if (!list) return;
-    if (reducedMotion() || !('IntersectionObserver' in window)) { list.style.setProperty('--prog', '1'); return; }
-
-    document.documentElement.classList.add('js-dim');
-    const lines = list.querySelectorAll<HTMLElement>('.line');
-    const jobs = list.querySelectorAll<HTMLElement>('.job');
-
-    // A line is lit while it sits in the middle band of the screen; a role stays lit while any of its lines is.
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => e.target.classList.toggle('lit', e.isIntersecting));
-      jobs.forEach((j) => j.classList.toggle('lit', !!j.querySelector('.line.lit')));
-    }, { rootMargin: '-30% 0px -35% 0px' });
-    lines.forEach((l) => io.observe(l));
-
-    let raf = 0;
-    const fill = () => {
-      raf = 0;
-      const r = list.getBoundingClientRect();
-      const mid = innerHeight * 0.55;
-      const p = Math.min(1, Math.max(0, (mid - r.top) / r.height));
-      list.style.setProperty('--prog', p.toFixed(3));
-    };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(fill); };
-    addEventListener('scroll', onScroll, { passive: true });
-    fill();
-
-    cleanup = () => {
-      io.disconnect(); removeEventListener('scroll', onScroll);
-      document.documentElement.classList.remove('js-dim');
-    };
-  }
-  document.addEventListener('astro:page-load', initWork);
-  document.addEventListener('astro:before-swap', () => { cleanup?.(); cleanup = undefined; });
-</script>

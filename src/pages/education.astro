@@ -1,46 +1,56 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Section from '../layouts/Section.astro';
-import { education, gradPolaroids } from '../data/content';
+import { education } from '../data/content';
+
+const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/logos/*.png', { eager: true });
+const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/photos/grad/*.jpg', { eager: true });
+const logo = (name: string) => logos[`../assets/logos/${name}.png`]?.default;
+const photo = (name: string) => photos[`../assets/photos/grad/${name}.jpg`]?.default;
+const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
-<Section id="education" title="Education — Bhavana Durgam" description="Bhavana Durgam's education: Master of Engineering Management (Technical MBA) at Northwestern University (Rubenstein Scholar) and a B.E. in Medical Electronics from BMS College of Engineering.">
+<Section id="education" title="Education — Bhavana Durgam" description="Bhavana Durgam's education: Master of Engineering Management (Technical MBA) at Northwestern University, Rubenstein Scholar, and a B.E. in Medical Electronics from BMS College of Engineering, where she was Class President.">
   <header class="frame-head">
     <p class="kicker">File No.02</p>
     <h1 class="title">Where I <em>learned</em></h1>
     <p class="lede">An engineering degree taught me how things work. A management degree taught me why people choose them.</p>
   </header>
 
-  <div class="edu-grid">
-    <ol class="timeline">
-      {education.map((e) => (
-        <li class="t-entry reveal" style={`--dc: var(${e.color})`}>
-          <span class="t-dot" aria-hidden="true">{e.initial}</span>
-          <p class="t-date">{e.dates} · {e.place}</p>
-          <h2 class="t-role">{e.school}</h2>
-          <p class="t-org">{e.degree}</p>
-          <ul class="t-list">{e.bullets.map((b) => <li>{b}</li>)}</ul>
+  <ol class="timeline work-line" data-lit-line>
+    {education.map((e, i) => {
+      const img = logo(e.logo);
+      const pic = photo(e.photo.src);
+      return (
+        <li class="t-entry job edu" style={`--dc: var(${e.color})`}>
+          <div class="edu-text">
+            <span class="t-logo">{img && <Image src={img} alt={`${e.school} logo`} width={112} height={112} />}</span>
+            <p class="t-date">{e.dates} · {e.place}</p>
+            <h2 class="t-role">{e.school}</h2>
+            <p class="t-org">{e.degree}</p>
+            <ul class="tags">{e.tags.map((t) => <li class="pill">{t}</li>)}</ul>
+            <ul class="t-list">{e.bullets.map((b) => <li class="line" set:html={bold(b)} />)}</ul>
+          </div>
+          {pic && (
+            <figure class="polaroid grad" style={`--r: ${i % 2 ? 3 : -3}deg; --ar: ${pic.width} / ${pic.height}`}>
+              <span class="ph"><Image src={pic} alt={e.photo.alt} widths={[360, 720]} sizes="(max-width: 960px) 80vw, 320px" /></span>
+              <figcaption>{e.photo.caption}</figcaption>
+            </figure>
+          )}
         </li>
-      ))}
-    </ol>
-
-    <div class="polas" aria-label="Graduation photos">
-      {gradPolaroids.map((p, i) => (
-        <figure class="polaroid reveal" style={`--r: ${i ? 3 : -3}deg; --tone: var(${p.tone})`}>
-          <div class="ph"><span>Graduation photo<br />coming soon</span></div>
-          <figcaption>{p.caption}</figcaption>
-        </figure>
-      ))}
-    </div>
-  </div>
+      );
+    })}
+  </ol>
 </Section>
 
 <style>
-  .edu-grid { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .polas { display: grid; gap: 28px; justify-items: center; }
-  .polaroid { width: 230px; }
-  .polaroid:hover { transform: rotate(0) scale(1.03); }
+  .edu { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: clamp(24px, 4vw, 56px); align-items: start; }
+  .edu-text { position: relative; }
+  .grad { width: 100%; margin: 0; }
+  .grad .ph { aspect-ratio: var(--ar); }
+  .job.lit .grad { transform: rotate(0deg) translateY(-6px) scale(1.03); box-shadow: 0 22px 34px -16px var(--shadow), 0 1px 3px rgba(0,0,0,.1); }
   @media (max-width: 960px) {
-    .edu-grid { grid-template-columns: 1fr; }
-    .polas { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-    .polaroid { width: 100%; max-width: 240px; }
+    .edu { grid-template-columns: 1fr; }
+    .grad { max-width: 340px; justify-self: center; }
   }
 </style>
