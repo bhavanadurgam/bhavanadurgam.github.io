@@ -9,7 +9,7 @@ const pic = (name: string) => (files[`../../assets/paintings/${name}.png`] ?? fi
 // Larger version for the lightbox (webp keeps the cut-out transparent).
 const big = async (m: ImageMetadata) => (await getImage({ src: m, width: Math.min(m.width, 1400), format: 'webp' })).src;
 
-const wall = { ...painting.wall, m: pic(painting.wall.img) };
+const wall = { m: pic(painting.wall.img) };
 const wallBig = await big(wall.m);
 const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(w.img), big: await big(pic(w.img)) })));
 ---
@@ -23,19 +23,20 @@ const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(
     {painting.story.map((p) => <p>{p}</p>)}
   </div>
 
-  <ul class="grid" aria-label="Paintings">
-    <li class="wall reveal">
-      <button class="tile" type="button" data-art={wallBig} data-title={wall.title} aria-label={`Open: ${wall.title}`}>
-        <Image src={wall.m} alt="Bhavana Durgam's gallery wall of her own colourful paintings" widths={[700, 1372]} sizes="(max-width: 960px) 92vw, 1000px" />
-      </button>
-      <p class="cap"><span class="cap-t">{wall.title}</span><span class="mono">{wall.note}</span></p>
-    </li>
+  <figure class="wall reveal">
+    <figcaption class="label mono">My gallery wall</figcaption>
+    <button class="tile" type="button" data-art={wallBig} data-title="My gallery wall" aria-label="Open: my gallery wall">
+      <Image src={wall.m} alt="Bhavana Durgam's gallery wall of her own colourful paintings" widths={[700, 1372]} sizes="(max-width: 960px) 92vw, 1000px" />
+    </button>
+  </figure>
+
+  <h2 class="recent">What I’ve painted <em>recently</em></h2>
+  <ul class="grid" aria-label="Recent paintings">
     {works.map((w, i) => (
       <li class="reveal" style={`--d: ${(i % 4) * 70}ms`}>
-        <button class="tile art" type="button" data-art={w.big} data-title={w.title} aria-label={`Open painting: ${w.title}`}>
-          <Image src={w.m} alt={`${w.title}, a painting by Bhavana Durgam`} widths={[360, 720]} sizes="(max-width: 640px) 44vw, 260px" />
+        <button class="tile art" type="button" data-art={w.big} data-title="" aria-label="Open painting">
+          <Image src={w.m} alt="A painting by Bhavana Durgam" widths={[360, 720]} sizes="(max-width: 640px) 44vw, 260px" />
         </button>
-        <p class="cap"><span class="cap-t">{w.title}</span></p>
       </li>
     ))}
   </ul>
@@ -55,27 +56,25 @@ const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(
   .story p:first-child { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.55; font-weight: 500; }
   .story p + p { margin-top: 18px; }
 
+  .label { margin-bottom: 12px; font-size: 12px; font-weight: 700; color: var(--plum); }
+  .wall { margin: 0; }
+  .recent { margin: clamp(48px, 7vw, 80px) 0 22px; font: 800 clamp(28px, 3.4vw, 44px)/1 var(--display); letter-spacing: -0.03em; }
+  .recent em { font: italic 400 1.08em/1 var(--serif); letter-spacing: -0.01em; color: var(--plum); }
   .grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 26px); }
-  .grid li { display: grid; gap: 10px; align-content: start; }
-  .grid .wall { grid-column: 1 / -1; }
   .tile {
-    display: grid; place-items: center; width: 100%; overflow: hidden; border-radius: 12px; border: 1.5px solid var(--plum);
-    background: var(--ivory); transition: transform .5s var(--spring), box-shadow .5s;
+    display: block; width: 100%; overflow: hidden; border-radius: 12px; border: 1.5px solid var(--plum);
+    background: #fff; transition: transform .5s var(--spring), box-shadow .5s;
   }
-  .wall .tile { background: #fff; }
   .wall .tile :global(img) { width: 100%; height: auto; display: block; }
   .tile:hover, .tile:focus-visible { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--rose); }
   .grid li:nth-child(even) .tile:hover, .grid li:nth-child(even) .tile:focus-visible { box-shadow: 8px 8px 0 var(--lime); }
-  /* every painting sits the same way: centred on a square of ivory, face-on, with a soft shadow */
-  .tile.art { aspect-ratio: 1; padding: 14%; background: radial-gradient(circle at 50% 45%, #fff, var(--ivory) 70%); }
+  /* every painting sits the same way: centred on an ivory square, face-on, with a soft shadow */
+  .tile.art { position: relative; aspect-ratio: 1; background: radial-gradient(circle at 50% 45%, #fff, var(--ivory) 70%); }
   .tile.art :global(img) {
-    width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 12px rgba(45,10,23,.25));
-    transition: transform .6s var(--spring);
+    position: absolute; inset: 12%; width: 76%; height: 76%; object-fit: contain;
+    filter: drop-shadow(0 10px 12px rgba(45,10,23,.25)); transition: transform .6s var(--spring);
   }
   .tile.art:hover :global(img), .tile.art:focus-visible :global(img) { transform: scale(1.07) rotate(-1.5deg); }
-  .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-  .cap-t { font: 700 12px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
-  .cap .mono { font-size: 11px; font-weight: 700; color: var(--muted); }
 
   .art-card { display: grid; justify-items: center; gap: 14px; max-width: min(900px, 100%); overflow: visible; }
   .art-big { max-width: 100%; max-height: 78vh; width: auto; filter: drop-shadow(0 30px 40px rgba(0,0,0,.45)); }

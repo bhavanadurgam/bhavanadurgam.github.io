@@ -461,22 +461,22 @@ export const books: Book[] = [
     review: "Malala reflects on finding herself during and after university. As an admirer of everything she stands for, I loved this glimpse into her life." },
 ];
 
-// Painting page. Cleaned-up photos live in src/assets/paintings/. TODO(Bhavana): rename any titles you like.
+// Painting page. Cleaned-up photos live in src/assets/paintings/.
 export const painting = {
   story: [
     'I picked up a paintbrush when stress had me at my lowest. I needed somewhere to put everything I couldn’t say out loud, and a blank canvas didn’t ask any questions.',
     'I haven’t stopped since. When I paint, time disappears: I sit down for “just twenty minutes” and look up hours later, paint on my hands and my head finally quiet. Every canvas on my wall holds a little of whatever I was carrying that day, and the lightness I felt when I let it go.',
   ],
-  wall: { img: 'gallery-wall', title: 'My gallery wall', note: 'Every canvas here is mine' },
+  wall: { img: 'gallery-wall' },
   works: [
-    { img: 'wildflowers', title: 'Wildflowers' },
-    { img: 'hamsa', title: 'Hamsa' },
-    { img: 'desert-sun', title: 'Desert sun' },
-    { img: 'cherries', title: 'Cherries' },
-    { img: 'profile', title: 'In profile' },
-    { img: 'you-are-enough', title: 'You are enough' },
-    { img: 'sundae', title: 'Sundae for two' },
-    { img: 'keyhole', title: 'Through the keyhole' },
+    { img: 'wildflowers' },
+    { img: 'hamsa' },
+    { img: 'desert-sun' },
+    { img: 'cherries' },
+    { img: 'profile' },
+    { img: 'you-are-enough' },
+    { img: 'sundae' },
+    { img: 'keyhole' },
   ],
 };
 
