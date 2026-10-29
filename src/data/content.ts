@@ -46,7 +46,7 @@ export const folders: Folder[] = [
   { id: 'work', no: '01', label: 'Work', title: 'Work Experience', href: '/work/', color: '--plum', ink: '--sheet', peek: 'Salmalita · PatientXpress · Capgemini · Raman Research', teaser: '$100K launch, year one', tabX: 4 },
   { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM (Technical MBA) · BMS College of Engineering', teaser: 'Biomedical engineer → technical MBA', tabX: 22 },
   { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
-  { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · a 125K community', teaser: 'The proud moments', tabX: 58 },
+  { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · model & actor since six', teaser: 'Crowns & cameras', tabX: 58 },
   { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'My bookshelf · painting · singing · content', teaser: 'The fun folder', tabX: 74 },
   { id: 'contact', no: '06', label: 'Contact', title: 'Contact', href: '/contact/', color: '--lime', ink: '--ink', peek: 'LinkedIn · Instagram · email', teaser: "Let's talk", tabX: 6 },
 ];
@@ -286,24 +286,101 @@ export const projects: Project[] = [
   },
 ];
 
-export const accomplishments = [
-  {
-    no: '01',
-    title: 'Femina Miss India Karnataka 2018',
-    org: 'Femina Miss India · 2018 · Top 10 nationally, Miss Beauty with a Purpose',
-    summary:
-      'Raised $11K in 3 weeks and hosted awareness camps in underserved communities on education, hygiene, breast cancer and menstrual health, reaching 5,000 people.',
-    photos: ['Crowning', 'Awareness camp', 'Finale'], // TODO(Bhavana): add photos
-  },
-  {
-    no: '02',
-    title: 'Content creator, model & actor',
-    org: 'Instagram · YouTube · TikTok · 2018 – present',
-    summary:
-      'Grew a cross-platform community from 40K to 125K through data-driven content experiments and audience research, alongside modelling and acting work.',
-    photos: ['On set', 'Campaign', 'Reel'], // TODO(Bhavana): add photos or video thumbnails
-  },
-];
+// ── Accomplishments: Miss India, and Model & Actor ──────────
+// Images live in src/assets/acc/, src/assets/press/ and src/assets/videos/ (named by YouTube id).
+
+export const missIndia = {
+  titles: [
+    { title: 'Femina Miss India Karnataka', year: '2018', note: 'Crowned at fbb Colors Femina Miss India South' },
+    { title: 'Top 10, Femina Miss India', year: '2018', note: 'Represented Karnataka at the national finale' },
+    { title: 'Miss Goodness Ambassador', year: '2018', note: 'For my social and volunteering work' },
+    { title: 'Top 10, Beauty with a Purpose', year: '2018', note: 'For my project bringing education to underserved communities' },
+  ],
+  stats: [
+    { value: '$11K', label: 'raised in 3 weeks with Ketto' },
+    { value: '5,000', label: 'people reached through awareness camps' },
+    { value: '2', label: 'states: Karnataka and Andhra Pradesh' },
+  ],
+  // **bold** = the result
+  work: [
+    'Raised **$11K in 3 weeks** to improve schools in underserved communities by running a crowdfunding campaign with Ketto.',
+    'Reached **5,000 people** by hosting awareness camps on education, hygiene, breast cancer and menstrual health across Karnataka (mainly Bengaluru) and Andhra Pradesh.',
+    'Earned **Miss Goodness Ambassador 2018** and a **Top 10 Beauty with a Purpose** finish for this work.',
+    'Celebrated **World Health Day with school children**, covered in the Kannada and Tamil press.',
+  ],
+  press: [
+    { outlet: 'The Hindu', date: 'Apr 2018', title: 'Tirupati-born ‘Miss Karnataka’ now eyes ‘Miss India’ crown', url: 'https://www.thehindu.com/news/national/andhra-pradesh/tirupati-born-miss-karnataka-now-eyes-miss-india-crown/article23437926.ece', img: 'press/hindu' },
+    { outlet: 'Femina', date: 'Mar 2018', title: '‘I always wanted to be a beauty queen’', url: 'https://www.femina.in/beauty-pageants/miss-india/i-always-wanted-to-be-a-beauty-queen/articleshow/63285397.cms', img: 'press/femina2' },
+    { outlet: 'Femina', date: '2018', title: 'Interesting facts about Bhavana Durgam', url: 'https://www.femina.in/beauty-pageants/miss-india/interesting-facts-about-bhavana-durgam/eventshow/63201192.cms', img: 'acc/missindia/portrait' },
+    { outlet: 'The Kaleidoscope of Pageantry', date: 'Feb 2018', title: 'Bhavana Durgam crowned Femina Miss India Karnataka 2018', url: 'https://tkoip.wordpress.com/2018/02/24/bhavana-durgam-crowned-femina-miss-india-karnataka-2018/', img: 'press/tkoip' },
+    { outlet: 'Whosthat360', date: 'Oct 2023', title: 'Bhavana Durgam: mastering influencer life, balancing act and positivity', url: 'https://www.whosthat360.com/motivation-and-self-help/bhavana-durgam-mastering-influencer-life-balancing-act-and-positivity-4467768', img: 'acc/missindia/fbb-event' },
+    { outlet: 'Times of India photo archive', date: 'Mar 2018', title: 'International Women’s Day feature', url: 'https://timescontent.timesgroup.com/photo/feature/international-women%27s-day/566504', img: 'acc/missindia/crowned' },
+  ],
+  clippings: [
+    { img: 'top-brands', outlet: 'Deccan Chronicle', date: 'Mar 2018', title: 'Top brands queue up for Tirupati girl' },
+    { img: 'women-power', outlet: 'Deccan Chronicle', date: 'Mar 2018', title: 'Women power on the right track' },
+    { img: 'tirupati-telugu', outlet: 'Telugu daily', date: 'Apr 2018', title: 'Miss Karnataka @ Tirupati' },
+    { img: 'mana-tirupati', outlet: 'Telugu daily', date: 'Apr 2018', title: '“Mana Tirupati ammayi”: our Tirupati girl' },
+    { img: 'health-day-kannada', outlet: 'Kannada daily', date: 'Apr 2018', title: 'World Health Day with school children' },
+    { img: 'health-day-tamil', outlet: 'Tamil daily', date: 'Apr 2018', title: 'World Health Day' },
+    { img: 'bangalore-times', outlet: 'Bangalore Times', date: 'Jul 2019', title: 'Bangalore Times feature' },
+    { img: 'food-nightlife-awards', outlet: 'Bangalore Times', date: 'Apr 2021', title: 'Presenting at the Times Food & Nightlife Awards' },
+  ],
+  videos: [
+    { id: '8tuPedoNS2M', title: 'Introducing Femina Miss India Karnataka 2018, Bhavana Durgam' },
+    { id: 'N32j8HZjhxE', title: 'Miss India South 2018: the crowning moments' },
+  ],
+  photos: [
+    { img: 'crowned', caption: 'Crowned Miss India Karnataka', pos: '50% 30%' },
+    { img: 'finale-1', caption: 'Miss India finale', pos: '50% 25%' },
+    { img: 'goodness-ambassador', caption: 'Miss Goodness Ambassador', pos: '50% 50%' },
+    { img: 'fbb-event', caption: 'Miss India 2018 events', pos: '62% 40%' },
+    { img: 'finale-2', caption: 'On the national stage', pos: '50% 25%' },
+    { img: 'portrait', caption: 'Official portrait', pos: '50% 20%' },
+  ],
+};
+
+export const modelling = {
+  stats: [
+    { value: '20+', label: 'brands across jewellery, fashion, tech and food' },
+    { value: '12', label: 'TV and digital commercials' },
+    { value: '1', label: 'Telugu feature film' },
+    { value: '6', label: 'years old at my first shoot' },
+  ],
+  commercials: ['Redmi ×3', 'Canon ×5', 'MTR Minute Foods', 'MTR Rasam', 'Crispy Day', 'fbb'],
+  print: ['Bhima Jewellers', 'Malabar Gold', 'PMJ Jewellers', 'Melorra', 'Jewel One', 'Canon', 'Myntra', 'Ajio', 'Central', 'Pothys', 'Kumaran Silks', 'Deepam Silks', 'Saaki World', 'Twin Birds', 'Madhura Coats', 'Kiru Foods'],
+  ramp: [
+    'Top 7, ramp round at Femina Miss India 2018',
+    'Femina Miss India Karnataka 2018',
+    'Showstopper at Bangalore Times Fashion Week, and a model there several times',
+  ],
+  film: { title: 'The Story of a Beautiful Girl', note: 'Telugu feature film' },
+  ads: [
+    { brand: 'Redmi', id: '9tcEk3m83VE', title: 'Saving notes made simple · Redmi × Google Lens' },
+    { brand: 'Redmi', id: 'LG5p4rtmF-k', title: 'Translation made simple · Redmi × Google Lens' },
+    { brand: 'Redmi', id: 'wZYo8WxFUgE', title: 'Homework made simple · Redmi × Google Lens' },
+    { brand: 'Canon', id: 'nwY3eX4oweM', title: 'Capturing the bride on the EOS R5' },
+    { brand: 'Canon', id: 'ABaWCRIoWx8', title: 'Wedding saga on the EOS R5' },
+    { brand: 'Canon', id: 'Q3alIoIwuFA', title: 'The magic proposal on the EOS R5' },
+    { brand: 'Canon', id: 'AwLwidOVG0M', title: 'Couple portrait on the EOS R5' },
+    { brand: 'Canon', id: 'hqxbDsGkKy8', title: 'Covering weddings on the EOS R5' },
+    { brand: 'Crispy Day', id: '3GFa7tzjTOc', title: 'Masalas for a delicious, happy meal' },
+  ],
+  links: [
+    { brand: 'MTR', title: 'MTR digital TVC', url: 'https://www.instagram.com/p/CHcFTnlp9Dr/', where: 'Instagram' },
+    { brand: 'fbb', title: 'fbb digital TVC', url: 'https://www.facebook.com/fbbonline/videos/10155542555713093/', where: 'Facebook' },
+    { brand: 'More', title: 'More of my work', url: 'https://www.instagram.com/p/CZeNEMSJTtA/', where: 'Instagram' },
+  ],
+  campaigns: [
+    { img: 'bhima-brilliance', caption: 'Bhima Brilliance, diamond jewellery festival', pos: '50% 40%' },
+    { img: 'pothys-billboard', caption: 'Pothys billboard', pos: '50% 50%' },
+    { img: 'canon-print', caption: 'Canon, print ad in The Times of India', pos: '50% 20%' },
+    { img: 'bhima-billboard', caption: 'March to Bhima, Bengaluru billboard', pos: '50% 50%' },
+    { img: 'ramp-1', caption: 'On the ramp, 2018', pos: '50% 35%' },
+    { img: 'ramp-2', caption: 'On the ramp, 2018', pos: '50% 35%' },
+    { img: 'ramp-3', caption: 'On the ramp, 2018', pos: '50% 35%' },
+  ],
+};
 
 export const hobbies = [
   { no: '01', title: 'My Bookshelf', href: '/hobbies/bookshelf/', copy: 'Top 3, the year’s reads, and a shelf you can pull books from.', color: '--plum', peek: '--lime', icon: '📚' },
