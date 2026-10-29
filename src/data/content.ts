@@ -108,23 +108,23 @@ export const experience: Job[] = [
     color: '--plum',
     tags: ['0 → 1 launch', 'Vision & roadmap', 'KPIs', 'Go-to-market'],
     bullets: [
-      'Launched Skin Perfecting Formula from concept to **over $100K in first-year revenue** (2,000 units, 100 sales in the first 4 weeks) by owning the product vision, roadmap and requirements end to end.',
-      'Validated **product-market fit and a data-backed roadmap**, measured against the acquisition, retention and engagement KPIs I defined, by analysing 200 customer, creator and retail touchpoints.',
-      'Grew reach to **a 200-partner creator and affiliate network and 100 repeat customers**, including Oscar-featured celebrity placements, by designing the go-to-market, positioning and messaging.',
-      'Streamlined the marketing team’s planning by **building AI workflows** that automate story content, newsletter production and market-trend research.',
+      'Launched Skin Perfecting Formula from concept to **over $100K in first-year revenue** (2,000 units, 100 sales in the first 4 weeks) by owning the product vision, roadmap and requirements end to end, reporting to the CEO and CMO on a 5-person team.',
+      'Validated **product-market fit and a data-backed roadmap**, measured against the acquisition, retention and engagement KPIs I defined, by analysing 200 customer, creator and retail touchpoints and A/B testing messaging and branding.',
+      'Grew reach to **a 200+ creator and affiliate network**, including Oscar-featured celebrity placements, and opened talks with med spas across Chicago and its suburbs, by designing the go-to-market, positioning and channel strategy.',
+      'Saved the team **15–20 hours a week per automation** by building AI workflows for story content, newsletter production and market-trend research.',
     ],
   },
   {
-    role: 'Teaching Assistant',
+    role: 'Teaching Assistant, MBA Program',
     company: 'Kellogg School of Management, Northwestern University',
     place: 'Evanston, IL',
     dates: 'Mar 2026 – Present',
     logo: 'kellogg',
     color: '--plum-deep',
-    tags: ['Teaching', 'Mentoring'],
-    // TODO(Bhavana): course name, class size and what you do week to week.
+    tags: ['Marketing Management', 'Business Strategy', 'Negotiations', 'Case discussions'],
     bullets: [
-      'Teaching Assistant at the **Kellogg School of Management**, supporting graduate students at Northwestern.',
+      'Kept **class participation consistently high** for Kellogg MBA students in Marketing Management, Business Strategy and Negotiations by running case discussions and keeping every student engaged.',
+      'Acted as **the link between students and faculty**, answering student questions and queries, assisting professors with course delivery and carrying student feedback back to the teaching team.',
     ],
   },
   {
@@ -150,10 +150,10 @@ export const experience: Job[] = [
     color: '--plum-deep',
     tags: ['Enterprise platforms', 'Team lead', 'Automation', 'Healthcare GTM'],
     bullets: [
-      'Owned **product quality for Meijer’s billing, inventory and workforce-management platforms**, including a Starbucks billing integration for Meijer stores, by leading a 5–7 person QA team and defining the test strategy.',
+      'Owned **product quality for Meijer’s billing, inventory and workforce-management platforms** across stores in multiple US states, including a Starbucks billing integration, by leading a 5–7 person QA team and defining the test strategy.',
       'Cut **release cycles by 40%** and raised **test automation coverage from 10% to 90% in one sprint** by building QA frameworks with Python, Selenium, Robot Framework and CI/CD pipelines.',
       'Reduced **post-release defects by 35%** by partnering with product managers and engineers on root-cause analysis and upstream requirement and release decisions.',
-      'Identified **a $2M healthcare imaging opportunity**, adopted by leadership for go-to-market planning, through market research and competitive mapping.',
+      'Identified **a $2M opportunity for a zero-footprint medical imaging viewer**, adopted by leadership for go-to-market planning, by leading the market research, competitive analysis and strategy.',
     ],
   },
   {
