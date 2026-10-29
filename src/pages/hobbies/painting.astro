@@ -1,21 +1,41 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Section from '../../layouts/Section.astro';
-import { paintings } from '../../data/content';
+import { painting } from '../../data/content';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('../../assets/paintings/*.{png,jpg}', { eager: true });
+const pic = (name: string) => (files[`../../assets/paintings/${name}.png`] ?? files[`../../assets/paintings/${name}.jpg`])!.default;
+// Larger version for the lightbox (webp keeps the cut-out transparent).
+const big = async (m: ImageMetadata) => (await getImage({ src: m, width: Math.min(m.width, 1400), format: 'webp' })).src;
+
+const wall = { ...painting.wall, m: pic(painting.wall.img) };
+const wallBig = await big(wall.m);
+const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(w.img), big: await big(pic(w.img)) })));
 ---
-<Section id="hobbies" sub="Painting" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Painting — Bhavana Durgam" description="Paintings by Bhavana Durgam: acrylics, watercolour and gouache.">
+<Section id="hobbies" sub="Painting" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Painting — Bhavana Durgam" description="Bhavana Durgam's paintings: she started painting to cope with stress and hasn't stopped since. Her gallery wall and her favourite canvases.">
   <header class="frame-head">
-    <p class="kicker">Hobby 02</p>
-    <h1 class="title">The <em>easel</em></h1>
-    <p class="lede">Colour, texture and slowness. Scroll sideways and click a frame to look closer. <span class="todo">Placeholder canvases until photos of the real paintings arrive.</span></p>
+    <p class="kicker">Hobby · Painting</p>
+    <h1 class="title">Where I get <em>lost</em></h1>
   </header>
 
-  <ul class="gallery" aria-label="Paintings">
-    {paintings.map((p) => (
-      <li>
-        <button class="frame-art" type="button" data-art={p.art} data-title={p.title} data-sub={`${p.medium} · ${p.year}`} data-sound aria-label={`${p.title}, ${p.medium}, ${p.year}`}>
-          <span class="mat"><span class="canvas" style={`background: ${p.art}`}></span></span>
+  <div class="story">
+    {painting.story.map((p) => <p>{p}</p>)}
+  </div>
+
+  <ul class="grid" aria-label="Paintings">
+    <li class="wall reveal">
+      <button class="tile" type="button" data-art={wallBig} data-title={wall.title} aria-label={`Open: ${wall.title}`}>
+        <Image src={wall.m} alt="Bhavana Durgam's gallery wall of her own colourful paintings" widths={[700, 1372]} sizes="(max-width: 960px) 92vw, 1000px" />
+      </button>
+      <p class="cap"><span class="cap-t">{wall.title}</span><span class="mono">{wall.note}</span></p>
+    </li>
+    {works.map((w, i) => (
+      <li class="reveal" style={`--d: ${(i % 4) * 70}ms`}>
+        <button class="tile art" type="button" data-art={w.big} data-title={w.title} aria-label={`Open painting: ${w.title}`}>
+          <Image src={w.m} alt={`${w.title}, a painting by Bhavana Durgam`} widths={[360, 720]} sizes="(max-width: 640px) 44vw, 260px" />
         </button>
-        <p class="cap"><span class="cap-t">{p.title}</span><span class="mono">{p.medium} · {p.year}</span></p>
+        <p class="cap"><span class="cap-t">{w.title}</span></p>
       </li>
     ))}
   </ul>
@@ -23,33 +43,50 @@ import { paintings } from '../../data/content';
   <div class="modal" id="art-modal" role="dialog" aria-modal="true" aria-labelledby="art-title">
     <div class="modal-card art-card">
       <button class="modal-close" type="button" aria-label="Close">✕</button>
-      <span class="mat big"><span class="canvas"></span></span>
-      <h2 id="art-title" class="h2"></h2>
-      <p class="mono art-sub"></p>
+      <img class="art-big" alt="" />
+      <p id="art-title" class="art-title mono"></p>
     </div>
   </div>
 </Section>
 
 <style>
-  .gallery {
-    list-style: none; padding: 16px 4px 22px; display: flex; gap: 32px; overflow-x: auto; scroll-snap-type: x mandatory;
-    scrollbar-width: thin; scrollbar-color: var(--wood) transparent;
+  .story { max-width: 760px; margin-bottom: clamp(36px, 5vw, 56px); }
+  .story p { font: 400 clamp(17px, 1.5vw, 20px)/1.7 var(--sans); color: var(--ink); }
+  .story p:first-child { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.55; font-weight: 500; }
+  .story p + p { margin-top: 18px; }
+
+  .grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 26px); }
+  .grid li { display: grid; gap: 10px; align-content: start; }
+  .grid .wall { grid-column: 1 / -1; }
+  .tile {
+    display: grid; place-items: center; width: 100%; overflow: hidden; border-radius: 12px; border: 1.5px solid var(--plum);
+    background: var(--ivory); transition: transform .5s var(--spring), box-shadow .5s;
   }
-  .gallery li { scroll-snap-align: start; flex: none; }
-  .frame-art {
-    display: block; padding: 14px; background: linear-gradient(135deg, var(--wood), var(--wood-dark)); border-radius: 3px;
-    box-shadow: 0 16px 24px -14px rgba(0,0,0,.5); transition: transform .45s var(--spring), box-shadow .45s;
+  .wall .tile { background: #fff; }
+  .wall .tile :global(img) { width: 100%; height: auto; display: block; }
+  .tile:hover, .tile:focus-visible { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--rose); }
+  .grid li:nth-child(even) .tile:hover, .grid li:nth-child(even) .tile:focus-visible { box-shadow: 8px 8px 0 var(--lime); }
+  /* every painting sits the same way: centred on a square of ivory, face-on, with a soft shadow */
+  .tile.art { aspect-ratio: 1; padding: 14%; background: radial-gradient(circle at 50% 45%, #fff, var(--ivory) 70%); }
+  .tile.art :global(img) {
+    width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 12px rgba(45,10,23,.25));
+    transition: transform .6s var(--spring);
   }
-  .frame-art:hover, .frame-art:focus-visible { transform: translateY(-10px); box-shadow: 0 26px 30px -16px rgba(0,0,0,.45); }
-  .mat { display: block; padding: 22px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
-  .canvas { display: block; width: 220px; height: 280px; }
-  .cap { display: grid; gap: 2px; margin-top: 14px; }
-  .cap-t { font: 400 24px/1.1 var(--serif); }
+  .tile.art:hover :global(img), .tile.art:focus-visible :global(img) { transform: scale(1.07) rotate(-1.5deg); }
+  .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .cap-t { font: 700 12px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
   .cap .mono { font-size: 11px; font-weight: 700; color: var(--muted); }
-  .art-card { display: grid; justify-items: center; gap: 10px; background: var(--sheet); padding: 28px; border-radius: 8px; }
-  .mat.big { padding: 26px; border: 14px solid var(--wood-dark); }
-  .mat.big .canvas { width: min(360px, 60vw); height: min(440px, 52vh); }
-  .art-sub { font-size: 12px; font-weight: 700; color: var(--muted); }
+
+  .art-card { display: grid; justify-items: center; gap: 14px; max-width: min(900px, 100%); overflow: visible; }
+  .art-big { max-width: 100%; max-height: 78vh; width: auto; filter: drop-shadow(0 30px 40px rgba(0,0,0,.45)); }
+  .art-title { color: var(--ivory); font-size: 12px; font-weight: 700; }
+  #art-modal .modal-close { top: -14px; right: -14px; }
+
+  @media (max-width: 960px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #art-modal .modal-close { top: 6px; right: 6px; }
+  }
 </style>
 
 <script>
@@ -57,10 +94,11 @@ import { paintings } from '../../data/content';
   function initArt() {
     const m = document.getElementById('art-modal');
     if (!m) return;
+    const img = m.querySelector<HTMLImageElement>('.art-big')!;
     document.querySelectorAll<HTMLElement>('[data-art]').forEach((b) => b.addEventListener('click', () => {
-      m.querySelector<HTMLElement>('.canvas')!.style.background = b.dataset.art!;
+      img.src = b.dataset.art!;
+      img.alt = b.dataset.title!;
       m.querySelector('#art-title')!.textContent = b.dataset.title!;
-      m.querySelector('.art-sub')!.textContent = b.dataset.sub!;
       openModal(m);
     }));
   }

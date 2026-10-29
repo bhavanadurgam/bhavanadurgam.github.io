@@ -461,14 +461,24 @@ export const books: Book[] = [
     review: "Malala reflects on finding herself during and after university. As an admirer of everything she stands for, I loved this glimpse into her life." },
 ];
 
-// TODO(Bhavana): add painting photos to src/assets/photos/ and list them here.
-export const paintings = [
-  { title: 'Monsoon Study', medium: 'Acrylic on canvas', year: 2024, art: 'linear-gradient(160deg,#6E1E3B,#F3D3E0 55%,#C9D863)' },
-  { title: 'Marigold', medium: 'Watercolour', year: 2023, art: 'radial-gradient(circle at 45% 45%,#C9D863,#EAB0C8 55%,#4A1229)' },
-  { title: 'Lake Michigan, Dusk', medium: 'Acrylic on canvas', year: 2025, art: 'linear-gradient(180deg,#EAB0C8 0 40%,#6E1E3B 40% 42%,#4A1229 42%)' },
-  { title: 'Bloom', medium: 'Acrylic on paper', year: 2024, art: 'radial-gradient(circle at 50% 55%,#FDFCEE 0 12%,#EAB0C8 13% 38%,#6E1E3B 39%)' },
-  { title: 'Rooftops', medium: 'Gouache', year: 2022, art: 'linear-gradient(0deg,#4A1229 0 30%,#EAB0C8 30% 34%,#C9D863 34%)' },
-];
+// Painting page. Cleaned-up photos live in src/assets/paintings/. TODO(Bhavana): rename any titles you like.
+export const painting = {
+  story: [
+    'I picked up a paintbrush when stress had me at my lowest. I needed somewhere to put everything I couldn’t say out loud, and a blank canvas didn’t ask any questions.',
+    'I haven’t stopped since. When I paint, time disappears: I sit down for “just twenty minutes” and look up hours later, paint on my hands and my head finally quiet. Every canvas on my wall holds a little of whatever I was carrying that day, and the lightness I felt when I let it go.',
+  ],
+  wall: { img: 'gallery-wall', title: 'My gallery wall', note: 'Every canvas here is mine' },
+  works: [
+    { img: 'wildflowers', title: 'Wildflowers' },
+    { img: 'hamsa', title: 'Hamsa' },
+    { img: 'desert-sun', title: 'Desert sun' },
+    { img: 'cherries', title: 'Cherries' },
+    { img: 'profile', title: 'In profile' },
+    { img: 'you-are-enough', title: 'You are enough' },
+    { img: 'sundae', title: 'Sundae for two' },
+    { img: 'keyhole', title: 'Through the keyhole' },
+  ],
+};
 
 // TODO(Bhavana): put MP3s in public/audio/ and set `src`, or add a link.
 // Music page. Previews are Apple's official 30-second clips; art is in src/assets/music/.
