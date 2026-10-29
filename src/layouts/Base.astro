@@ -63,7 +63,7 @@ const { title, description, jsonld, noindex, active } = Astro.props;
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
         </button>
       </div>
-      <p class="kicker">The files</p>
+      <p class="kicker">Life files</p>
       <nav class="menu-tabs" aria-label="Main">
         {folders.map((f) => (
           <a href={f.href} style={`--c: var(${f.color}); --t: var(${f.ink})`}>{f.title}<span>No.{f.no}</span></a>

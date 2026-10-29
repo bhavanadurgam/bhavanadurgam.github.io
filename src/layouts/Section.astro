@@ -10,7 +10,7 @@ interface Props {
   back?: { href: string; label: string };
   holes?: boolean;
 }
-const { id, title, description, sub, back = { href: '/#files', label: 'Back to files' }, holes = true } = Astro.props;
+const { id, title, description, sub, back = { href: '/#files', label: 'Back to life files' }, holes = true } = Astro.props;
 const f = folders.find((x) => x.id === id)!;
 const light = f.ink === '--ink';
 ---

@@ -22,13 +22,13 @@ export interface Folder {
 export const site = {
   name: 'Bhavana Durgam',
   url: 'https://bhavanadurgam.github.io',
-  role: 'Product Marketing Manager & aspiring PM',
+  role: 'Product Manager with product marketing experience',
   location: 'Chicago, IL',
   email: 'bhavanadurgam.work@gmail.com',
-  tagline: 'Product marketer & aspiring PM who likes building things people *actually* love, then telling the world about them.',
-  meta: "Chicago, IL · Northwestern MEM '25 · Open to PM & PMM roles",
+  tagline: 'Biomedical engineer turned product manager, with product marketing experience, who builds things people *actually* love.',
+  meta: "Chicago, IL · Northwestern MEM (Technical MBA) · Open to PM & PMM opportunities",
   description:
-    "Bhavana Durgam is a Product Marketing Manager and aspiring Product Manager in Chicago, Northwestern MEM '25. Work, projects, and the things she loves.",
+    "Bhavana Durgam is a biomedical engineer turned Product Manager with product marketing experience, based in Chicago. Master of Engineering Management (Technical MBA), Northwestern University. Open to PM and PMM opportunities.",
   socials: {
     linkedin: 'https://www.linkedin.com/in/bhavanadurgam/',
     instagram: 'https://www.instagram.com/bhavanadurgam/',
@@ -45,13 +45,13 @@ export const site = {
 
 // Homepage "Hello, I'm Bhavana!" card. TODO(Bhavana): edit these two paragraphs in your own words.
 export const about = [
-  "I'm a product marketer and aspiring product manager based in Chicago, focused on building things people actually love and then telling the world about them. My work spans positioning, go-to-market launches, creator partnerships and the user research underneath it all.",
-  "An engineer by training and a Northwestern MEM grad, I'm happiest where strategy meets storytelling. I love shaping a product's story from scratch, turning messy data into clear decisions, and I'm always up for new collaborations and a good book recommendation.",
+  "I'm a biomedical engineer turned product manager, based in Chicago. I love figuring out what people actually need, building the product that solves it, and making sure the world hears about it. Along the way I've picked up hands-on product marketing experience too: positioning, go-to-market launches, creator partnerships and the user research underneath it all.",
+  "I graduated with a Master of Engineering Management (a technical MBA) from Northwestern University, so I'm happiest where engineering, strategy and storytelling meet. I'm open to PM and PMM opportunities, new collaborations and, always, a good book recommendation.",
 ];
 
 export const folders: Folder[] = [
   { id: 'work', no: '01', label: 'Work', title: 'Work Experience', href: '/work/', color: '--plum', ink: '--sheet', peek: 'Salmalita · PatientXpress · Capgemini · Raman Research', teaser: '$100K launch, year one', tabX: 4 },
-  { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM · BMS College of Engineering', teaser: 'Engineer, then strategist', tabX: 22 },
+  { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM (Technical MBA) · BMS College of Engineering', teaser: 'Biomedical engineer → technical MBA', tabX: 22 },
   { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
   { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · a 125K community', teaser: 'The proud moments', tabX: 58 },
   { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'My bookshelf · painting · singing · content', teaser: 'The fun folder', tabX: 74 },
@@ -59,20 +59,20 @@ export const folders: Folder[] = [
 ];
 
 export const marquee = [
-  'Product Marketing', 'Positioning', 'Messaging', 'Go-to-Market', 'Product Launches', 'Creator Partnerships',
-  'Storytelling', 'Product Strategy', 'Roadmapping', 'User Research', 'Competitive Intelligence', 'A/B Testing',
+  'Product Strategy', 'Roadmapping', 'User Research', 'A/B Testing', 'Competitive Intelligence', 'Go-to-Market',
+  'Positioning', 'Product Launches', 'Product Marketing', 'Messaging', 'Creator Partnerships', 'Storytelling',
 ];
 
 // "A few things to know about me…" polaroids. Keep each caption short.
 // To add a photo: put it in public/photos/notes/ and add  photo: '/photos/notes/your-file.jpg'
 export const notes: { icon: string; text: string; photo?: string }[] = [
-  { icon: '✎', text: 'I read around 50 books a year', photo: '/photos/notes/books.jpg' },
-  { icon: '⌂', text: 'Grew up in Bangalore, India', photo: '/photos/notes/bangalore.jpg' },
-  { icon: '✐', text: 'Volunteer teacher for kids in underserved communities across Bangalore', photo: '/photos/notes/teaching.jpg' },
-  { icon: '♛', text: 'Miss India title holder', photo: '/photos/notes/miss-india.jpg' },
-  { icon: '✧', text: 'Modelling since I was six', photo: '/photos/notes/modelling.jpg' },
-  { icon: '♡', text: 'Animal lover and proud dog mom to Nora', photo: '/photos/notes/nora.jpg' },
-  { icon: '∞', text: 'A polymath: always learning something new', photo: '/photos/notes/polymath.jpg' },
+  { icon: '✎', text: 'Around 50 books a year. Ask me for a recommendation!', photo: '/photos/notes/books.jpg' },
+  { icon: '⌂', text: 'Bangalore girl at heart, Chicago by address', photo: '/photos/notes/bangalore.jpg' },
+  { icon: '✐', text: 'Volunteer teacher for kids in underserved schools across Bangalore', photo: '/photos/notes/teaching.jpg' },
+  { icon: '♛', text: 'Femina Miss India Karnataka 2018, crown and all', photo: '/photos/notes/miss-india.jpg' },
+  { icon: '✧', text: 'In front of the camera since I was six', photo: '/photos/notes/modelling.jpg' },
+  { icon: '♡', text: 'Animal lover, and Nora’s very proud dog mom', photo: '/photos/notes/nora.jpg' },
+  { icon: '∞', text: 'Forever a student: there’s always something new I’m learning', photo: '/photos/notes/polymath.jpg' },
 ];
 
 export const philosophy = {
@@ -162,7 +162,7 @@ export const experience: Job[] = [
 export const education = [
   {
     school: 'Northwestern University',
-    degree: 'Master of Engineering Management',
+    degree: 'Master of Engineering Management (Technical MBA)',
     place: 'Evanston, IL',
     dates: 'Dec 2025',
     initial: 'NU',

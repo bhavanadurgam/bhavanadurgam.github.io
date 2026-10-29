@@ -13,7 +13,7 @@ const jsonld = {
       name: 'Bhavana Durgam',
       givenName: 'Bhavana',
       familyName: 'Durgam',
-      jobTitle: 'Product Marketing Manager',
+      jobTitle: 'Product Manager',
       worksFor: { '@type': 'Organization', name: 'Salmalita Cosmetics' },
       alumniOf: [
         { '@type': 'CollegeOrUniversity', name: 'Northwestern University' },
@@ -23,7 +23,7 @@ const jsonld = {
       email: `mailto:${site.email}`,
       url: `${site.url}/`,
       image: `${site.url}/og/headshot.jpg`,
-      knowsAbout: ['Product Marketing', 'Product Management', 'Positioning', 'Go-to-Market Strategy', 'Product Launches', 'Creator Partnerships', 'User Research'],
+      knowsAbout: ['Product Management', 'Product Marketing', 'Biomedical Engineering', 'Positioning', 'Go-to-Market Strategy', 'Product Launches', 'Creator Partnerships', 'User Research'],
       award: ['Femina Miss India Karnataka 2018', 'Albert H. Rubenstein Memorial Scholarship'],
       sameAs: [site.socials.linkedin, site.socials.instagram],
     },
@@ -33,7 +33,7 @@ const jsonld = {
 
 const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'];
 ---
-<Base title="Bhavana Durgam — Product Marketing Manager & PM · Chicago" jsonld={jsonld}>
+<Base title="Bhavana Durgam — Product Manager with PMM experience · Chicago" jsonld={jsonld}>
   <!-- ═══ A. About: photo + hello card ═══ -->
   <section class="hero" aria-label="About Bhavana Durgam">
     <div class="wrap">
@@ -51,8 +51,8 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
           </div>
           <p class="meta mono">{site.meta}</p>
           <div class="ctas">
-            <a class="btn btn-ink" href="#files" data-sound>Open the files ↓</a>
-            <a class="btn btn-line" href="/contact/" data-sound>Say hello</a>
+            <a class="btn btn-ink" href="#files" data-sound>Get to know me ↓</a>
+            <a class="btn btn-line" href="/contact/" data-sound>Say hi!</a>
           </div>
         </div>
       </div>
@@ -69,8 +69,8 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   <!-- ═══ C. The files ═══ -->
   <section class="files" id="files" aria-labelledby="files-h">
     <div class="wrap files-head">
-      <h2 class="h2" id="files-h">The <em>files</em></h2>
-      <p class="files-hint mono">Hover to peek · click to open</p>
+      <h2 class="h2" id="files-h">My <em>life</em> files</h2>
+      <p class="files-hint mono">Hover to peek · click to open one up</p>
     </div>
     <div class="wrap stack" data-stack>
       {folders.map((f, i) => (
@@ -87,7 +87,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
               <span class="peek-l mono">{f.peek}</span>
               <span class="peek-r">{f.teaser} <span aria-hidden="true">→</span></span>
             </span>
-            {i === folders.length - 1 && <span class="file-foot mono">Six files · all open · no login required</span>}
+            {i === folders.length - 1 && <span class="file-foot mono">Six folders · one life · no password needed</span>}
           </span>
         </a>
       ))}
