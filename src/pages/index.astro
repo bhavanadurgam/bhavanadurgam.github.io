@@ -39,7 +39,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
     <div class="wrap">
       <div class="hello">
         <figure class="hello-photo">
-          <Image src={headshot} alt="Bhavana Durgam" widths={[480, 720, 900]} sizes="(max-width: 860px) 100vw, 42vw" loading="eager" fetchpriority="high" />
+          <Image src={headshot} alt="Bhavana Durgam" widths={[320, 640]} sizes="(max-width: 860px) 240px, 300px" loading="eager" fetchpriority="high" />
         </figure>
         <div class="hello-text">
           <h1 class="hello-h">
@@ -136,14 +136,20 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   /* ── About: hello card ───────────────────────── */
   .hero { padding: clamp(24px, 4vw, 48px) 0 clamp(56px, 7vw, 88px); background: var(--rose); }
   .hello {
-    display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    display: grid; grid-template-columns: minmax(0, 3.6fr) minmax(0, 8.4fr);
     background: var(--ivory); border: 1.5px solid var(--plum); border-radius: 22px; overflow: hidden;
     box-shadow: 0 30px 60px -34px rgba(45,10,23,.55);
     animation: rise .8s var(--spring) .05s both;
   }
   @keyframes rise { from { opacity: 0; transform: translateY(40px); } }
-  .hello-photo { margin: 0; border-right: 1.5px solid var(--plum); background: var(--rose-soft); overflow: hidden; }
-  .hello-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; animation: settle 1.4s var(--smooth) both; }
+  /* A framed photo at a modest size, sitting in its own column */
+  .hello-photo { margin: 0; display: grid; place-items: center; padding: clamp(24px, 3vw, 44px); border-right: 1.5px solid var(--plum); }
+  .hello-photo img {
+    width: min(100%, 300px); aspect-ratio: 1 / 1.05; height: auto; object-fit: cover; object-position: 50% 14%;
+    border: 1.5px solid var(--plum); border-radius: 4px; box-shadow: 10px 10px 0 var(--rose);
+    transform: rotate(-2deg); transition: transform .5s var(--spring), box-shadow .5s; animation: settle 1.4s var(--smooth) both;
+  }
+  .hello-photo img:hover { transform: rotate(0) scale(1.02); box-shadow: 14px 14px 0 var(--lime); }
   @keyframes settle { from { transform: scale(1.08); } }
   .hello-text {
     display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 56px) clamp(24px, 5vw, 80px);
@@ -171,7 +177,8 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
 
   @media (max-width: 860px) {
     .hello { grid-template-columns: 1fr; min-height: 0; }
-    .hello-photo { border-right: 0; border-bottom: 1.5px solid var(--plum); aspect-ratio: 4 / 3; }
+    .hello-photo { border-right: 0; border-bottom: 1.5px solid var(--plum); padding: 28px 24px 30px; }
+    .hello-photo img { width: min(68%, 240px); }
     .hello-copy p { text-align: left; }
   }
 

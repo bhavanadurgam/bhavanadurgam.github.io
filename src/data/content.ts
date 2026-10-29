@@ -115,19 +115,6 @@ export const experience: Job[] = [
     ],
   },
   {
-    role: 'Teaching Assistant, MBA Program',
-    company: 'Kellogg School of Management, Northwestern University',
-    place: 'Evanston, IL',
-    dates: 'Mar 2026 – Present',
-    logo: 'kellogg',
-    color: '--plum-deep',
-    tags: ['Marketing Management', 'Business Strategy', 'Negotiations', 'Case discussions'],
-    bullets: [
-      'Kept **class participation consistently high** for Kellogg MBA students in Marketing Management, Business Strategy and Negotiations by running case discussions and keeping every student engaged.',
-      'Acted as **the link between students and faculty**, answering student questions and queries, assisting professors with course delivery and carrying student feedback back to the teaching team.',
-    ],
-  },
-  {
     role: 'Product Management Intern',
     company: 'PatientXpress',
     place: 'Evanston, IL',
@@ -183,7 +170,7 @@ export const education = [
     photo: { src: 'northwestern', caption: 'Northwestern, 2025', alt: 'Bhavana Durgam in her purple graduation gown under the Northwestern arch' },
     bullets: [
       'Albert H. Rubenstein Memorial Scholarship: **merit award, top 3 of 60 admits**.',
-      'Teaching Assistant, **Kellogg School of Management**.',
+      'Teaching Assistant at the **Kellogg School of Management** (Mar 2026 – present) for MBA courses in Marketing Management, Business Strategy and Negotiations: I run case discussions, keep class participation high, answer student questions and act as the link between students and professors.',
       'President, Lead@NUMEM: designed **career programming for 100+ MEM students**, including bootcamps and mock interviews.',
     ],
   },

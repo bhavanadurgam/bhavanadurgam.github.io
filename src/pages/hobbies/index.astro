@@ -6,8 +6,8 @@ import { hobbies } from '../../data/content';
 // m* = phone layout (a taller table with a 2x2 grid).
 const spots: Record<string, { x: number; y: number; w: number; r: number; d: number; mx: number; my: number; mw: number }> = {
   Reading:            { x: 7,  y: 9,  w: 21, r: -6, d: 1.0, mx: 6,  my: 31, mw: 40 },
-  Music:              { x: 63, y: 8,  w: 24, r: 5,  d: 1.4, mx: 52, my: 30, mw: 43 },
-  Painting:           { x: 6,  y: 60, w: 23, r: 4,  d: 1.2, mx: 5,  my: 64, mw: 43 },
+  Painting:           { x: 66, y: 9,  w: 24, r: 5,  d: 1.4, mx: 52, my: 31, mw: 43 },
+  Music:              { x: 8,  y: 58, w: 20, r: -4, d: 1.2, mx: 8,  my: 63, mw: 38 },
   'Content creation': { x: 71, y: 61, w: 21, r: -5, d: 0.8, mx: 53, my: 65, mw: 40 },
 };
 ---
@@ -65,23 +65,16 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
                 </svg>
               )}
               {h.no === '03' && (
-                <svg class="art vinyl" viewBox="0 0 280 210" aria-hidden="true">
-                  <g class="record">
-                    <circle cx="176" cy="105" r="96" class="disc" />
-                    {[86, 74, 62, 50].map((r) => <circle cx="176" cy="105" r={r} class="groove" />)}
-                    <circle cx="176" cy="105" r="30" class="label" /><text x="176" y="102" class="label-t">SIDE B</text><text x="176" y="116" class="label-s">BHAVANA</text>
-                    <circle cx="176" cy="105" r="4" class="hole" />
-                  </g>
-                  <g class="sleeve">
-                    <rect x="6" y="9" width="192" height="192" rx="6" />
-                    <text x="22" y="52" class="s-big">SIDE</text><text x="22" y="92" class="s-big">B</text>
-                    <path d="M30 150 Q 60 110 90 150 T 150 150 T 190 140" class="squig" />
-                    <circle cx="150" cy="70" r="20" class="sun" />
-                    <rect x="22" y="172" width="64" height="14" class="bar" />
-                  </g>
-                </svg>
-              )}
-              {h.no === '04' && (
+            <svg class="art phones" viewBox="0 0 240 220" aria-hidden="true">
+              <path class="band" d="M44 128 C 40 52 82 18 120 18 C 158 18 200 52 196 128" />
+              <path class="band-in" d="M58 120 C 56 64 88 34 120 34 C 152 34 184 64 182 120" />
+              <g class="cup cup-l"><rect x="22" y="112" width="52" height="84" rx="24" class="shell" /><rect x="58" y="122" width="22" height="64" rx="10" class="pad" /><circle cx="44" cy="154" r="9" class="dot" /></g>
+              <g class="cup cup-r"><rect x="166" y="112" width="52" height="84" rx="24" class="shell" /><rect x="160" y="122" width="22" height="64" rx="10" class="pad" /><path d="M192 146 c -5 -7 -16 -4 -11 5 l 11 10 l 11 -10 c 5 -9 -6 -12 -11 -5 z" class="heart" /></g>
+              <path class="cord" d="M44 196 C 44 214 70 210 76 200 C 84 188 98 204 110 206" />
+              <g class="notes"><path d="M104 96 v -30 l 22 -6 v 28" /><circle cx="99" cy="97" r="7" /><circle cx="121" cy="89" r="7" /><path d="M142 74 v -22" /><circle cx="137" cy="76" r="6" /></g>
+            </svg>
+          )}
+          {h.no === '04' && (
                 <svg class="art camera" viewBox="0 0 230 170" aria-hidden="true">
                   <rect x="10" y="34" width="210" height="126" rx="22" class="body" />
                   <rect x="30" y="20" width="56" height="22" rx="8" class="top" /><rect x="168" y="22" width="34" height="16" rx="6" class="shutter" />
@@ -94,7 +87,7 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
                 </svg>
               )}
           </span></span>
-          <span class="tag mono"><b>{h.no}</b> {h.title}</span>
+          <span class="tag mono">{h.title}</span>
           {h.no === '04' && <span class="flash" aria-hidden="true"></span>}
         </a>
       );
@@ -184,17 +177,19 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   .palette .brush { transition: transform .6s var(--spring); }
   .obj-02:hover .brush { transform: translate(-10px, 8px) rotate(-6deg); }
 
-  /* vinyl */
-  .vinyl .disc { fill: #1d1418; } .vinyl .groove { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 1.5; }
-  .vinyl .label { fill: var(--lime); } .vinyl .hole { fill: var(--plum-deep); }
-  .vinyl .label-t { font: 800 11px var(--display); fill: var(--plum); text-anchor: middle; } .vinyl .label-s { font: 700 6px var(--mono); fill: var(--plum); text-anchor: middle; letter-spacing: 1px; }
-  .vinyl .record { transform-box: view-box; transform-origin: 176px 105px; transition: translate .6s var(--spring); }
-  .obj-03:hover .record, .obj-03:focus-visible .record { translate: 28px 0; animation: spin 2.4s linear infinite; }
-  @keyframes spin { to { rotate: 360deg; } }
-  .vinyl .sleeve rect { fill: var(--rose); stroke: rgba(45,10,23,.3); stroke-width: 1.5; }
-  .vinyl .s-big { font: 800 44px/1 var(--display); fill: var(--plum); letter-spacing: -2px; }
-  .vinyl .squig { fill: none; stroke: var(--plum); stroke-width: 6; stroke-linecap: round; }
-  .vinyl .sun { fill: var(--lime); } .vinyl .bar { fill: var(--plum-deep); }
+  /* headphones */
+  .phones .band { fill: none; stroke: var(--plum); stroke-width: 14; stroke-linecap: round; }
+  .phones .band-in { fill: none; stroke: var(--rose); stroke-width: 5; stroke-linecap: round; opacity: .8; }
+  .phones .shell { fill: var(--rose); stroke: rgba(45,10,23,.3); stroke-width: 1.5; } .phones .pad { fill: var(--lime); }
+  .phones .dot { fill: var(--plum); } .phones .heart { fill: var(--plum); }
+  .phones .cord { fill: none; stroke: var(--plum); stroke-width: 3.5; stroke-linecap: round; }
+  .phones .notes { fill: var(--lime); stroke: var(--lime); stroke-width: 4; stroke-linecap: round; opacity: 0; translate: 0 10px; transition: opacity .4s, translate .6s var(--spring); }
+  .phones .notes circle { stroke: none; }
+  .phones .cup { transform-box: fill-box; transform-origin: 50% 0; }
+  .obj-03:hover .notes, .obj-03:focus-visible .notes { opacity: 1; translate: 0 -14px; }
+  .obj-03:hover .cup-l, .obj-03:focus-visible .cup-l { animation: beat .5s ease-in-out infinite alternate; }
+  .obj-03:hover .cup-r, .obj-03:focus-visible .cup-r { animation: beat .5s ease-in-out .25s infinite alternate; }
+  @keyframes beat { to { scale: 1.06; } }
 
   /* camera */
   .camera .body { fill: #F4B9CF; stroke: rgba(45,10,23,.3); stroke-width: 1.5; } .camera .top { fill: #E39BB8; } .camera .shutter { fill: var(--plum); }
