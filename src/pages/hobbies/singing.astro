@@ -8,7 +8,6 @@ const art = import.meta.glob<{ default: ImageMetadata }>('../../assets/music/*.j
 const cover = (slug: string) => art[`../../assets/music/${slug}.jpg`]!.default;
 const now = new Date();
 const month = now.toLocaleString('en-US', { month: 'long' });
-const swaras = ['Sa', 'Ri', 'Ga', 'Ma', 'Pa', 'Da', 'Ni', 'Ṡa'];
 ---
 <Section id="hobbies" sub="Music" back={{ href: '/hobbies/', label: 'Back to hobbies' }} title="Music — Bhavana Durgam" description="Bhavana Durgam is trained in Carnatic classical music; singing and listening are her therapy. Plus her current top 3 songs.">
   <header class="frame-head">
@@ -20,15 +19,6 @@ const swaras = ['Sa', 'Ri', 'Ga', 'Ma', 'Pa', 'Da', 'Ni', 'Ṡa'];
     <div class="story-text">
       {music.story.map((p) => <p>{p}</p>)}
     </div>
-    <figure class="quote" aria-label="A note on music">
-      <span class="eq" aria-hidden="true">{Array.from({ length: 7 }, (_, i) => <i style={`--i:${i}`}></i>)}</span>
-      <blockquote>Some people journal. <em>I sing.</em></blockquote>
-      <figcaption class="mono">Trained in Carnatic classical</figcaption>
-    </figure>
-  </div>
-
-  <div class="swaras" aria-hidden="true">
-    <div class="sw-track">{[0, 1, 2].map(() => swaras.map((s) => <span>{s}<b>♪</b></span>))}</div>
   </div>
 
   <section class="playlist" aria-labelledby="pl-h">
@@ -72,27 +62,11 @@ const swaras = ['Sa', 'Ri', 'Ga', 'Ma', 'Pa', 'Da', 'Ni', 'Ṡa'];
 
 <style>
   /* Story */
-  .story { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-  .story-text p { font: 400 clamp(19px, 2vw, 23px)/1.5 var(--serif); max-width: 640px; }
-  .story-text p + p { margin-top: 16px; }
-  .quote {
-    position: relative; margin: 0; padding: 34px 30px 28px; border-radius: 20px; background: var(--plum-deep); color: var(--ivory);
-    box-shadow: 8px 8px 0 var(--rose); transform: rotate(1.5deg);
-  }
-  .quote blockquote { margin: 18px 0 12px; font: 800 clamp(30px, 3.4vw, 46px)/1 var(--display); letter-spacing: -0.035em; }
-  .quote blockquote em { font: italic 400 1.1em/1 var(--serif); letter-spacing: -0.01em; color: var(--rose); }
-  .quote figcaption { font-size: 11px; font-weight: 700; color: var(--lime); }
-  .eq { display: flex; align-items: flex-end; gap: 5px; height: 34px; }
-  .eq i { width: 7px; height: 100%; border-radius: 3px; background: var(--lime); transform-origin: bottom; animation: eq 1.1s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -.17s); }
-  .eq i:nth-child(even) { background: var(--rose); }
+  .story { max-width: 760px; }
+  .story-text p { font: 400 clamp(17px, 1.5vw, 20px)/1.7 var(--sans); color: var(--ink); }
+  .story-text p:first-child { font-size: clamp(19px, 1.8vw, 23px); line-height: 1.55; font-weight: 500; }
+  .story-text p + p { margin-top: 18px; }
   @keyframes eq { from { transform: scaleY(.2); } to { transform: scaleY(1); } }
-
-  /* Swaras: the Carnatic scale drifting by */
-  .swaras { margin: clamp(40px, 6vw, 64px) 0 0; overflow: hidden; border-block: 1.5px dashed var(--line); padding: 14px 0; }
-  .sw-track { display: flex; width: max-content; animation: drift 30s linear infinite; }
-  .sw-track span { padding-right: 34px; font: italic 400 30px/1 var(--serif); color: var(--plum); white-space: nowrap; }
-  .sw-track b { margin-left: 34px; font: 400 16px/1 var(--sans); color: var(--rose); }
-  @keyframes drift { to { transform: translateX(-33.333%); } }
 
   /* Playlist */
   .playlist { margin-top: clamp(48px, 7vw, 80px); }
@@ -129,7 +103,6 @@ const swaras = ['Sa', 'Ri', 'Ga', 'Ma', 'Pa', 'Da', 'Ni', 'Ṡa'];
   .s-link:hover { background: var(--lime); }
   .credit { margin-top: 22px; text-align: right; font-size: 10.5px; font-weight: 700; color: var(--muted); }
 
-  @media (max-width: 860px) { .story { grid-template-columns: 1fr; } .quote { max-width: 420px; } }
   @media (max-width: 640px) { .songs { grid-template-columns: 1fr; max-width: 340px; } }
 </style>
 
