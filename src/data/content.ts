@@ -46,7 +46,7 @@ export const folders: Folder[] = [
   { id: 'work', no: '01', label: 'Work', title: 'Work Experience', href: '/work/', color: '--plum', ink: '--sheet', peek: 'Salmalita · PatientXpress · Capgemini · Raman Research', teaser: '$100K launch, year one', tabX: 4 },
   { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM (Technical MBA) · BMS College of Engineering', teaser: 'Biomedical engineer → technical MBA', tabX: 22 },
   { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
-  { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · model & actor since six', teaser: 'Crowns & cameras', tabX: 58 },
+  { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · model & actor · 125K creator', teaser: 'Crowns, cameras & content', tabX: 58 },
   { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'My bookshelf · painting · singing · content', teaser: 'The fun folder', tabX: 74 },
   { id: 'contact', no: '06', label: 'Contact', title: 'Contact', href: '/contact/', color: '--lime', ink: '--ink', peek: 'LinkedIn · Instagram · email', teaser: "Let's talk", tabX: 6 },
 ];
@@ -296,11 +296,6 @@ export const missIndia = {
     { title: 'Miss Goodness Ambassador', year: '2018', note: 'For my social and volunteering work' },
     { title: 'Top 10, Beauty with a Purpose', year: '2018', note: 'For my project bringing education to underserved communities' },
   ],
-  stats: [
-    { value: '$11K', label: 'raised in 3 weeks with Ketto' },
-    { value: '5,000', label: 'people reached through awareness camps' },
-    { value: '2', label: 'states: Karnataka and Andhra Pradesh' },
-  ],
   // **bold** = the result
   work: [
     'Raised **$11K in 3 weeks** to improve schools in underserved communities by running a crowdfunding campaign with Ketto.',
@@ -341,44 +336,43 @@ export const missIndia = {
 };
 
 export const modelling = {
-  stats: [
-    { value: '20+', label: 'brands across jewellery, fashion, tech and food' },
-    { value: '12', label: 'TV and digital commercials' },
-    { value: '1', label: 'Telugu feature film' },
-    { value: '6', label: 'years old at my first shoot' },
-  ],
-  commercials: ['Redmi ×3', 'Canon ×5', 'MTR Minute Foods', 'MTR Rasam', 'Crispy Day', 'fbb'],
-  print: ['Bhima Jewellers', 'Malabar Gold', 'PMJ Jewellers', 'Melorra', 'Jewel One', 'Canon', 'Myntra', 'Ajio', 'Central', 'Pothys', 'Kumaran Silks', 'Deepam Silks', 'Saaki World', 'Twin Birds', 'Madhura Coats', 'Kiru Foods'],
-  ramp: [
-    'Top 7, ramp round at Femina Miss India 2018',
-    'Femina Miss India Karnataka 2018',
-    'Showstopper at Bangalore Times Fashion Week, and a model there several times',
-  ],
-  film: { title: 'The Story of a Beautiful Girl', note: 'Telugu feature film' },
+  intro: 'I’ve been in front of the camera since I was six: countless print, TV, billboard and ramp campaigns for brands across jewellery, fashion, tech and food, from Bhima Jewellers, Malabar Gold and Canon to Redmi, Myntra and Ajio. On the ramp, I’ve been a showstopper and a model for many of India’s major designers, including at Bangalore Times Fashion Week. I’ve also acted in a Telugu feature film, The Story of a Beautiful Girl.',
+  // One ad per brand (Redmi's three are one campaign).
   ads: [
-    { brand: 'Redmi', id: '9tcEk3m83VE', title: 'Saving notes made simple · Redmi × Google Lens' },
-    { brand: 'Redmi', id: 'LG5p4rtmF-k', title: 'Translation made simple · Redmi × Google Lens' },
-    { brand: 'Redmi', id: 'wZYo8WxFUgE', title: 'Homework made simple · Redmi × Google Lens' },
     { brand: 'Canon', id: 'nwY3eX4oweM', title: 'Capturing the bride on the EOS R5' },
-    { brand: 'Canon', id: 'ABaWCRIoWx8', title: 'Wedding saga on the EOS R5' },
-    { brand: 'Canon', id: 'Q3alIoIwuFA', title: 'The magic proposal on the EOS R5' },
-    { brand: 'Canon', id: 'AwLwidOVG0M', title: 'Couple portrait on the EOS R5' },
-    { brand: 'Canon', id: 'hqxbDsGkKy8', title: 'Covering weddings on the EOS R5' },
+    { brand: 'Redmi × Google Lens', id: '9tcEk3m83VE', title: 'Saving notes made simple' },
+    { brand: 'Redmi × Google Lens', id: 'LG5p4rtmF-k', title: 'Translation made simple' },
+    { brand: 'Redmi × Google Lens', id: 'wZYo8WxFUgE', title: 'Homework made simple' },
     { brand: 'Crispy Day', id: '3GFa7tzjTOc', title: 'Masalas for a delicious, happy meal' },
   ],
-  links: [
-    { brand: 'MTR', title: 'MTR digital TVC', url: 'https://www.instagram.com/p/CHcFTnlp9Dr/', where: 'Instagram' },
-    { brand: 'fbb', title: 'fbb digital TVC', url: 'https://www.facebook.com/fbbonline/videos/10155542555713093/', where: 'Facebook' },
-    { brand: 'More', title: 'More of my work', url: 'https://www.instagram.com/p/CZeNEMSJTtA/', where: 'Instagram' },
-  ],
+  more: { brand: 'MTR', title: 'MTR digital TVC', url: 'https://www.instagram.com/p/CHcFTnlp9Dr/', where: 'Instagram' },
   campaigns: [
-    { img: 'bhima-brilliance', caption: 'Bhima Brilliance, diamond jewellery festival', pos: '50% 40%' },
-    { img: 'pothys-billboard', caption: 'Pothys billboard', pos: '50% 50%' },
-    { img: 'canon-print', caption: 'Canon, print ad in The Times of India', pos: '50% 20%' },
-    { img: 'bhima-billboard', caption: 'March to Bhima, Bengaluru billboard', pos: '50% 50%' },
-    { img: 'ramp-1', caption: 'On the ramp, 2018', pos: '50% 35%' },
-    { img: 'ramp-2', caption: 'On the ramp, 2018', pos: '50% 35%' },
-    { img: 'ramp-3', caption: 'On the ramp, 2018', pos: '50% 35%' },
+    { img: 'bhima-brilliance', caption: 'Bhima Jewellers', pos: '50% 40%' },
+    { img: 'pothys-billboard', caption: 'Pothys', pos: '50% 50%' },
+    { img: 'canon-print', caption: 'Canon', pos: '50% 20%' },
+    { img: 'bhima-billboard', caption: 'Bhima Jewellers', pos: '50% 50%' },
+    { img: 'ramp-1', caption: 'Bangalore Times Fashion Week', pos: '50% 35%' },
+    { img: 'ramp-2', caption: 'Bangalore Times Fashion Week', pos: '50% 35%' },
+    { img: 'ramp-3', caption: 'Bangalore Times Fashion Week', pos: '50% 35%' },
+  ],
+};
+
+export const creator = {
+  niche: ['Lifestyle', 'Wellness'],
+  platforms: [
+    { name: 'Instagram', handle: '@bhavana.durgam', url: 'https://www.instagram.com/bhavana.durgam/', count: '122K followers' },
+    { name: 'YouTube', handle: '@Bhavana.durgam', url: 'https://www.youtube.com/@Bhavana.durgam' },
+    { name: 'TikTok', handle: '@bhavana_durgam', url: 'https://www.tiktok.com/@bhavana_durgam' },
+  ],
+  story: [
+    'I started creating in 2020, during COVID, as a way to cope with my anxiety. I talked openly about how I was handling my mental health, one honest post at a time, and people related. What started as my own coping tool grew into a community.',
+    'Today I create lifestyle and wellness content on Instagram, YouTube and TikTok for a community of around 125K, about wellness and the life in between.',
+  ],
+  // What creating taught me, in product terms. **bold** = the takeaway.
+  lessons: [
+    'Grew **from about 40K to 125K followers** across Instagram, YouTube and TikTok by treating every post as an experiment: testing hooks, formats and timing, and keeping what worked.',
+    'Learned **to understand what an audience actually wants** by reading comments, DMs and analytics as user research, then shaping content around it.',
+    'Built **a content strategy, not just posts**: a clear niche, consistent pillars and a plan for what to make next.',
   ],
 };
 

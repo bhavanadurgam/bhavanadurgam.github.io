@@ -2,7 +2,7 @@
 import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Section from '../layouts/Section.astro';
-import { missIndia, modelling } from '../data/content';
+import { missIndia, modelling, creator } from '../data/content';
 
 const all = import.meta.glob<{ default: ImageMetadata }>('../assets/{acc,press,videos}/**/*.jpg', { eager: true });
 const img = (path: string) => all[`../assets/${path}.jpg`]?.default;
@@ -15,14 +15,15 @@ const clips = await Promise.all(missIndia.clippings.map(async (c) => ({ ...c, m:
 const campaigns = await Promise.all(modelling.campaigns.map(async (c) => ({ ...c, m: img(`acc/modelling/${c.img}`)!, big: await full(img(`acc/modelling/${c.img}`)!) })));
 const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 ---
-<Section id="accomplishments" title="Accomplishments — Bhavana Durgam" description="Bhavana Durgam: Femina Miss India Karnataka 2018, Top 10 at Femina Miss India, Miss Goodness Ambassador and Top 10 Beauty with a Purpose; model and actor since age six for Canon, Redmi, Bhima, Myntra, Ajio and more.">
+<Section id="accomplishments" title="Accomplishments — Bhavana Durgam" description="Bhavana Durgam: Femina Miss India Karnataka 2018, Top 10 at Femina Miss India, Miss Goodness Ambassador and Top 10 Beauty with a Purpose; model and actor since age six; lifestyle and wellness creator with a 125K community.">
   <header class="frame-head">
     <p class="kicker">File No.04</p>
-    <h1 class="title">Crowns &amp; <em>cameras</em></h1>
-    <p class="lede">Long before product, two things taught me how to read a room and tell a story: a year as Femina Miss India Karnataka spent on education and health in underserved communities, and a lifetime in front of the camera.</p>
+    <h1 class="title">Crowns, cameras &amp; <em>content</em></h1>
+    <p class="lede">Long before product, two things taught me how to read a room and tell a story: a year as Femina Miss India Karnataka spent on education and health in underserved communities, a lifetime in front of the camera, and a creator community that grew out of my own mental-health journey.</p>
     <nav class="jump" aria-label="On this page">
       <a class="pill" href="#miss-india">♛ Miss India</a>
       <a class="pill" href="#model-actor">✧ Model &amp; actor</a>
+      <a class="pill" href="#creator">♡ Content creator</a>
     </nav>
   </header>
 
@@ -35,28 +36,16 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
       {missIndia.titles.map((t, i) => (
         <li class="crown reveal" style={`--d: ${i * 70}ms`}>
           <span class="c-ico" aria-hidden="true">♛</span>
-          <span class="c-title">{t.title}</span>
-          <span class="c-year mono">{t.year}</span>
-          <span class="c-note">{t.note}</span>
+          <span class="c-body">
+            <span class="c-title">{t.title} <span class="c-year mono">{t.year}</span></span>
+            <span class="c-note">{t.note}</span>
+          </span>
         </li>
       ))}
     </ul>
 
-    <div class="reign">
-      <div>
-        <h3 class="sub">The work behind the crown</h3>
-        <ul class="t-list reign-lines" data-lit-line>
-          <li class="job">
-            <ul class="t-list">{missIndia.work.map((w) => <li class="line" set:html={bold(w)} />)}</ul>
-          </li>
-        </ul>
-      </div>
-      <ul class="stats">
-        {missIndia.stats.map((s) => (
-          <li class="stat reveal"><span class="s-val">{s.value}</span><span class="s-label">{s.label}</span></li>
-        ))}
-      </ul>
-    </div>
+    <h3 class="sub">The work behind the crown</h3>
+    <ul class="t-list lit-list" data-lit-line>{missIndia.work.map((w) => <li class="line" set:html={bold(w)} />)}</ul>
 
     <ul class="strip" aria-label="Miss India photos">
       {photos.map((p, i) => (
@@ -119,18 +108,7 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
     <p class="kicker">02 · In front of the camera</p>
     <h2 class="h2" id="ma-h">Model &amp; actor <em>since six</em></h2>
 
-    <ul class="stats four">
-      {modelling.stats.map((s) => (
-        <li class="stat reveal"><span class="s-val">{s.value}</span><span class="s-label">{s.label}</span></li>
-      ))}
-    </ul>
-
-    <div class="brands" aria-label="Brands I've worked with">
-      <div class="brand-row"><span class="b-k mono">TV &amp; digital</span><ul>{modelling.commercials.map((b) => <li>{b}</li>)}</ul></div>
-      <div class="brand-row"><span class="b-k mono">Print &amp; billboards</span><ul>{modelling.print.map((b) => <li>{b}</li>)}</ul></div>
-      <div class="brand-row"><span class="b-k mono">Ramp</span><ul>{modelling.ramp.map((b) => <li>{b}</li>)}</ul></div>
-      <div class="brand-row"><span class="b-k mono">Film</span><ul><li><em>{modelling.film.title}</em> · {modelling.film.note}</li></ul></div>
-    </div>
+    <p class="intro">{modelling.intro}</p>
 
     <h3 class="sub">Commercials</h3>
     <ul class="videos">
@@ -143,16 +121,9 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
           </a>
         </li>
       ))}
-      {modelling.links.map((l) => (
-        <li class="reveal">
-          <a class="video link-card" href={l.url} target="_blank" rel="noopener">
-            <span class="v-img lc"><span class="lc-brand">{l.brand}</span><span class="play" aria-hidden="true">↗</span></span>
-            <span class="v-brand mono">{l.where}</span>
-            <span class="v-title">{l.title}</span>
-          </a>
-        </li>
-      ))}
     </ul>
+
+    <p class="more-link"><a href={modelling.more.url} target="_blank" rel="noopener">Also: the {modelling.more.title} on {modelling.more.where} ↗</a></p>
 
     <h3 class="sub">Campaigns &amp; ramp</h3>
     <ul class="campaigns">
@@ -165,6 +136,32 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
         </li>
       ))}
     </ul>
+  </section>
+
+  <!-- ═══ Content creator ═══ -->
+  <section class="block" id="creator" aria-labelledby="cc-h">
+    <p class="kicker">03 · Online</p>
+    <h2 class="h2" id="cc-h">Content <em>creator</em></h2>
+    <ul class="niche">{creator.niche.map((n) => <li class="pill">{n}</li>)}<li class="pill">Since 2020</li></ul>
+
+    <div class="cc-grid">
+      <div class="cc-story">
+        {creator.story.map((p) => <p>{p}</p>)}
+        <h3 class="sub">What creating taught me</h3>
+        <ul class="t-list lit-list" data-lit-line>{creator.lessons.map((l) => <li class="line" set:html={bold(l)} />)}</ul>
+      </div>
+      <div class="cc-side">
+        <a class="ig-card" href={creator.platforms[0].url} target="_blank" rel="noopener me" aria-label="Open Bhavana Durgam's Instagram, @bhavana.durgam">
+          <Image src={img('acc/instagram-profile')!} alt="Bhavana Durgam's Instagram profile: 122K followers, creator, wellness and the life in between" widths={[420, 840]} sizes="(max-width: 960px) 90vw, 400px" />
+          <span class="ig-go mono">Follow on Instagram ↗</span>
+        </a>
+        <ul class="platforms">
+          {creator.platforms.map((p) => (
+            <li><a href={p.url} target="_blank" rel="noopener me"><span class="pf-name">{p.name}</span><span class="pf-handle mono">{p.handle}{p.count && ` · ${p.count}`}</span><span aria-hidden="true">↗</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </section>
 
   <div class="modal lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-cap">
@@ -186,29 +183,19 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
   .sub { font: 800 clamp(22px, 2.4vw, 28px)/1.1 var(--display); letter-spacing: -0.02em; margin: clamp(40px, 6vw, 64px) 0 18px; }
   .hint { font-size: 11px; font-weight: 700; color: var(--muted); margin: -10px 0 16px; }
 
-  /* Titles */
-  .titles { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-  .crown {
-    position: relative; display: grid; align-content: start; gap: 6px; padding: 20px 18px; border-radius: 16px;
-    background: var(--plum); color: var(--ivory); box-shadow: 5px 5px 0 var(--rose); transition: transform .4s var(--spring);
+  /* Titles: a light list, no boxes */
+  .titles { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; }
+  .crown { display: flex; gap: 16px; align-items: flex-start; padding: 18px 0; border-bottom: 1.5px dashed var(--line); }
+  .c-ico {
+    flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+    background: var(--lime); color: var(--plum); font-size: 20px; transition: transform .45s var(--spring);
   }
-  .crown:nth-child(even) { background: var(--plum-deep); box-shadow: 5px 5px 0 var(--lime); }
-  .crown:hover { transform: translateY(-6px) rotate(-1deg); }
-  .c-ico { font-size: 26px; color: var(--lime); line-height: 1; }
-  .c-title { font: 800 21px/1.1 var(--display); letter-spacing: -0.02em; }
-  .c-year { font-size: 11px; font-weight: 700; color: var(--rose); }
-  .c-note { font-size: 14px; line-height: 1.45; opacity: .85; }
-
-  /* Reign work + stats */
-  .reign { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: clamp(24px, 4vw, 56px); align-items: start; }
-  .reign-lines { list-style: none; padding: 0; margin: 0; }
-  .reign-lines .t-list { margin-top: 0; gap: 14px; }
-  .stats { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
-  .stats.four { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 28px; }
-  .stat { display: grid; gap: 4px; padding: 18px; border-radius: 14px; background: var(--ivory); border: 1.5px solid var(--plum); box-shadow: 4px 4px 0 var(--rose); }
-  .stat:nth-child(even) { box-shadow: 4px 4px 0 var(--lime); }
-  .s-val { font: 800 clamp(34px, 3.6vw, 46px)/.9 var(--display); letter-spacing: -0.04em; }
-  .s-label { font-size: 14px; line-height: 1.4; color: var(--muted); }
+  .crown:hover .c-ico { transform: rotate(-12deg) scale(1.1); }
+  .c-body { display: grid; gap: 4px; }
+  .c-title { font: 800 21px/1.15 var(--display); letter-spacing: -0.02em; color: var(--ink); }
+  .c-year { margin-left: 6px; font-size: 11px; font-weight: 700; color: var(--plum); letter-spacing: .1em; vertical-align: 3px; }
+  .c-note { font-size: 15px; line-height: 1.45; color: var(--muted); }
+  .lit-list { list-style: none; padding: 0; margin: 0; gap: 14px; max-width: 860px; }
 
   /* Photo strip */
   .strip { list-style: none; padding: 26px 4px 8px; margin: 40px 0 0; display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--rose) transparent; }
@@ -266,13 +253,38 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
   .lc-brand { font: 800 34px/1 var(--display); letter-spacing: -0.03em; color: var(--plum); }
   .lc .play { left: auto; right: 12px; top: auto; bottom: 12px; margin: 0; width: 40px; height: 40px; padding: 0; background: var(--plum); color: var(--ivory); }
 
-  /* Brands */
-  .brands { display: grid; gap: 14px; padding: 22px; border-radius: 16px; background: var(--plum-deep); color: var(--ivory); }
-  .brand-row { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 14px; align-items: start; }
-  .b-k { padding-top: 7px; font-size: 11px; font-weight: 700; color: var(--lime); }
-  .brand-row ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-  .brand-row li { padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(247,246,215,.3); font-size: 14px; transition: background .25s, color .25s, transform .3s var(--spring); }
-  .brand-row li:hover { background: var(--rose); color: var(--ink); transform: translateY(-2px); }
+  /* Modelling intro + extra link */
+  .intro { max-width: 760px; font: 400 clamp(19px, 2vw, 22px)/1.5 var(--serif); color: var(--ink); }
+  .more-link { margin-top: 18px; }
+  .more-link a { font: 700 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--plum); text-decoration: none; border-bottom: 2px solid var(--lime); padding-bottom: 4px; }
+  .more-link a:hover { background: var(--lime); }
+
+  /* Creator */
+  .niche { list-style: none; padding: 0; margin: -10px 0 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .niche .pill { background: var(--rose-soft); border-color: transparent; color: var(--plum); }
+  .cc-grid { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: clamp(28px, 5vw, 64px); align-items: start; margin-top: 20px; }
+  .cc-story > p { font: 400 clamp(19px, 2vw, 22px)/1.5 var(--serif); margin-bottom: 14px; max-width: 680px; }
+  .cc-story .sub { margin-top: 36px; }
+  .cc-side { position: sticky; top: calc(var(--header) + 24px); display: grid; gap: 16px; }
+  .ig-card {
+    position: relative; display: block; overflow: hidden; border-radius: 22px; border: 1.5px solid var(--plum);
+    box-shadow: 8px 8px 0 var(--rose); transform: rotate(1.5deg); transition: transform .5s var(--spring), box-shadow .5s;
+  }
+  .ig-card :global(img) { width: 100%; height: auto; display: block; }
+  .ig-card:hover, .ig-card:focus-visible { transform: rotate(0) translateY(-6px); box-shadow: 12px 14px 0 var(--lime); }
+  .ig-go {
+    position: absolute; right: 14px; bottom: 14px; padding: 9px 14px; border-radius: 999px; background: var(--lime); color: var(--ink);
+    font-size: 11px; font-weight: 700; transform: translateY(4px); transition: transform .35s var(--spring);
+  }
+  .ig-card:hover .ig-go { transform: none; }
+  .platforms { list-style: none; padding: 0; margin: 0; display: grid; }
+  .platforms a {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 12px; padding: 14px 4px;
+    border-bottom: 1.5px dashed var(--line); text-decoration: none; transition: padding .3s var(--spring), color .2s;
+  }
+  .platforms a:hover { padding-left: 12px; color: var(--plum); }
+  .pf-name { font: 800 20px/1 var(--display); letter-spacing: -0.02em; }
+  .pf-handle { font-size: 11px; font-weight: 700; color: var(--muted); }
 
   /* Campaigns */
   .campaigns { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 14px; }
@@ -295,17 +307,14 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
   .lightbox .modal-close { top: -14px; right: -14px; }
 
   @media (max-width: 960px) {
-    .titles, .stats.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .reign { grid-template-columns: 1fr; }
-    .stats:not(.four) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cc-grid { grid-template-columns: 1fr; }
+    .cc-side { position: static; max-width: 440px; }
     .press, .videos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .campaigns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 640px) {
     .titles, .press, .videos, .videos.two { grid-template-columns: 1fr; }
-    .stats:not(.four) { grid-template-columns: 1fr; }
-    .brand-row { grid-template-columns: 1fr; gap: 6px; }
     .campaigns { grid-auto-rows: 180px; }
     .campaigns li { grid-column: span 2; }
     .campaigns li.tall { grid-column: span 1; }
