@@ -26,14 +26,16 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
       </p>
     </div>
 
-    <svg class="flower f1" viewBox="0 0 100 100" aria-hidden="true">
-      {[0, 72, 144, 216, 288].map((a) => <ellipse cx="50" cy="28" rx="15" ry="24" transform={`rotate(${a} 50 50)`} />)}
-      <circle cx="50" cy="50" r="10" class="core" />
-    </svg>
-    <svg class="flower f2" viewBox="0 0 100 100" aria-hidden="true">
-      {[0, 60, 120, 180, 240, 300].map((a) => <ellipse cx="50" cy="26" rx="12" ry="22" transform={`rotate(${a} 50 50)`} />)}
-      <circle cx="50" cy="50" r="11" class="core" />
-    </svg>
+    <!-- doodles: a few daisies and sparkles -->
+    {[1, 2, 3].map((n) => (
+      <svg class={`flower f${n}`} viewBox="0 0 100 100" aria-hidden="true">
+        {[0, 60, 120, 180, 240, 300].map((a) => <ellipse cx="50" cy="25" rx="13" ry="21" transform={`rotate(${a} 50 50)`} />)}
+        <circle cx="50" cy="50" r="12" class="core" />
+      </svg>
+    ))}
+    {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+      <svg class={`spark s${n}`} viewBox="-12 -12 24 24" aria-hidden="true"><path d="M0-11C1-2 2-1 11 0C2 1 1 2 0 11C-1 2-2 1-11 0C-2-1-1-2 0-11Z" /></svg>
+    ))}
 
     {hobbies.map((h, i) => {
       const s = spots[h.title];
@@ -47,43 +49,51 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
         >
           <span class="par"><span class="bob">
               {h.no === '01' && (
-                <svg class="art books" viewBox="0 0 220 190" aria-hidden="true">
-                  <rect class="b1" x="8" y="140" width="204" height="42" rx="4" />
-                  <rect x="8" y="140" width="10" height="42" class="edge" /><line x1="40" y1="152" x2="150" y2="152" class="txt" /><line x1="40" y1="166" x2="110" y2="166" class="txt" />
-                  <g class="b2"><rect x="22" y="100" width="176" height="40" rx="4" /><rect x="186" y="100" width="12" height="40" class="pages" /><line x1="44" y1="114" x2="136" y2="114" class="txt" /><line x1="44" y1="126" x2="104" y2="126" class="txt" /></g>
-                  <g class="b3"><rect x="14" y="62" width="186" height="38" rx="4" /><rect x="14" y="62" width="12" height="38" class="edge" /><line x1="44" y1="76" x2="160" y2="76" class="txt dark" /><line x1="44" y1="88" x2="120" y2="88" class="txt dark" /></g>
-                  <g class="b4"><path d="M40 62 L40 18 Q 72 6 106 18 Q 140 6 172 18 L172 62 Q 140 50 106 62 Q 72 50 40 62 Z" /><path d="M106 18 L106 62" class="spine" /><path d="M52 26 Q 74 20 96 26 M52 36 Q 74 30 96 36 M116 26 Q 138 20 160 26 M116 36 Q 138 30 160 36" class="lines" /><path d="M140 14 L140 44 L146 38 L152 44 L152 12" class="ribbon" /></g>
+                <svg class="art doodle books" viewBox="0 0 230 200" aria-hidden="true">
+                  <g class="b1"><rect x="16" y="152" width="198" height="36" rx="7" class="fill-rose" /><rect x="194" y="158" width="12" height="24" rx="3" class="pg" /><path d="M40 162v16M50 162v16" class="ln" /></g>
+                  <g class="b3"><rect x="28" y="116" width="176" height="36" rx="7" class="fill-lime" /><rect x="36" y="122" width="12" height="24" rx="3" class="pg" /><path d="M70 128h84M70 140h54" class="ln" /></g>
+                  <g class="b4">
+                    <path d="M115 110C92 98 60 98 30 106V44C60 36 92 36 115 50Z" class="pg" />
+                    <path d="M115 110C138 98 170 98 200 106V44C170 36 138 36 115 50Z" class="pg" />
+                    <path d="M115 50V110" class="ln" />
+                    <path d="M44 60C64 54 84 54 102 62M44 74C64 68 84 68 102 76M44 88C64 82 84 82 102 90" class="ln soft" />
+                    <path d="M156 78c-5-9-18-5-13 5l13 11 13-11c5-10-8-14-13-5z" class="fill-rose" />
+                    <path d="M178 40v34l6-6 6 6V38" class="fill-plum" />
+                  </g>
                 </svg>
               )}
               {h.no === '02' && (
-                <svg class="art palette" viewBox="0 0 260 190" aria-hidden="true">
-                  <path class="board-p" d="M128 12 C 200 8 252 46 248 98 C 244 140 210 156 186 146 C 166 138 170 118 150 118 C 126 118 142 166 106 176 C 58 188 10 150 12 98 C 14 48 64 14 128 12 Z" />
-                  <ellipse cx="150" cy="96" rx="13" ry="10" class="hole" />
-                  <circle cx="66" cy="70" r="16" class="p1" /><circle cx="112" cy="46" r="15" class="p2" /><circle cx="168" cy="44" r="14" class="p3" />
-                  <circle cx="212" cy="80" r="14" class="p4" /><circle cx="52" cy="122" r="15" class="p5" /><circle cx="92" cy="142" r="12" class="p1" />
-                  <g class="brush"><rect x="60" y="88" width="170" height="10" rx="5" transform="rotate(-24 145 93)" class="handle" /><path d="M58 128 L 46 142 Q 38 154 50 150 L 66 136 Z" class="tip" /><rect x="58" y="120" width="16" height="12" rx="2" transform="rotate(-24 66 126)" class="ferrule" /></g>
+                <svg class="art doodle palette" viewBox="0 0 260 214" aria-hidden="true">
+                  <rect x="36" y="8" width="168" height="80" rx="11" class="fill-rose-soft" /><rect x="48" y="20" width="144" height="56" rx="7" class="fill-rose hl" />
+                  <rect x="22" y="86" width="198" height="98" rx="13" class="fill-rose" /><rect x="34" y="98" width="174" height="74" rx="8" class="fill-ivory" />
+                  {['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10'].map((c, k) => (
+                    <rect x={44 + (k % 5) * 32} y={k < 5 ? 106 : 138} width="26" height="24" rx="6" class={`pan ${c}`} />
+                  ))}
+                  <g class="brush">
+                    <path d="M108 206L238 152" class="h-out" /><path d="M108 206L238 152" class="h-in rose" /><path d="M104 208l-16 5c-7 2-6-3-2-6l12-8z" class="fill-plum" />
+                    <path d="M126 196L246 146" class="h-out" /><path d="M126 196L246 146" class="h-in lime" /><path d="M122 198l-15 5c-7 2-6-3-2-6l12-8z" class="fill-lime" />
+                  </g>
                 </svg>
               )}
               {h.no === '03' && (
-            <svg class="art phones" viewBox="0 0 240 220" aria-hidden="true">
-              <path class="band" d="M44 128 C 40 52 82 18 120 18 C 158 18 200 52 196 128" />
-              <path class="band-in" d="M58 120 C 56 64 88 34 120 34 C 152 34 184 64 182 120" />
-              <g class="cup cup-l"><rect x="22" y="112" width="52" height="84" rx="24" class="shell" /><rect x="58" y="122" width="22" height="64" rx="10" class="pad" /><circle cx="44" cy="154" r="9" class="dot" /></g>
-              <g class="cup cup-r"><rect x="166" y="112" width="52" height="84" rx="24" class="shell" /><rect x="160" y="122" width="22" height="64" rx="10" class="pad" /><path d="M192 146 c -5 -7 -16 -4 -11 5 l 11 10 l 11 -10 c 5 -9 -6 -12 -11 -5 z" class="heart" /></g>
-              <path class="cord" d="M44 196 C 44 214 70 210 76 200 C 84 188 98 204 110 206" />
-              <g class="notes"><path d="M104 96 v -30 l 22 -6 v 28" /><circle cx="99" cy="97" r="7" /><circle cx="121" cy="89" r="7" /><path d="M142 74 v -22" /><circle cx="137" cy="76" r="6" /></g>
-            </svg>
-          )}
-          {h.no === '04' && (
-                <svg class="art camera" viewBox="0 0 230 170" aria-hidden="true">
-                  <rect x="10" y="34" width="210" height="126" rx="22" class="body" />
-                  <rect x="30" y="20" width="56" height="22" rx="8" class="top" /><rect x="168" y="22" width="34" height="16" rx="6" class="shutter" />
-                  <rect x="150" y="50" width="52" height="26" rx="6" class="flashbox" />
-                  <circle cx="104" cy="100" r="46" class="ring" /><circle cx="104" cy="100" r="34" class="lens" /><circle cx="104" cy="100" r="20" class="glass" />
-                  <circle cx="94" cy="90" r="7" class="glint" />
-                  <path d="M180 110 c -8 -12 -26 -6 -18 8 l 18 16 l 18 -16 c 8 -14 -10 -20 -18 -8 z" class="sticker-h" />
-                  <path d="M38 130 l 5 10 l 11 2 l -8 8 l 2 11 l -10 -5 l -10 5 l 2 -11 l -8 -8 l 11 -2 z" class="sticker-s" />
-                  <circle cx="190" cy="150" r="8" class="dot" />
+                <svg class="art doodle phones" viewBox="0 0 240 224" aria-hidden="true">
+                  <path class="band-out" d="M46 132C40 54 84 20 120 20C156 20 200 54 194 132" />
+                  <path class="band" d="M46 132C40 54 84 20 120 20C156 20 200 54 194 132" />
+                  <path d="M58 72l12 6M182 72l-12 6" class="ln lime-ln" />
+                  <g class="cup cup-l"><rect x="20" y="112" width="56" height="88" rx="26" class="fill-rose" /><rect x="58" y="124" width="24" height="64" rx="11" class="fill-lime" /><path d="M34 140c6-6 14-6 18 0M34 158c6-6 14-6 18 0" class="ln soft" /></g>
+                  <g class="cup cup-r"><rect x="164" y="112" width="56" height="88" rx="26" class="fill-rose" /><rect x="158" y="124" width="24" height="64" rx="11" class="fill-lime" /><path d="M188 140c6-6 14-6 18 0M188 158c6-6 14-6 18 0" class="ln soft" /></g>
+                  <g class="notes"><path d="M104 98V66l24-6v30" /><circle cx="99" cy="99" r="7" /><circle cx="123" cy="91" r="7" /><path d="M146 76V52" /><circle cx="141" cy="78" r="6" /></g>
+                </svg>
+              )}
+              {h.no === '04' && (
+                <svg class="art doodle camera" viewBox="0 0 230 176" aria-hidden="true">
+                  <rect x="30" y="20" width="58" height="24" rx="8" class="fill-rose" /><rect x="166" y="22" width="36" height="18" rx="6" class="fill-plum" />
+                  <rect x="10" y="36" width="210" height="128" rx="24" class="fill-rose-soft" />
+                  <rect x="150" y="52" width="54" height="28" rx="7" class="fill-ivory" />
+                  <circle cx="104" cy="102" r="46" class="fill-ivory" /><circle cx="104" cy="102" r="34" class="fill-plum" /><circle cx="104" cy="102" r="20" class="fill-lens" />
+                  <path d="M92 90a14 14 0 0 1 10-6" class="hl-ln" />
+                  <path d="M182 116c-8-12-26-6-18 8l18 16 18-16c8-14-10-20-18-8z" class="fill-lime" />
+                  <path d="M40 132l5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2z" class="fill-lime" />
                 </svg>
               )}
           </span></span>
@@ -151,7 +161,6 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   .obj:hover .bob, .obj:focus-visible .bob { animation-play-state: paused; }
   /* everything else steps back */
   .board:has(.obj:hover, .obj:focus-visible) .obj:not(:hover, :focus-visible) { opacity: .45; filter: saturate(.6) blur(1.5px); transform: rotate(var(--r)) scale(.96); }
-  .board:has(.obj:hover, .obj:focus-visible) .flower { opacity: .25; }
   .obj:focus-visible { outline: none; }
   .obj:focus-visible .tag { outline: 2px solid var(--lime); outline-offset: 3px; }
 
@@ -168,35 +177,31 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   .board:not(.touched) .tag { animation: nudge 4.8s ease-in-out infinite; animation-delay: calc(1.6s + var(--i) * 1.2s); }
   @keyframes nudge { 0%, 18%, 100% { box-shadow: 0 6px 12px rgba(0,0,0,.25), 0 0 0 0 rgba(201,216,99,0); } 8% { box-shadow: 0 6px 12px rgba(0,0,0,.25), 0 0 0 6px rgba(201,216,99,.7); } }
 
+  /* doodle style: dark ink outlines, soft fills, round joins (like a sticker sheet) */
+  .doodle :is(rect, path, circle, ellipse) { stroke: var(--ink); stroke-width: 3.2; stroke-linejoin: round; stroke-linecap: round; }
+  .doodle .fill-rose { fill: var(--rose); } .doodle .fill-rose-soft { fill: var(--rose-soft); } .doodle .fill-lime { fill: var(--lime); }
+  .doodle .fill-ivory, .doodle .pg { fill: #FFFDF2; } .doodle .fill-plum { fill: var(--plum); } .doodle .fill-lens { fill: #8E5A78; }
+  .doodle .ln { fill: none; stroke-width: 2.6; } .doodle .ln.soft { stroke: rgba(45,10,23,.45); stroke-width: 2.2; }
+  .doodle .hl { stroke-width: 2; } .doodle .hl-ln { fill: none; stroke: #fff; stroke-width: 4; }
+
   /* books */
-  .books rect, .books path { stroke: rgba(45,10,23,.35); stroke-width: 1.5; }
-  .books .b1 { fill: var(--rose); } .books .b2 rect:first-child { fill: var(--lime); } .books .b3 rect:first-child { fill: var(--ivory); }
-  .books .edge { fill: rgba(45,10,23,.18); stroke: none; } .books .pages { fill: #fff; }
-  .books .txt { stroke: rgba(45,10,23,.35); stroke-width: 4; stroke-linecap: round; } .books .txt.dark { stroke: var(--plum); }
-  .books .b4 > path:first-child { fill: #FFFDF2; } .books .spine { stroke: rgba(45,10,23,.3); fill: none; }
-  .books .lines { fill: none; stroke: rgba(45,10,23,.25); stroke-width: 2.5; stroke-linecap: round; }
-  .books .ribbon { fill: var(--plum); stroke: none; }
   .books .b4, .books .b3 { transition: transform .5s var(--spring); transform-origin: 50% 100%; }
   .obj-01:hover .b4 { transform: translateY(-14px) rotate(-4deg); } .obj-01:hover .b3 { transform: translateX(6px); }
 
-  /* palette */
-  .palette .board-p { fill: #F2E3C6; stroke: rgba(45,10,23,.3); stroke-width: 1.5; }
-  .palette .hole { fill: var(--plum-deep); }
-  .palette .p1 { fill: var(--plum); } .palette .p2 { fill: var(--rose); } .palette .p3 { fill: var(--lime); } .palette .p4 { fill: #7FB7E2; } .palette .p5 { fill: #F2A65A; }
-  .palette circle[class^='p'] { transition: transform .5s var(--spring); transform-box: fill-box; transform-origin: center; }
-  .obj-02:hover circle[class^='p'] { transform: scale(1.15); }
-  .palette .handle { fill: #C98A5B; } .palette .ferrule { fill: #B9B4AE; } .palette .tip { fill: var(--plum); }
+  /* paint tin */
+  .palette .pan { stroke-width: 2.4; transition: transform .5s var(--spring); transform-box: fill-box; transform-origin: center; }
+  .palette .c1 { fill: var(--plum); } .palette .c2 { fill: var(--rose); } .palette .c3 { fill: var(--lime); } .palette .c4 { fill: #F2A65A; } .palette .c5 { fill: #9FC3E8; }
+  .palette .c6 { fill: #C9B8E8; } .palette .c7 { fill: #F4D6E2; } .palette .c8 { fill: #E3EAA8; } .palette .c9 { fill: #E86B86; } .palette .c10 { fill: #FFE08A; }
+  .obj-02:hover .pan { transform: scale(1.12); }
+  .palette .h-out { fill: none; stroke-width: 10; } .palette .h-in { fill: none; stroke-width: 4.5; } .palette .h-in.rose { stroke: var(--rose); } .palette .h-in.lime { stroke: var(--lime); }
   .palette .brush { transition: transform .6s var(--spring); }
-  .obj-02:hover .brush { transform: translate(-10px, 8px) rotate(-6deg); }
+  .obj-02:hover .brush { transform: translate(-10px, 8px) rotate(-5deg); }
 
   /* headphones */
-  .phones .band { fill: none; stroke: var(--plum); stroke-width: 14; stroke-linecap: round; }
-  .phones .band-in { fill: none; stroke: var(--rose); stroke-width: 5; stroke-linecap: round; opacity: .8; }
-  .phones .shell { fill: var(--rose); stroke: rgba(45,10,23,.3); stroke-width: 1.5; } .phones .pad { fill: var(--lime); }
-  .phones .dot { fill: var(--plum); } .phones .heart { fill: var(--plum); }
-  .phones .cord { fill: none; stroke: var(--plum); stroke-width: 3.5; stroke-linecap: round; }
-  .phones .notes { fill: var(--lime); stroke: var(--lime); stroke-width: 4; stroke-linecap: round; opacity: 0; translate: 0 10px; transition: opacity .4s, translate .6s var(--spring); }
-  .phones .notes circle { stroke: none; }
+  .phones .band-out { fill: none; stroke-width: 20; } .phones .band { fill: none; stroke: var(--rose); stroke-width: 13; }
+  .phones .lime-ln { stroke: var(--lime); stroke-width: 6; }
+  .phones .notes { fill: var(--lime); stroke: var(--lime); stroke-width: 4; opacity: 0; translate: 0 10px; transition: opacity .4s, translate .6s var(--spring); }
+  .phones .notes circle { stroke: var(--ink); stroke-width: 2; }
   .phones .cup { transform-box: fill-box; transform-origin: 50% 0; }
   .obj-03:hover .notes, .obj-03:focus-visible .notes { opacity: 1; translate: 0 -14px; }
   .obj-03:hover .cup-l, .obj-03:focus-visible .cup-l { animation: beat .5s ease-in-out infinite alternate; }
@@ -204,20 +209,28 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   @keyframes beat { to { scale: 1.06; } }
 
   /* camera */
-  .camera .body { fill: #F4B9CF; stroke: rgba(45,10,23,.3); stroke-width: 1.5; } .camera .top { fill: #E39BB8; } .camera .shutter { fill: var(--plum); }
-  .camera .flashbox { fill: #FFF8E8; stroke: rgba(45,10,23,.25); } .camera .ring { fill: #D9D4DA; stroke: rgba(45,10,23,.3); }
-  .camera .lens { fill: #3B2730; } .camera .glass { fill: #6B5A7A; } .camera .glint { fill: rgba(255,255,255,.7); }
-  .camera .sticker-h { fill: var(--lime); stroke: #fff; stroke-width: 3; } .camera .sticker-s { fill: #FFF3A6; stroke: #fff; stroke-width: 2; } .camera .dot { fill: var(--plum); }
   .flash { position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.95), transparent 60%); opacity: 0; pointer-events: none; }
   .obj-04:hover .flash, .obj-04:focus-visible .flash { animation: flash .5s ease-out; }
   @keyframes flash { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
 
-  /* two pressed flowers, drifting slowly */
-  .flower { position: absolute; z-index: 1; pointer-events: none; opacity: .85; transition: opacity .4s; animation: drift 14s ease-in-out infinite alternate; }
-  .flower ellipse { fill: var(--rose); } .flower .core { fill: var(--lime); }
-  .f1 { left: 34%; top: 74%; width: 7%; }
-  .f2 { left: 60%; top: 12%; width: 6%; animation-delay: -6s; } .f2 ellipse { fill: #F3D3E0; } .f2 .core { fill: #F2A65A; }
+  /* daisies, drifting slowly */
+  .flower { position: absolute; z-index: 1; pointer-events: none; transition: opacity .4s; animation: drift 14s ease-in-out infinite alternate; }
+  .flower ellipse, .flower circle { stroke: var(--ink); stroke-width: 4; }
+  .flower ellipse { fill: #FFFDF2; } .flower .core { fill: var(--lime); }
+  .f1 { left: 33%; top: 70%; width: 6%; }
+  .f2 { left: 57%; top: 13%; width: 5.5%; animation-delay: -6s; } .f2 ellipse { fill: var(--rose); } .f2 .core { fill: #FFE08A; }
+  .f3 { left: 91%; top: 54%; width: 5%; animation-delay: -3s; }
   @keyframes drift { from { rotate: -8deg; translate: 0 0; } to { rotate: 14deg; translate: 6px -6px; } }
+
+  /* sparkles, twinkling */
+  .spark { position: absolute; z-index: 1; width: 4%; pointer-events: none; animation: twinkle 3.2s ease-in-out infinite; }
+  .spark path { fill: var(--lime); stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; }
+  .s1 { left: 31%; top: 12%; animation-delay: -.4s; } .s2 { left: 63%; top: 4%; width: 3%; animation-delay: -1.4s; }
+  .s3 { left: 93%; top: 40%; animation-delay: -2.2s; } .s4 { left: 3%; top: 47%; width: 3%; animation-delay: -.9s; }
+  .s5 { left: 38%; top: 86%; animation-delay: -1.8s; } .s6 { left: 59%; top: 82%; width: 2.8%; animation-delay: -2.7s; }
+  .s7 { left: 46%; top: 7%; width: 2.4%; animation-delay: -.2s; }
+  @keyframes twinkle { 0%, 100% { scale: .7; opacity: .7; rotate: 0deg; } 50% { scale: 1.15; opacity: 1; rotate: 20deg; } }
+  .board:has(.obj:hover, .obj:focus-visible) :is(.flower, .spark) { opacity: .3; }
 
   @media (max-width: 640px) {
     .board { aspect-ratio: 3 / 5.6; }
@@ -225,7 +238,8 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
     .board-center { top: 17%; }
     .board-title { font-size: clamp(32px, 10vw, 44px); }
     .now { margin-top: 12px; font-size: 10px; }
-    .f1 { left: 40%; top: 52%; width: 14%; } .f2 { left: 78%; top: 8%; width: 12%; }
+    .f1 { left: 42%; top: 56%; width: 12%; } .f2 { left: 80%; top: 8%; width: 11%; } .f3 { left: 6%; top: 88%; width: 10%; }
+    .spark { width: 7%; } .s1 { left: 8%; top: 6%; } .s2 { left: 70%; top: 3%; width: 4%; } .s3 { left: 90%; top: 30%; } .s4 { left: 4%; top: 58%; width: 4%; } .s5 { left: 40%; top: 92%; } .s6 { left: 88%; top: 90%; width: 4%; } .s7 { display: none; }
     .tag { font-size: 9.5px; padding: 5px 7px; letter-spacing: .06em; white-space: normal; width: max-content; max-width: 100%; text-align: center; }
   }
 </style>
