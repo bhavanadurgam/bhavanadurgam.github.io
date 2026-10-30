@@ -2,17 +2,18 @@
 import Section from '../../layouts/Section.astro';
 import { projects } from '../../data/content';
 ---
-<Section id="projects" title="Projects — Bhavana Durgam" description="Projects by Bhavana Durgam: product launches, positioning, market sizing, healthcare go-to-market, brain-computer interface research and this portfolio.">
+<Section id="projects" title="Projects — Bhavana Durgam" description="Projects by Bhavana Durgam. This page is under construction: new projects coming soon.">
   <header class="frame-head">
     <p class="kicker">Projects</p>
     <h1 class="title">Things I've <em>built</em></h1>
-    <p class="lede">Each one, the way I'd walk you through it in a room: the problem, what I did, and what changed. Click a row to open it.</p>
+    <p class="lede">Each one, the way I'd walk you through it in a room: the problem, what I did, and what changed.</p>
+    <p class="wip mono"><span aria-hidden="true">◐</span> Under construction: new projects are on their way</p>
   </header>
 
   <ul class="rows">
     {projects.map((p, i) => (
-      <li class="row reveal" style={`--pc: var(${p.color})`}>
-        <button class="row-head" type="button" aria-expanded="false" aria-controls={`p-${p.slug}`} data-sound>
+      <li class:list={['row', 'reveal', { open: projects.length === 1 }]} style={`--pc: var(${p.color})`}>
+        <button class="row-head" type="button" aria-expanded={projects.length === 1 ? 'true' : 'false'} aria-controls={`p-${p.slug}`} data-sound>
           <span class="thumb" aria-hidden="true">{p.icon}</span>
           <span class="row-text">
             
@@ -36,6 +37,9 @@ import { projects } from '../../data/content';
 </Section>
 
 <style>
+  .wip { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 8px 14px; border-radius: 999px; background: var(--lime); color: var(--ink); font-size: 11px; font-weight: 700; }
+  .wip span { display: inline-block; animation: spin 3s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .rows { list-style: none; padding: 0; display: grid; gap: 14px; }
   .row { border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow: hidden; transition: box-shadow .3s; }
   .row:hover { box-shadow: 0 12px 26px -16px var(--shadow); }

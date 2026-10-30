@@ -94,10 +94,11 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
     <ul class="videos two">
       {missIndia.videos.map((v) => (
         <li class="reveal">
-          <a class="video" href={yt(v.id)} target="_blank" rel="noopener">
-            <span class="v-img"><Image src={img(`videos/${v.id}`)!} alt="" width={480} height={270} /><span class="play" aria-hidden="true">▶</span></span>
+          <div class="video" data-yt={v.id}>
+            <button class="v-img" type="button" aria-label={`Play: ${v.title}`}><Image src={img(`videos/${v.id}`)!} alt="" width={480} height={270} /><span class="play" aria-hidden="true">▶</span></button>
             <span class="v-title">{v.title}</span>
-          </a>
+            <a class="v-yt mono" href={yt(v.id)} target="_blank" rel="noopener">Watch on YouTube ↗</a>
+          </div>
         </li>
       ))}
     </ul>
@@ -114,11 +115,12 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
     <ul class="videos">
       {modelling.ads.map((v, i) => (
         <li class="reveal" style={`--d: ${(i % 3) * 60}ms`}>
-          <a class="video" href={yt(v.id)} target="_blank" rel="noopener">
-            <span class="v-img"><Image src={img(`videos/${v.id}`)!} alt="" width={480} height={270} /><span class="play" aria-hidden="true">▶</span></span>
+          <div class="video" data-yt={v.id}>
+            <button class="v-img" type="button" aria-label={`Play: ${v.brand}, ${v.title}`}><Image src={img(`videos/${v.id}`)!} alt="" width={480} height={270} /><span class="play" aria-hidden="true">▶</span></button>
             <span class="v-brand mono">{v.brand}</span>
             <span class="v-title">{v.title}</span>
-          </a>
+            <a class="v-yt mono" href={yt(v.id)} target="_blank" rel="noopener">Watch on YouTube ↗</a>
+          </div>
         </li>
       ))}
     </ul>
@@ -237,7 +239,7 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
   .videos { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
   .videos.two { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; }
   .video { display: grid; gap: 6px; text-decoration: none; }
-  .v-img { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; border: 1.5px solid var(--plum); background: var(--plum-deep); }
+  .v-img { position: relative; display: block; width: 100%; padding: 0; cursor: pointer; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; border: 1.5px solid var(--plum); background: var(--plum-deep); }
   .v-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--smooth), filter .4s; }
   .play {
     position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%;
@@ -245,6 +247,13 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
     box-shadow: 0 6px 16px rgba(0,0,0,.3); transition: transform .4s var(--spring);
   }
   .video:hover .v-img :global(img), .video:focus-visible .v-img :global(img) { transform: scale(1.06); filter: saturate(1.1); }
+  /* the YouTube player slides in over the thumbnail while it plays */
+  .v-img :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 2; opacity: 0; transition: opacity .4s; pointer-events: none; }
+  .v-img.live :global(iframe) { opacity: 1; }
+  .v-img.sound :global(iframe) { pointer-events: auto; }
+  .v-img.live .play { opacity: 0; }
+  .v-yt { justify-self: start; font-size: 10.5px; font-weight: 700; color: var(--muted); text-decoration: none; }
+  .v-yt:hover { color: var(--plum); }
   .video:hover .play, .video:focus-visible .play { transform: scale(1.18); }
   .v-brand { margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--plum); }
   .v-title { font: 600 15.5px/1.35 var(--sans); color: var(--ink); }
@@ -339,4 +348,37 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
     }));
   }
   document.addEventListener('astro:page-load', initLightbox);
+
+  // Videos: hover plays a silent preview right in the card; click plays it with sound and controls.
+  function initVideos() {
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-yt]')];
+    const src = (id: string, sound: boolean) =>
+      `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=${sound ? 0 : 1}&controls=${sound ? 1 : 0}&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=${id}`;
+    const stop = (box: HTMLElement) => { box.classList.remove('live', 'sound'); box.querySelector('iframe')?.remove(); };
+    const start = (card: HTMLElement, sound: boolean) => {
+      const box = card.querySelector<HTMLElement>('.v-img')!;
+      cards.forEach((c) => { const b = c.querySelector<HTMLElement>('.v-img')!; if (b !== box && (sound || !b.classList.contains('sound'))) stop(b); });
+      let f = box.querySelector('iframe');
+      if (!f || (sound && !box.classList.contains('sound'))) {
+        f?.remove();
+        f = document.createElement('iframe');
+        f.allow = 'autoplay; encrypted-media; picture-in-picture';
+        f.title = card.querySelector('.v-title')?.textContent || 'Video';
+        f.src = src(card.dataset.yt!, sound);
+        f.addEventListener('load', () => box.classList.add('live'), { once: true });
+        box.appendChild(f);
+      }
+      if (sound) box.classList.add('sound', 'live');
+    };
+    cards.forEach((card) => {
+      const box = card.querySelector<HTMLElement>('.v-img')!;
+      if (fine) {
+        card.addEventListener('pointerenter', () => start(card, false));
+        card.addEventListener('pointerleave', () => { if (!box.classList.contains('sound')) stop(box); });
+      }
+      box.addEventListener('click', () => start(card, true));
+    });
+  }
+  document.addEventListener('astro:page-load', initVideos);
 </script>

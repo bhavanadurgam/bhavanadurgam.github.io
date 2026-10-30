@@ -30,9 +30,4 @@ const light = f.ink === '--ink';
     </div>
   </section>
 
-  <nav class="side-tabs" aria-label="Jump to another file">
-    {folders.map((x) => (
-      <a href={x.href} style={`--c: var(${x.color}); --t: var(${x.ink})`} aria-current={x.id === id && !sub ? 'page' : undefined} data-sound>{x.label}</a>
-    ))}
-  </nav>
 </Base>

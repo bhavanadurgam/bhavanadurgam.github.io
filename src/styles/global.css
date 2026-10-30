@@ -24,7 +24,6 @@
   --display: 'Bricolage Grotesque Variable', 'Arial Black', system-ui, sans-serif;
   --serif:  'Instrument Serif', Georgia, serif;
   --sans:   'DM Sans Variable', system-ui, -apple-system, sans-serif;
-  --script: 'Mrs Saint Delafield', 'Brush Script MT', cursive;
   --mono:   'Courier Prime', 'Courier New', monospace;
 
   --spring: cubic-bezier(.34, 1.56, .64, 1);
@@ -100,7 +99,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   border-bottom: 1px solid var(--line);
 }
 .site-header .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.logo { font: 400 36px/1 var(--script); color: var(--plum); text-decoration: none; padding: 6px 4px 0; white-space: nowrap; }
+.logo { font: italic 400 30px/1 var(--serif); color: var(--plum); text-decoration: none; padding: 6px 4px 0; white-space: nowrap; }
 .nav { display: flex; align-items: center; gap: 22px; }
 .nav a {
   position: relative; font: 700 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
@@ -227,21 +226,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .frame-head { margin-bottom: clamp(28px, 4vw, 48px); }
 .frame-head .lede { margin-top: 12px; }
 
-/* Side tabs: jump between files (Mosby-style). */
-.side-tabs {
-  position: fixed; right: 0; top: calc(var(--header) + 40px); z-index: 20;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.side-tabs a {
-  writing-mode: vertical-rl; display: grid; place-items: center; width: 34px; padding: 16px 0;
-  border-radius: 12px 0 0 12px; background: var(--c); color: var(--t); text-decoration: none;
-  font: 400 15px/1 var(--serif); letter-spacing: .02em; box-shadow: -3px 3px 0 rgba(0,0,0,.12);
-  transform: translateX(6px); transition: transform .35s var(--spring), width .35s var(--spring);
-}
-.side-tabs a:hover, .side-tabs a:focus-visible { transform: translateX(0); width: 42px; }
-.side-tabs a[aria-current='page'] { display: none; }
-@media (max-width: 960px) { .side-tabs { display: none; } }
-
 /* ─── Timeline ───────────────────────────────────────────── */
 .timeline { position: relative; display: grid; gap: 40px; padding-left: 70px; list-style: none; margin: 0; }
 .timeline::before { content: ''; position: absolute; left: 23px; top: 8px; bottom: 8px; border-left: 2px dashed var(--line); }
@@ -328,7 +312,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .site-footer { background: var(--plum-deep); color: var(--ivory); padding: 56px 0 36px; }
 .site-footer .logo, .site-footer .secret-trigger { color: var(--rose); }
 .site-footer .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
-.site-footer .logo { font-size: 56px; }
+.site-footer .logo { font-size: 44px; }
 .foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; }
 .foot-links a, .foot-links button { font: 700 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; padding: 12px 2px; }
 .foot-links a:hover, .foot-links button:hover { color: var(--lime); }

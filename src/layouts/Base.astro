@@ -3,7 +3,6 @@ import '@fontsource/instrument-serif/400.css';
 import '@fontsource/instrument-serif/400-italic.css';
 import '@fontsource-variable/dm-sans/opsz.css';
 import '@fontsource-variable/bricolage-grotesque/standard.css';
-import '@fontsource/mrs-saint-delafield/400.css';
 import '@fontsource/courier-prime/400.css';
 import '@fontsource/courier-prime/700.css';
 import '../styles/global.css';
@@ -41,6 +40,7 @@ const { title, description, jsonld, noindex, active } = Astro.props;
       <div class="wrap">
         <a class="logo" href="/" aria-label="Bhavana Durgam, home">Bhavana Durgam</a>
         <nav class="nav" aria-label="Main">
+          <a href="/" style="--u: var(--plum)" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
           {folders.map((f) => (
             <a href={f.href} style={`--u: var(${f.color})`} aria-current={active === f.id ? 'page' : undefined} data-nav={f.id}>{f.label}</a>
           ))}
@@ -65,6 +65,7 @@ const { title, description, jsonld, noindex, active } = Astro.props;
       </div>
       <p class="kicker">Life files</p>
       <nav class="menu-tabs" aria-label="Main">
+        <a href="/" style="--c: var(--ivory); --t: var(--ink)">Home</a>
         {folders.map((f) => (
           <a href={f.href} style={`--c: var(${f.color}); --t: var(${f.ink})`}>{f.title}</a>
         ))}
@@ -112,7 +113,7 @@ const { title, description, jsonld, noindex, active } = Astro.props;
       .sound-btn .wave { display: none; }
       .sound-btn[aria-pressed='true'] .mute { display: none; }
       .sound-btn[aria-pressed='true'] .wave { display: inline; }
-      .secret-trigger { font: 400 56px/1 var(--script); color: var(--plum); padding: 6px; }
+      .secret-trigger { font: italic 400 44px/1 var(--serif); color: var(--plum); padding: 6px; }
       .secret .modal-card { max-width: min(520px, 100%); overflow: visible; }
       .secret-folder { position: relative; background: var(--plum); border-radius: 0 14px 14px 14px; padding: 18px; margin-top: 44px; transform: scale(.9) rotate(-2deg); transition: transform .5s var(--spring); }
       .secret.open .secret-folder { transform: none; }
@@ -120,7 +121,7 @@ const { title, description, jsonld, noindex, active } = Astro.props;
       .secret-sheet { padding: 32px 28px; display: grid; gap: 14px; }
       .secret-sheet h2 em { color: var(--plum); }
       .secret-stamp { position: absolute; top: 18px; right: 16px; transform: rotate(8deg); border: 2.5px solid var(--plum); color: var(--plum); padding: 4px 10px; border-radius: 4px; font: 700 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
-      .secret-sign { font: 400 40px/1 var(--script); color: var(--plum); }
+      .secret-sign { font: italic 400 32px/1 var(--serif); color: var(--plum); }
     </style>
 
     <script>

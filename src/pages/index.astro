@@ -185,7 +185,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   .marquee { background: var(--plum); color: var(--ivory); overflow: hidden; padding: 16px 0; }
   .marquee-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
   .marquee:hover .marquee-track { animation-play-state: paused; }
-  .marquee span { white-space: nowrap; font: italic 400 26px/1 var(--serif); padding-right: 28px; }
+  .marquee span { white-space: nowrap; font: 700 22px/1 var(--display); letter-spacing: -0.01em; padding-right: 28px; }
   .marquee b { color: var(--lime); font-weight: 400; margin-left: 28px; font-style: normal; font-size: 18px; }
   @keyframes marquee { to { transform: translateX(-50%); } }
 
@@ -262,7 +262,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
   .scallop { filter: drop-shadow(0 18px 24px rgba(45,10,23,.18)); }
   .scallop-in { text-align: center; display: grid; gap: 16px; }
   blockquote { font: 400 clamp(26px, 3.4vw, 40px)/1.2 var(--serif); }
-  .sig { font: 400 48px/1 var(--script); color: var(--plum); }
+  .sig { font: italic 400 36px/1 var(--serif); color: var(--plum); }
 </style>
 
 <script>

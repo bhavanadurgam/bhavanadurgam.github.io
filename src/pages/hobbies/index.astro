@@ -5,10 +5,10 @@ import { hobbies } from '../../data/content';
 // Where each object rests on the table: x, y, width (% of the board), tilt, depth (parallax strength).
 // m* = phone layout (a taller table with a 2x2 grid).
 const spots: Record<string, { x: number; y: number; w: number; r: number; d: number; mx: number; my: number; mw: number }> = {
-  Reading:            { x: 7,  y: 9,  w: 21, r: -6, d: 1.0, mx: 6,  my: 31, mw: 40 },
-  Painting:           { x: 66, y: 9,  w: 24, r: 5,  d: 1.4, mx: 52, my: 31, mw: 43 },
-  Music:              { x: 8,  y: 58, w: 20, r: -4, d: 1.2, mx: 8,  my: 63, mw: 38 },
-  'Content creation': { x: 71, y: 61, w: 21, r: -5, d: 0.8, mx: 53, my: 65, mw: 40 },
+  Reading:            { x: 7,  y: 9,  w: 21, r: -6, d: 1.0, mx: 6,  my: 37, mw: 40 },
+  Painting:           { x: 66, y: 9,  w: 24, r: 5,  d: 1.4, mx: 52, my: 36, mw: 43 },
+  Music:              { x: 8,  y: 58, w: 20, r: -4, d: 1.2, mx: 8,  my: 67, mw: 38 },
+  'Content creation': { x: 71, y: 61, w: 21, r: -5, d: 0.8, mx: 53, my: 69, mw: 40 },
 };
 ---
 <Section id="hobbies" title="Hobbies — Bhavana Durgam" description="Bhavana Durgam off the clock: reading (her bookshelf), painting, music and content creation.">
@@ -21,7 +21,7 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
     <div class="board-center">
       <h1 class="board-title">The hobby <em>archive</em></h1>
       <p class="now mono" aria-hidden="true">
-        <span class="n-0">Pick something up</span>
+        <span class="n-0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-4-2l-3-4a1.5 1.5 0 0 1 2.3-1.9L9 15V11" /></svg><span class="cta-fine">Click an object to open it</span><span class="cta-touch">Tap an object to open it</span></span>
         {hobbies.map((h) => <span class={`n-${h.no}`}>{h.label} →</span>)}
       </p>
     </div>
@@ -87,7 +87,7 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
                 </svg>
               )}
           </span></span>
-          <span class="tag mono">{h.title}</span>
+          <span class="tag mono">{h.title} <span class="go" aria-hidden="true">↗</span></span>
           {h.no === '04' && <span class="flash" aria-hidden="true"></span>}
         </a>
       );
@@ -117,9 +117,16 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   }
   .board-title em { display: block; font: italic 400 1.1em/1 var(--serif); letter-spacing: -0.01em; color: var(--rose); }
   @keyframes rise-in { from { opacity: 0; transform: translateY(24px) scale(.94); } }
-  .now { position: relative; height: 1.4em; margin-top: 18px; font-size: clamp(10px, .95vw, 13px); font-weight: 700; letter-spacing: .14em; color: var(--lime); }
-  .now span { position: absolute; inset: 0; transition: opacity .3s, transform .4s var(--spring); }
-  .now span:not(.n-0) { opacity: 0; transform: translateY(8px); }
+  /* the call to action: a clear pill telling people the objects open */
+  .now { position: relative; height: 2.6em; margin-top: 20px; font-size: clamp(11px, .95vw, 13px); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--lime); }
+  .now > span { position: absolute; left: 50%; top: 0; translate: -50% 0; white-space: nowrap; transition: opacity .3s, transform .4s var(--spring); }
+  .now > span:not(.n-0) { opacity: 0; transform: translateY(8px); line-height: 2.6em; }
+  .n-0 { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px 8px 12px; border-radius: 999px; background: var(--lime); color: var(--ink); box-shadow: 0 0 0 0 rgba(201,216,99,.6); animation: beckon 2.2s ease-out infinite; }
+  .n-0 svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; animation: tap 2.2s ease-in-out infinite; }
+  @keyframes beckon { 0% { box-shadow: 0 0 0 0 rgba(201,216,99,.55); } 70%, 100% { box-shadow: 0 0 0 14px rgba(201,216,99,0); } }
+  @keyframes tap { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(3px) scale(.92); } }
+  .cta-touch { display: none; }
+  @media (hover: none) { .cta-fine { display: none; } .cta-touch { display: inline; } }
   .board:has(.obj:hover, .obj:focus-visible) .n-0 { opacity: 0; transform: translateY(-8px); }
   .board:has(.obj-01:hover, .obj-01:focus-visible) .n-01,
   .board:has(.obj-02:hover, .obj-02:focus-visible) .n-02,
@@ -155,6 +162,11 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   }
   .tag b { color: var(--plum); margin-right: 4px; }
   .obj:hover .tag, .obj:focus-visible .tag { background: var(--lime); transform: rotate(0) translateY(6px); }
+  .tag .go { display: inline-block; margin-left: 4px; color: var(--plum); transition: transform .35s var(--spring); }
+  .obj:hover .tag .go { transform: translate(2px, -2px); }
+  /* until someone picks something up, the labels glow one after another */
+  .board:not(.touched) .tag { animation: nudge 4.8s ease-in-out infinite; animation-delay: calc(1.6s + var(--i) * 1.2s); }
+  @keyframes nudge { 0%, 18%, 100% { box-shadow: 0 6px 12px rgba(0,0,0,.25), 0 0 0 0 rgba(201,216,99,0); } 8% { box-shadow: 0 6px 12px rgba(0,0,0,.25), 0 0 0 6px rgba(201,216,99,.7); } }
 
   /* books */
   .books rect, .books path { stroke: rgba(45,10,23,.35); stroke-width: 1.5; }
@@ -208,11 +220,11 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   @keyframes drift { from { rotate: -8deg; translate: 0 0; } to { rotate: 14deg; translate: 6px -6px; } }
 
   @media (max-width: 640px) {
-    .board { aspect-ratio: 3 / 5; }
+    .board { aspect-ratio: 3 / 5.6; }
     .obj { left: var(--mx); top: var(--my); width: var(--mw); }
-    .board-center { top: 15%; }
+    .board-center { top: 17%; }
     .board-title { font-size: clamp(32px, 10vw, 44px); }
-    .now { display: none; }
+    .now { margin-top: 12px; font-size: 10px; }
     .f1 { left: 40%; top: 52%; width: 14%; } .f2 { left: 78%; top: 8%; width: 12%; }
     .tag { font-size: 9.5px; padding: 5px 7px; letter-spacing: .06em; white-space: normal; width: max-content; max-width: 100%; text-align: center; }
   }
@@ -224,6 +236,7 @@ const spots: Record<string, { x: number; y: number; w: number; r: number; d: num
   // The table tilts gently towards the cursor: each object moves by its own depth.
   function initBoard() {
     const board = document.querySelector<HTMLElement>('[data-board]');
+    board?.querySelectorAll('.obj').forEach((o) => o.addEventListener('pointerenter', () => board.classList.add('touched'), { once: true }));
     if (!board || reducedMotion() || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     let raf = 0, x = 0, y = 0;
     board.addEventListener('pointermove', (e) => {
