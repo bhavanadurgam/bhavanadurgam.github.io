@@ -15,7 +15,7 @@ const clips = await Promise.all(missIndia.clippings.map(async (c) => ({ ...c, m:
 const campaigns = await Promise.all(modelling.campaigns.map(async (c) => ({ ...c, m: img(`acc/modelling/${c.img}`)!, big: await full(img(`acc/modelling/${c.img}`)!) })));
 const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 ---
-<Section id="accomplishments" title="Accomplishments — Bhavana Durgam" description="Bhavana Durgam: Femina Miss India Karnataka 2018, Top 10 at Femina Miss India, Miss Goodness Ambassador and Top 10 Beauty with a Purpose; model and actor since age six; lifestyle and wellness creator with a 125K community.">
+<Section id="accomplishments" title="Accomplishments — Bhavana Durgam" description="Bhavana Durgam: Femina Miss India Karnataka 2018, Top 10 at Femina Miss India, Miss Goodness Ambassador and Top 10 Beauty with a Purpose; model and actor since age six; lifestyle and wellness creator with 125K followers across Instagram, YouTube and TikTok.">
   <header class="frame-head">
     <p class="kicker">Accomplishments</p>
     <h1 class="title">Crowns, cameras &amp; <em>content</em></h1>
@@ -65,7 +65,7 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
         return (
           <li class="reveal">
             <a class="article" href={a.url} target="_blank" rel="noopener">
-              <span class="a-img">{m && <Image src={m} alt="" widths={[360, 640]} sizes="(max-width: 640px) 90vw, 340px" />}</span>
+              <span class="a-img">{m && <Image src={m} alt={`Preview image for the ${a.outlet} article`} widths={[360, 640]} sizes="(max-width: 640px) 90vw, 340px" />}</span>
               <span class="a-meta mono">{a.outlet} · {a.date}</span>
               <span class="a-title">{a.title}</span>
               <span class="a-go mono">Read the article ↗</span>
@@ -95,7 +95,7 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
       {missIndia.videos.map((v) => (
         <li class="reveal">
           <div class="video" data-yt={v.id}>
-            <button class="v-img" type="button" aria-label={`Play: ${v.title}`}><Image src={img(`videos/${v.id}`)!} alt="" width={480} height={270} /><span class="play" aria-hidden="true">▶</span></button>
+            <button class="v-img" type="button" aria-label={`Play: ${v.title}`}><Image src={img(`videos/${v.id}`)!} alt={`Video thumbnail: ${v.title}`} width={480} height={270} /><span class="play" aria-hidden="true">▶</span></button>
             <span class="v-title">{v.title}</span>
             <a class="v-yt mono" href={yt(v.id)} target="_blank" rel="noopener">Watch on YouTube ↗</a>
           </div>
@@ -116,7 +116,7 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
       {modelling.ads.map((v, i) => (
         <li class="reveal" style={`--d: ${(i % 3) * 60}ms`}>
           <div class="video" data-yt={v.id}>
-            <button class="v-img" type="button" aria-label={`Play: ${v.brand}, ${v.title}`}><Image src={img(`videos/${v.id}`)!} alt="" width={480} height={270} /><span class="play" aria-hidden="true">▶</span></button>
+            <button class="v-img" type="button" aria-label={`Play: ${v.brand}, ${v.title}`}><Image src={img(`videos/${v.id}`)!} alt={`${v.brand} ad thumbnail: ${v.title}`} width={480} height={270} /><span class="play" aria-hidden="true">▶</span></button>
             <span class="v-brand mono">{v.brand}</span>
             <span class="v-title">{v.title}</span>
             <a class="v-yt mono" href={yt(v.id)} target="_blank" rel="noopener">Watch on YouTube ↗</a>
@@ -169,7 +169,7 @@ const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
   <div class="modal lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-cap">
     <div class="modal-card lb-card">
       <button class="modal-close" type="button" aria-label="Close">✕</button>
-      <img class="lb-img" alt="" />
+      <img class="lb-img" alt="Enlarged photo" />
       <p class="lb-cap mono" id="lb-cap"></p>
     </div>
   </div>

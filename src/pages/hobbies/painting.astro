@@ -44,7 +44,7 @@ const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(
   <div class="modal" id="art-modal" role="dialog" aria-modal="true" aria-labelledby="art-title">
     <div class="modal-card art-card">
       <button class="modal-close" type="button" aria-label="Close">✕</button>
-      <img class="art-big" alt="" />
+      <img class="art-big" alt="A painting by Bhavana Durgam, enlarged" />
       <p id="art-title" class="art-title mono"></p>
     </div>
   </div>
@@ -96,7 +96,7 @@ const works = await Promise.all(painting.works.map(async (w) => ({ ...w, m: pic(
     const img = m.querySelector<HTMLImageElement>('.art-big')!;
     document.querySelectorAll<HTMLElement>('[data-art]').forEach((b) => b.addEventListener('click', () => {
       img.src = b.dataset.art!;
-      img.alt = b.dataset.title!;
+      img.alt = b.dataset.title || 'A painting by Bhavana Durgam, enlarged';
       m.querySelector('#art-title')!.textContent = b.dataset.title!;
       openModal(m);
     }));

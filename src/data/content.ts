@@ -26,9 +26,9 @@ export const site = {
   location: 'Chicago, IL',
   email: 'bhavanadurgam.work@gmail.com',
   tagline: 'Biomedical engineer turned product manager, with product marketing experience, who builds things people *actually* love.',
-  meta: "Chicago, IL · Northwestern MEM (Technical MBA) · Open to PM & PMM opportunities",
+  meta: "Chicago, IL · Northwestern MEM (Technical MBA Equivalent) · Open to PM, PMM & GTM roles",
   description:
-    "Bhavana Durgam is a biomedical engineer turned Product Manager with product marketing experience, based in Chicago. Master of Engineering Management (Technical MBA), Northwestern University. Open to PM and PMM opportunities.",
+    "Biomedical engineer turned product manager in Chicago with product marketing and go-to-market experience. Northwestern Master of Engineering Management (Technical MBA Equivalent). Open to PM, PMM and GTM roles.",
   socials: {
     linkedin: 'https://www.linkedin.com/in/bhavanadurgam/',
     instagram: 'https://www.instagram.com/bhavana.durgam/',
@@ -38,22 +38,21 @@ export const site = {
 
 // Homepage "Hello, I'm Bhavana!" card. TODO(Bhavana): edit these two paragraphs in your own words.
 export const about = [
-  "I'm a biomedical engineer turned product manager, based in Chicago. I love figuring out what people actually need, building the product that solves it, and making sure the world hears about it. Along the way I've picked up hands-on product marketing experience too: positioning, go-to-market launches, creator partnerships and the user research underneath it all.",
-  "I graduated with a Master of Engineering Management (a technical MBA) from Northwestern University, so I'm happiest where engineering, strategy and storytelling meet. I'm open to PM and PMM opportunities, new collaborations and, always, a good book recommendation.",
+  "Biomedical engineer turned product manager in Chicago. I figure out what people need, build it with engineers, and take it to market. I took a skincare product from concept to $100K in its first year and worked on an AI voice assistant used by 250 dental clinics. Master of Engineering Management (Technical MBA Equivalent) from Northwestern University.",
 ];
 
 export const folders: Folder[] = [
   { id: 'work', no: '01', label: 'Work', title: 'Work Experience', href: '/work/', color: '--plum', ink: '--sheet', peek: 'Salmalita · PatientXpress · Capgemini · Raman Research', teaser: '$100K launch, year one', tabX: 4 },
-  { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM (Technical MBA) · BMS College of Engineering', teaser: 'Biomedical engineer → technical MBA', tabX: 22 },
-  { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, positioning, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
+  { id: 'education', no: '02', label: 'Education', title: 'Education', href: '/education/', color: '--rose', ink: '--ink', peek: 'Northwestern MEM (Technical MBA Equivalent) · BMS College of Engineering', teaser: 'Biomedical engineer → technical MBA', tabX: 22 },
+  { id: 'projects', no: '03', label: 'Projects', title: 'Projects', href: '/projects/', color: '--lime', ink: '--ink', peek: 'Launches, AI automations, research, this very site', teaser: 'Problem → approach → outcome', tabX: 40 },
   { id: 'accomplishments', no: '04', label: 'Accomplishments', title: 'Accomplishments', href: '/accomplishments/', color: '--plum-deep', ink: '--sheet', peek: 'Miss India Karnataka 2018 · model & actor · 125K creator', teaser: 'Crowns, cameras & content', tabX: 58 },
   { id: 'hobbies', no: '05', label: 'Hobbies', title: 'Hobbies', href: '/hobbies/', color: '--rose', ink: '--ink', peek: 'Reading · painting · music · content', teaser: 'The fun folder', tabX: 74 },
   { id: 'contact', no: '06', label: 'Contact', title: 'Contact', href: '/contact/', color: '--lime', ink: '--ink', peek: 'LinkedIn · Instagram · email', teaser: "Let's talk", tabX: 6 },
 ];
 
 export const marquee = [
-  'Product Strategy', 'Roadmapping', 'User Research', 'A/B Testing', 'Competitive Intelligence', 'Go-to-Market',
-  'Positioning', 'Product Launches', 'Product Marketing', 'Messaging', 'Creator Partnerships', 'Storytelling',
+  'Product Strategy', 'Roadmapping', 'Customer Discovery', 'User Stories', 'Go-to-Market', 'Positioning & Messaging',
+  'Product Launches', 'Product Marketing', 'AI Products', 'Healthcare Tech', 'Creator Partnerships', 'Test Automation',
 ];
 
 // "A few things to know about me…" polaroids. Keep each caption short.
@@ -84,6 +83,7 @@ export interface Job {
   company: string;
   place: string;
   dates: string;
+  note?: string;      // small line under the company: promotions, client
   logo: string;       // file name in src/assets/logos/
   color: string;
   tags: string[];     // what the role was about, shown as chips
@@ -92,55 +92,59 @@ export interface Job {
 
 // Headline numbers for the Work page, all taken from the bullets below.
 export const impact = [
-  { value: '$100K+', label: 'first-year revenue from a product I took from 0 to 1', trait: 'Ships 0 → 1' },
-  { value: '250', label: 'dental clinics using the AI voice product I shaped', trait: 'Customer-obsessed' },
-  { value: '30%', label: 'less customer confusion after my research-led PRDs', trait: 'Data-led' },
-  { value: '40%', label: 'faster release cycles from automation I built', trait: 'Technical depth' },
+  { value: '$100K+', label: 'first-year revenue from a product I launched', trait: '0 → 1' },
+  { value: '250', label: 'dental clinics using the AI voice assistant I worked on', trait: 'AI product' },
+  { value: '30%', label: 'less customer confusion after I rewrote the pitch and messaging', trait: 'Messaging' },
+  { value: '20% → 90%', label: 'test automation coverage in one sprint, built single-handedly', trait: 'Technical depth' },
 ];
 
 export const experience: Job[] = [
   {
     role: 'Product Manager',
     company: 'Salmalita Cosmetics',
+    note: 'Joined Sep 2025 as Product Marketing Intern, promoted to Product Manager in Jan 2026. Team of 4, working directly with the CEO and CMO.',
     place: 'Chicago, IL',
-    dates: 'Sep 2025 – Present',
+    dates: 'Jan 2026 – Present',
     logo: 'salmalita',
     color: '--plum',
-    tags: ['0 → 1 launch', 'Vision & roadmap', 'KPIs', 'Go-to-market'],
+    tags: ['0 → 1 launch', 'Go-to-market', 'Channels', 'AI automation'],
     bullets: [
-      'Launched Skin Perfecting Formula from concept to **over $100K in first-year revenue** (2,000 units, 100 sales in the first 4 weeks) by owning the product vision, roadmap and requirements end to end, reporting to the CEO and CMO on a 5-person team.',
-      'Validated **product-market fit and a data-backed roadmap**, measured against the acquisition, retention and engagement KPIs I defined, by analysing 200 customer, creator and retail touchpoints and A/B testing messaging and branding.',
-      'Grew reach to **a 200+ creator and affiliate network**, including Oscar-featured celebrity placements, and opened talks with med spas across Chicago and its suburbs, by designing the go-to-market, positioning and channel strategy.',
-      'Saved the team **15–20 hours a week per automation** by building AI workflows for story content, newsletter production and market-trend research.',
+      'Generated **$100K+ in first-year revenue** (2,000 units; 100 sales in the first 4 weeks) by owning Skin Perfecting Formula’s positioning, messaging, go-to-market plan and roadmap.',
+      'Opened **a professional channel of ~10 med spas, dermatology clinics and aestheticians** in the Chicago area, plus a first account in Atlanta, by repositioning the product for mature skin after customer research at market pop-ups.',
+      'Landed **Oscar-featured celebrity placements** by building a 200-partner creator and affiliate program and running 3+ exclusive influencer events.',
+      'Grew **Instagram from 0 to 2,700 followers**, engagement from 1% to 4% and audience 3x in 3 months, and built 100 repeat customers.',
+      'Building **Claude-powered automations** for the weekly newsletter (Zoho), social stories and content to grow reach, clicks and website traffic, and turn them into sales (in progress).',
     ],
   },
   {
     role: 'Product Management Intern',
     company: 'PatientXpress',
-    place: 'Evanston, IL',
-    dates: 'Jul 2025 – Aug 2025',
+    place: 'Remote (Evanston, IL)',
+    dates: 'Jun 2025 – Aug 2025',
     logo: 'patientxpress',
     color: '--plum',
-    tags: ['AI product', 'Healthcare', 'Discovery', 'PRDs'],
+    tags: ['AI product', 'Healthcare', 'Discovery', 'Messaging'],
     bullets: [
-      'Defined **the product strategy and roadmap for an AI voice assistant used by 250 dental clinics**, each handling 10–50 patient calls a day, by running user interviews and a competitive analysis of 3 solutions.',
-      'Reduced **customer confusion by 30%** and helped onboard **7–8 new clients in 3 months** by writing PRDs and redesigning onboarding flows with the CEO, CTO and engineering team.',
-      'Improved **product clarity and sales readiness** by turning customer research into positioning that shaped a full website redesign.',
+      'Cut **customer confusion by 30%** and helped onboard **1–2 new clinics a week** by rewriting the pitch and messaging after sitting in on demo calls and client feedback sessions.',
+      'Improved **an AI voice assistant used by 250 dental clinics** (10–50 patient calls each a day) by redesigning call flows, prompts and FAQ handling, tested on live calls and real call recordings.',
+      'Spoke with **10–15 clinic clients a day** and turned their feedback into user stories in Jira.',
+      'Redesigned **the company website and UI** in Figma, built with a developer.',
     ],
   },
   {
-    role: 'Product Quality Lead',
+    role: 'Quality Engineering Lead',
     company: 'Capgemini Technology Services',
+    note: 'Client: Meijer (US retailer) · promoted 3 times',
     place: 'Bengaluru, India',
     dates: 'Jan 2021 – Jun 2024',
     logo: 'capgemini',
     color: '--plum-deep',
-    tags: ['Enterprise platforms', 'Team lead', 'Automation', 'Healthcare GTM'],
+    tags: ['Enterprise platforms', 'Team lead', 'Test automation'],
     bullets: [
-      'Owned **product quality for Meijer’s billing, inventory and workforce-management platforms** across stores in multiple US states, including a Starbucks billing integration, by leading a 5–7 person QA team and defining the test strategy.',
-      'Cut **release cycles by 40%** and raised **test automation coverage from 10% to 90% in one sprint** by building QA frameworks with Python, Selenium, Robot Framework and CI/CD pipelines.',
-      'Reduced **post-release defects by 35%** by partnering with product managers and engineers on root-cause analysis and upstream requirement and release decisions.',
-      'Identified **a $2M opportunity for a zero-footprint medical imaging viewer**, adopted by leadership for go-to-market planning, by leading the market research, competitive analysis and strategy.',
+      'Raised **test automation coverage from 20% to 90% in one sprint**, single-handedly automating 50–70 tests a day on a 1,000+ test suite (Python, Selenium, Robot Framework).',
+      'Cut **release cycles by 40%** and **post-release defects by 35%** by building automation into Agile sprints and working with product managers and engineers on root causes.',
+      'Led **a 7-person team on the Starbucks–Meijer billing integration**, owning test strategy, work assignment and reporting to Capgemini and Meijer leadership.',
+      'Owned **end-to-end testing for 7 client websites** as the only QE on a 10-person team.',
     ],
   },
   {
@@ -150,10 +154,23 @@ export const experience: Job[] = [
     dates: 'Jan 2019 – Jun 2019',
     logo: 'raman',
     color: '--plum',
-    tags: ['Healthcare tech', 'User research', 'Specs'],
+    tags: ['Healthcare tech', 'Brain-computer interface', 'Research'],
     bullets: [
-      'Improved **model accuracy by 31%** for a brain-computer interface (a system that turns brain signals into computer commands) by translating end-user research into product specifications.',
-      'Aligned **leadership on next-stage development priorities** for the platform by synthesising user-behaviour data and test results from structured user sessions.',
+      'Reached **up to 83% accuracy** decoding left- vs right-hand intent from EEG for a brain-computer interface by comparing 5 signal-processing methods and 4 classifiers in MATLAB and Python.',
+      'Designed **the experiment protocol**: 8 scalp electrodes, 150 trials across 3 trained subjects (B.E. thesis, team of 2).',
+    ],
+  },
+  {
+    role: 'Product Management Intern, Healthcare',
+    company: 'Capgemini',
+    place: 'Bengaluru, India',
+    dates: 'Dec 2018 (1 month)',
+    logo: 'capgemini',
+    color: '--plum-deep',
+    tags: ['Healthcare', 'Market sizing', 'Go-to-market'],
+    bullets: [
+      'Sized **a $2M TAM for a zero-footprint medical image viewer** (a browser-based tool that lets hospital clinicians view scans without installing software) through market and competitor research.',
+      'Built **the go-to-market plan and competitor analysis** in a deck presented to executives, who used both when shaping the product.',
     ],
   },
 ];
@@ -161,12 +178,12 @@ export const experience: Job[] = [
 export const education = [
   {
     school: 'Northwestern University',
-    degree: 'Master of Engineering Management (Technical MBA)',
+    degree: 'Master of Engineering Management (Technical MBA Equivalent)',
     place: 'Evanston, IL',
     dates: 'Dec 2025',
     logo: 'northwestern',
     color: '--plum',
-    tags: ['Technical MBA', 'Rubenstein Scholar', 'Kellogg TA', 'Lead@NUMEM President'],
+    tags: ['Technical MBA Equivalent', 'Rubenstein Scholar', 'Kellogg TA', 'Lead@NUMEM President'],
     photo: { src: 'northwestern', caption: 'Northwestern, 2025', alt: 'Bhavana Durgam in her purple graduation gown under the Northwestern arch' },
     bullets: [
       'Albert H. Rubenstein Memorial Scholarship: **merit award, top 3 of 60 admits**.',
@@ -176,7 +193,7 @@ export const education = [
   },
   {
     school: 'BMS College of Engineering',
-    degree: 'B.E., Medical Electronics',
+    degree: 'Bachelor of Engineering, Biomedical Engineering',
     place: 'Bengaluru, India',
     dates: 'Jun 2019',
     logo: 'bms',
@@ -185,7 +202,8 @@ export const education = [
     photo: { src: 'bms', caption: 'BMSCE, with my parents', alt: 'Bhavana Durgam holding her Bachelor of Engineering certificate with her parents' },
     bullets: [
       'Department Recruitment Lead: drove **an 85% placement rate for 60 students** and lifted engagement 30%.',
-      '**Class President** for the Medical Electronics class.',
+      '**Class President**.',
+      'Thesis: built **a motor-imagery brain-computer interface** (see Raman Research Institute).',
     ],
   },
 ];
@@ -199,20 +217,94 @@ export interface Project {
   color: string;
   problem: string;
   approach: string;
-  outcome: string;
+  outcome?: string;
+  approachLabel?: string;  // defaults to "What I did"
+  outcomeLabel?: string;   // defaults to "Outcome"
+  status?: string;         // small chip next to the title, e.g. "In discovery"
   link?: { label: string; href: string };
 }
 
 export const projects: Project[] = [
+  {
+    slug: 'skin-perfecting-formula',
+    title: 'Launching Skin Perfecting Formula',
+    summary: 'Salmalita Cosmetics · from concept to $100K+ in year one',
+    tags: ['0 → 1', 'GTM', 'Positioning'],
+    icon: '✦',
+    color: '--plum',
+    problem: 'A new skincare-powered makeup product needed a market and a launch.',
+    approach: 'Defined positioning and messaging, ran the go-to-market, built a 200-partner creator and affiliate program and ran influencer events; then repositioned for mature skin after field research and opened a med spa and dermatology channel (~10 accounts).',
+    outcome: '$100K+ first-year revenue, 2,000 units, 100 sales in the first 4 weeks, Oscar-featured celebrity placements.',
+  },
+  {
+    slug: 'claude-automations',
+    title: 'Claude-powered marketing automations',
+    summary: 'Salmalita Cosmetics · in progress',
+    tags: ['AI', 'Automation', 'Growth'],
+    icon: '⚙',
+    color: '--plum-deep',
+    status: 'Results coming soon',
+    problem: 'A 4-person team can’t hand-make a weekly newsletter, daily stories and trend research.',
+    approach: 'Building automations with Claude for the weekly newsletter (Zoho), social stories and content, aimed at reach, clicks, website traffic and sales.',
+    outcomeLabel: 'Outcome so far',
+    outcome: 'Engagement from 1% to 4% and audience 3x in 3 months.',
+  },
+  {
+    slug: 'ai-voice-assistant',
+    title: 'Fixing the pitch and call flows for an AI voice assistant',
+    summary: 'PatientXpress · used by 250 dental clinics',
+    tags: ['AI product', 'Healthcare', 'Discovery'],
+    icon: '☏',
+    color: '--plum',
+    problem: 'Dental clinics were confused about what the AI receptionist did.',
+    approach: 'Sat in on demos, spoke with 10–15 clinics a day, rewrote the pitch and messaging, and redesigned call flows, prompts and FAQ handling.',
+    outcome: '30% less customer confusion; 1–2 new clinics onboarded a week.',
+  },
+  {
+    slug: 'goldendays',
+    title: 'GoldenDays',
+    summary: 'A wellness platform for adults 55+ and caregivers · Northwestern product management course, team of 7',
+    tags: ['Discovery', 'PRD', 'Market sizing'],
+    icon: '❀',
+    color: '--plum-deep',
+    problem: 'Older adults and their caregivers juggle health tracking, schedules and social life across many apps.',
+    approachLabel: 'What we did',
+    approach: '100+ customer interviews, 4 personas, a competitor feature matrix, an MRD with a go/no-go call, a PRD with roadmap and success metrics, market sizing (TAM 162M people) and subscription pricing ($10/$15 a month).',
+    outcome: 'A clickable prototype and landing page.',
+    link: { label: 'See the prototype ↗', href: 'https://golden-days.lovable.app/' },
+  },
+  {
+    slug: 'brain-computer-interface',
+    title: 'Brain-computer interface',
+    summary: 'B.E. thesis at Raman Research Institute',
+    tags: ['Healthcare tech', 'Research', 'ML'],
+    icon: '◎',
+    color: '--plum',
+    problem: 'Help paralyzed patients control a robotic arm by imagining a movement.',
+    approach: 'Designed an 8-electrode EEG protocol, collected 150 trials from 3 subjects, and compared 5 feature methods and 4 classifiers in MATLAB and Python.',
+    outcome: 'Up to 83% accuracy telling left- from right-hand intent.',
+  },
+  {
+    slug: 'collab-tracker',
+    title: 'Influencer collaboration tracker',
+    summary: 'One place for creators to manage collaborations and payments',
+    tags: ['0 → 1', 'Creator economy'],
+    icon: '✉',
+    color: '--plum-deep',
+    status: 'In discovery',
+    problem: 'Influencers track collaborations and payments across DMs, emails and spreadsheets.',
+    approachLabel: 'What I’m doing',
+    approach: 'Research and early design for one place (website + app) to manage collaborations and payments.',
+  },
   {
     slug: 'this-portfolio',
     title: 'This portfolio',
     summary: 'PRD → Figma wireframes → a fast, folder-themed website.',
     tags: ['Product', 'Design', 'Web'],
     icon: '❒',
-    color: '--plum-deep',
+    color: '--plum',
     problem: 'Most PM portfolios read like a résumé in a different font.',
-    approach: 'Wrote a PRD, wireframed it, and built it with Astro: real pages for Google, folders that open, a bookshelf you can pull books from.',
+    approach: 'Wrote a PRD, wireframed it, and built it with Astro: real pages built to be found on Google, folders that open, a bookshelf you can pull books from.',
     outcome: 'A portfolio that is also a work sample: requirements, design and a shipped product.',
     link: { label: 'You are here ✦', href: '/' },
   },
@@ -298,7 +390,7 @@ export const creator = {
   ],
   story: [
     'I started creating in 2020, during COVID, as a way to cope with my anxiety. I talked openly about how I was handling my mental health, one honest post at a time, and people related. What started as my own coping tool grew into a community.',
-    'Today I create lifestyle and wellness content on Instagram, YouTube and TikTok for a community of around 125K, about wellness and the life in between.',
+    'Today I create lifestyle and wellness content for a community of 125K across Instagram, YouTube and TikTok, about wellness and the life in between.',
   ],
   // What creating taught me, in product terms. **bold** = the takeaway.
   lessons: [

@@ -8,18 +8,18 @@ const logos = import.meta.glob<{ default: ImageMetadata }>('../assets/logos/*.pn
 const logo = (name: string) => logos[`../assets/logos/${name}.png`]?.default;
 const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
-<Section id="work" title="Work Experience — Bhavana Durgam" description="Bhavana Durgam, biomedical engineer turned Product Manager: 0→1 launch to $100K+ first-year revenue, AI voice product strategy for 250 dental clinics, 40% faster releases at Capgemini, and BCI research.">
+<Section id="work" title="Work Experience — Bhavana Durgam" description="Bhavana Durgam, biomedical engineer turned Product Manager: a 0 → 1 launch to $100K+ first-year revenue, an AI voice assistant used by 250 dental clinics, test automation from 20% to 90% at Capgemini, and brain-computer interface research.">
   <header class="frame-head">
     <p class="kicker">Work experience</p>
     <h1 class="title">Where I've <em>built</em></h1>
-    <p class="lede">Four-plus years building products across healthcare, consumer and enterprise: from customer discovery and PRDs to roadmaps, launches and the go-to-market that makes them land.</p>
+    <p class="lede">Four-plus years building products across healthcare, AI, consumer and enterprise: from customer discovery and roadmaps to launches and the go-to-market that makes them land.</p>
   </header>
 
   <ul class="impact" aria-label="Impact at a glance">
     {impact.map((m, i) => (
       <li class="stat reveal" style={`--d: ${i * 80}ms`}>
         <span class="s-trait mono">{m.trait}</span>
-        <span class="s-val">{m.value}</span>
+        <span class:list={["s-val", { long: m.value.length > 6 }]}>{m.value}</span>
         <span class="s-label">{m.label}</span>
       </li>
     ))}
@@ -36,6 +36,7 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
           <p class="t-date">{j.dates} · {j.place}</p>
           <h2 class="t-role">{j.role}</h2>
           <p class="t-org">{j.company}</p>
+          {j.note && <p class="t-note">{j.note}</p>}
           <ul class="tags">{j.tags.map((t) => <li class="pill">{t}</li>)}</ul>
           <ul class="t-list">{j.bullets.map((b) => <li class="line" set:html={bold(b)} />)}</ul>
         </li>
@@ -54,8 +55,10 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   .stat:nth-child(2) { box-shadow: 5px 5px 0 var(--lime); }
   .stat:nth-child(4) { box-shadow: 5px 5px 0 var(--lime); }
   .s-trait { font-size: 11px; font-weight: 700; color: var(--plum); }
-  .s-val { font: 800 clamp(40px, 4.6vw, 58px)/.9 var(--display); letter-spacing: -0.04em; color: var(--ink); }
+  .s-val { font: 800 clamp(40px, 4.6vw, 58px)/.9 var(--display); letter-spacing: -0.04em; color: var(--ink); white-space: nowrap; }
+  .s-val.long { font-size: clamp(26px, 2.6vw, 38px); line-height: 1.5; }
   .s-label { font-size: 14px; line-height: 1.4; color: var(--muted); }
 
   @media (max-width: 960px) { .impact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .s-val.long { white-space: normal; line-height: 1.05; } }
 </style>

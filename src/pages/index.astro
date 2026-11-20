@@ -33,7 +33,7 @@ const jsonld = {
 
 const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'];
 ---
-<Base title="Bhavana Durgam — Product Manager with PMM experience · Chicago" jsonld={jsonld}>
+<Base title="Bhavana Durgam — Product Manager (AI, Healthcare & Consumer) · Chicago" jsonld={jsonld}>
   <!-- ═══ A. About: photo + hello card ═══ -->
   <section class="hero" aria-label="About Bhavana Durgam">
     <div class="wrap">
@@ -107,7 +107,7 @@ const pastel = ['#F4D6E2', '#E3EAA8', '#EAB0C8', '#EFEDC6', '#C9D863', '#F4D6E2'
             <figure class="pola-card">
               <span class="pola-photo">
                 {n.photo
-                  ? <img src={n.photo} alt={k === 1 ? '' : `Bhavana Durgam: ${n.text}`} width="600" height="600" loading="lazy" decoding="async" />
+                  ? <img src={n.photo} alt={`Bhavana Durgam: ${n.text}`} width="600" height="600" loading="lazy" decoding="async" />
                   : <span class="pola-ph" aria-hidden="true">{n.icon}</span>}
               </span>
               <figcaption class="pola-cap">{n.text}</figcaption>
